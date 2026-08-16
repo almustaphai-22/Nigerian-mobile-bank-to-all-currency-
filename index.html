@@ -43,14 +43,12 @@
     <h1 class="text-3xl font-bold mb-2 gradient-text">Welcome Back</h1>
     <p class="text-gray-400 mb-6">Account: <span id="accountNumber" class="font-bold text-[#00D4AA]"></span></p>
     
-    <!-- BALANCE CARD -->
     <div class="card p-6 rounded-2xl mb-6 bg-gradient-to-r from-[#00D4AA] to-[#00A8FF] text-black">
       <p>Available Balance</p>
       <h2 class="text-4xl font-bold">₦0.00</h2>
       <a href="PASTE_YOUR_GUMROAD_LINK_HERE" target="_blank" class="bg-black text-white px-6 py-2 rounded-lg font-bold mt-3 inline-block">Fund Wallet $1</a>
     </div>
 
-    <!-- SERVICES GRID -->
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
       <div onclick="showSection('airtime')" class="card p-4 rounded-xl text-center cursor-pointer">📱<p>Airtime</p></div>
       <div onclick="showSection('bills')" class="card p-4 rounded-xl text-center cursor-pointer">💡<p>Bills</p></div>
@@ -58,7 +56,6 @@
       <div onclick="showSection('transfer')" class="card p-4 rounded-xl text-center cursor-pointer">💸<p>Transfer</p></div>
     </div>
 
-    <!-- AIRTIME SECTION -->
     <div id="airtime" class="card p-6 rounded-2xl mb-6 hidden">
       <h3 class="text-xl font-bold mb-4">Buy Airtime</h3>
       <input id="airtimePhone" placeholder="080..." class="w-full bg-gray-800 p-3 rounded-lg mb-3">
@@ -66,7 +63,6 @@
       <button onclick="alert('Airtime of ₦'+document.getElementById('airtimeAmount').value+' sent to '+document.getElementById('airtimePhone').value)" class="btn-primary w-full text-black py-3 rounded-lg font-bold">Buy Now</button>
     </div>
 
-    <!-- BILLS SECTION -->
     <div id="bills" class="card p-6 rounded-2xl mb-6 hidden">
       <h3 class="text-xl font-bold mb-4">Pay Bills</h3>
       <select class="w-full bg-gray-800 p-3 rounded-lg mb-3"><option>DSTV</option><option>GOTV</option><option>EKEDC</option></select>
@@ -75,7 +71,6 @@
       <button onclick="alert('Bill Payment Successful')" class="btn-primary w-full text-black py-3 rounded-lg font-bold">Pay Now</button>
     </div>
 
-    <!-- FOREX SECTION -->
     <div id="forex" class="card p-6 rounded-2xl mb-6 hidden">
       <h3 class="text-xl font-bold mb-4">Currency Exchange</h3>
       <p>Rate: 1 USD = ₦1600</p>
@@ -100,8 +95,8 @@
   let generatedOTP = "";
   let userData = {};
 
-  // ✅ PASTE YOUR PUBLIC KEY HERE
-  emailjs.init("PASTE_YOUR_PUBLIC_KEY_HERE"); 
+  // ✅ YOUR REAL PUBLIC KEY
+  emailjs.init("7H-20VEn5wiKfWzl"); 
   const SERVICE_ID = "service_j557oql";
   const TEMPLATE_ID = "template_qeoiqtj";
 
@@ -133,7 +128,6 @@
     document.getElementById(id).classList.remove('hidden');
   }
 
-  // BOT
   function toggleBot(){ document.getElementById('botChat').classList.toggle('hidden'); }
   document.getElementById('botInput').addEventListener('keypress', function(e){
     if(e.key === 'Enter'){
@@ -146,7 +140,6 @@
     }
   });
 
-  // FOREX CALC
   document.getElementById('forexAmount').addEventListener('input', function(){
     document.getElementById('forexResult').innerText = this.value * 1600;
   });
