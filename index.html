@@ -7,20 +7,159 @@
   <meta name="theme-color" content="#00D4AA">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     body { background: #0B0E14; color: #EAECEF; font-family: Inter, sans-serif; }
     .gradient-text { background: linear-gradient(90deg, #00D4AA 0%, #00A8FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .card { background: #1A1F2E; border: 1px solid #2B3139; transition: all 0.3s; }
     .card:hover { transform: translateY(-5px); border-color: #00D4AA; }
-    .btn-primary { background: linear-gradient(90deg, #00D4AA 0%, #00A8FF 100%); transition: all 0.3s; }
+    .btn-primary { background: linear-gradient(90deg, #00D4AA 0%, #00A8FF 100%); transition: all 0.3s; color: black; }
     .btn-primary:hover { transform: scale(1.05); }
     .hidden { display: none; }
     #bot { position: fixed; bottom: 20px; right: 20px; z-index: 999; }
     #botChat { width: 320px; height: 400px; background: #1A1F2E; border: 1px solid #00D4AA; }
+    input { border: 1px solid #2B3139; }
   </style>
 </head>
 <body class="min-h-screen">
 
   <!-- LOGIN / OTP -->
-  <div id="auth"
+  <div id="auth" class="flex items-center justify-center px-4 min-h-screen">
+    <div id="step1" class="card p-8 rounded-2xl w-full max-w-md">
+      <h1 class="text-3xl font-bold text-center mb-6 gradient-text">NairaGlobal</h1>
+      <input id="email" type="email" placeholder="Email" class="w-full bg-gray-800 p-3 rounded-lg mb-3" required>
+      <input id="phone" type="tel" placeholder="Phone 080xxxxxxxx" class="w-full bg-gray-800 p-3 rounded-lg mb-3" required>
+      <button id="sendBtn" class="btn-primary w-full py-3 rounded-lg font-bold">Send Verification Code</button>
+    </div>
+
+    <div id="step2" class="card p-8 rounded-2xl w-full max-w-md hidden">
+      <h2 class="text-2xl font-bold text-center mb-4">Enter 6-Digit Code</h2>
+      <p class="text-sm text-gray-400 text-center mb-3">We sent it to your email</p>
+      <input id="otpInput" type="text" placeholder="123456" maxlength="6" class="w-full bg-gray-800 p-3 rounded-lg mb-3 text-center text-2xl tracking-widest">
+      <button id="verifyBtn" class="btn-primary w-full py-3 rounded-lg font-bold">Verify</button>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="dashboard" class="hidden p-4 max-w-6xl mx-auto">
+    <h1 class="text-3xl font-bold mb-2 gradient-text">Welcome Back</h1>
+    <p class="text-gray-400 mb-6">Account: <span id="accountNumber" class="font-bold text-[#00D4AA]"></span></p>
+    
+    <div class="card p-6 rounded-2xl mb-6 bg-gradient-to-r from-[#00D4AA] to-[#00A8FF] text-black">
+      <p>Available Balance</p>
+      <h2 class="text-4xl font-bold">₦0.00</h2>
+    </div>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+      <div onclick="showSection('airtime')" class="card p-4 rounded-xl text-center cursor-pointer">📱<p class="mt-2">Airtime</p></div>
+      <div onclick="showSection('bills')" class="card p-4 rounded-xl text-center cursor-pointer">💡<p class="mt-2">Bills</p></div>
+      <div onclick="showSection('forex')" class="card p-4 rounded-xl text-center cursor-pointer">💱<p class="mt-2">Exchange</p></div>
+      <div onclick="showSection('transfer')" class="card p-4 rounded-xl text-center cursor-pointer">💸<p class="mt-2">Transfer</p></div>
+    </div>
+
+    <div id="airtime" class="card p-6 rounded-2xl mb-6 hidden">
+      <h3 class="text-xl font-bold mb-4">Buy Airtime</h3>
+      <input id="airtimePhone" placeholder="080..." class="w-full bg-gray-800 p-3 rounded-lg mb-3">
+      <input id="airtimeAmount" type="number" placeholder="Amount ₦" class="w-full bg-gray-800 p-3 rounded-lg mb-3">
+      <button onclick="alert('Airtime sent')" class="btn-primary w-full py-3 rounded-lg font-bold">Buy Now</button>
+    </div>
+
+    <div id="bills" class="card p-6 rounded-2xl mb-6 hidden">
+      <h3 class="text-xl font-bold mb-4">Pay Bills</h3>
+      <select class="w-full bg-gray-800 p-3 rounded-lg mb-3"><option>DSTV</option><option>GOTV</option><option>EKEDC</option></select>
+      <input placeholder="Smartcard/Meter No" class="w-full bg-gray-800 p-3 rounded-lg mb-3">
+      <input type="number" placeholder="Amount ₦" class="w-full bg-gray-800 p-3 rounded-lg mb-3">
+      <button onclick="alert('Bill Payment Successful')" class="btn-primary w-full py-3 rounded-lg font-bold">Pay Now</button>
+    </div>
+
+    <div id="forex" class="card p-6 rounded-2xl mb-6 hidden">
+      <h3 class="text-xl font-bold mb-4">Currency Exchange</h3>
+      <p>Rate: 1 USD = ₦1600</p>
+      <input id="forexAmount" type="number" placeholder="Enter USD" class="w-full bg-gray-800 p-3 rounded-lg mb-3 mt-2">
+      <p>You'll get: ₦<span id="forexResult">0</span></p>
+      <button onclick="alert('Exchange Request Submitted')" class="btn-primary w-full py-3 rounded-lg font-bold mt-3">Exchange</button>
+    </div>
+
+  </div>
+
+  <!-- AI BOT -->
+  <div id="bot">
+    <button id="botToggle" class="btn-primary w-14 h-14 rounded-full text-2xl shadow-lg">💬</button>
+    <div id="botChat" class="hidden rounded-2xl p-4 mt-2 shadow-2xl">
+      <h4 class="font-bold mb-2">NairaBot Assistant</h4>
+      <div id="botMessages" class="h-64 overflow-y-auto text-sm mb-2"></div>
+      <input id="botInput" placeholder="Ask me anything..." class="w-full bg-gray-800 p-2 rounded-lg">
+    </div>
+  </div>
+  
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  
+  let generatedOTP = "";
+  let userData = {};
+
+  // CORRECT PUBLIC KEY
+  emailjs.init("7H-20VEn5wiKfWzl"); 
+  
+  const SERVICE_ID = "service_j557oql";
+  const TEMPLATE_ID = "template_qeoiqtj";
+
+  function generateOTP() { return Math.floor(100000 + Math.random() * 900000); }
+  function generateAccNumber(phone) { return "810" + phone.replace(/\D/g,'').slice(-7); }
+
+  async function sendOTP() {
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    if(!email || !phone) return alert("Please enter Email and Phone");
+    
+    generatedOTP = generateOTP();
+    userData = {email, phone};
+
+    try {
+      await emailjs.send(SERVICE_ID, TEMPLATE_ID, {to_email: email, otp_code: generatedOTP});
+      alert("✅ Code sent to " + email);
+      document.getElementById('step1').classList.add('hidden');
+      document.getElementById('step2').classList.remove('hidden');
+    } catch (err) {
+      alert("❌ Error: " + err.text);
+    }
+  }
+
+  function verifyOTP() {
+    if(document.getElementById('otpInput').value == generatedOTP) {
+      document.getElementById('auth').classList.add('hidden');
+      document.getElementById('dashboard').classList.remove('hidden');
+      document.getElementById('accountNumber').innerText = generateAccNumber(userData.phone);
+    } else alert("Wrong code. Please try again");
+  }
+
+  function showSection(id) {
+    ['airtime','bills','forex','transfer'].forEach(s => document.getElementById(s)?.classList.add('hidden'));
+    document.getElementById(id).classList.remove('hidden');
+  }
+
+  function toggleBot(){ document.getElementById('botChat').classList.toggle('hidden'); }
+  
+  // ADD EVENT LISTENERS AFTER PAGE LOADS
+  document.getElementById('sendBtn').addEventListener('click', sendOTP);
+  document.getElementById('verifyBtn').addEventListener('click', verifyOTP);
+  document.getElementById('botToggle').addEventListener('click', toggleBot);
+
+  document.getElementById('botInput').addEventListener('keypress', function(e){
+    if(e.key === 'Enter'){
+      let msg = this.value;
+      document.getElementById('botMessages').innerHTML += `<p><b>You:</b> ${msg}</p>`;
+      let reply = "I'm NairaBot. I can help with Airtime, Bills, Exchange.";
+      document.getElementById('botMessages').innerHTML += `<p><b>Bot:</b> ${reply}</p>`;
+      this.value = "";
+    }
+  });
+
+  document.getElementById('forexAmount').addEventListener('input', function(){
+    document.getElementById('forexResult').innerText = this.value * 1600;
+  });
+
+});
+</script>
+</body>
+</html>
