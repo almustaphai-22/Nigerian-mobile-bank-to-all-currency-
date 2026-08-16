@@ -22,14 +22,14 @@
   <div id="step1" class="card p-8 rounded-2xl w-full max-w-md">
     <h1 class="text-3xl font-bold text-center mb-6 gradient-text">NairaGlobal</h1>
     <input id="email" type="email" placeholder="Email" class="w-full bg-gray-800 p-3 rounded-lg mb-3 border border-gray-700" required>
-    <input id="phone" type="tel" placeholder="Phone 080xxxxxxxx" class="w-full bg-gray-800 p-3 rounded-lg mb-3 border border-gray-700" required>
+    <input id="phone" type="tel" placeholder="Phone 080xxxxxxxx" class="w-full bg-gray-800 p-3 rounded-lg mb-3 border-gray-700" required>
     <button onclick="sendOTP()" class="btn-primary w-full text-black py-3 rounded-lg font-bold">Send Verification Code</button>
   </div>
 
   <!-- STEP 2 -->
   <div id="step2" class="card p-8 rounded-2xl w-full max-w-md hidden">
     <h2 class="text-2xl font-bold text-center mb-4">Enter 6-Digit Code</h2>
-    <p class="text-gray-400 text-center mb-4">Sent to Email + SMS</p>
+    <p class="text-gray-400 text-center mb-4">Check your Email</p>
     <input id="otpInput" type="text" placeholder="123456" maxlength="6" class="w-full bg-gray-800 p-3 rounded-lg mb-3 border-gray-700 text-center text-2xl">
     <button onclick="verifyOTP()" class="btn-primary w-full text-black py-3 rounded-lg font-bold">Verify</button>
   </div>
@@ -47,19 +47,19 @@
   let generatedOTP = "";
   let userData = {};
 
-  // 1. PASTE YOUR KEYS HERE
+  // ✅ YOUR KEYS CONNECTED
   emailjs.init("7H-20VEnSwiKFhwzI"); 
-  const TERMII_API_KEY = "PASTE_TERMII_KEY_HERE";
-  const SERVICE_ID = "PASTE_SERVICE_ID_HERE";
-  const TEMPLATE_ID = "PASTE_TEMPLATE_ID_HERE";
+  const SERVICE_ID = "service_j557oql";
+  const TEMPLATE_ID = "template_qeoiqtj";
+  const TERMII_API_KEY = "PASTE_TERMII_KEY_HERE"; // Add later
 
   function generateOTP() {
     return Math.floor(100000 + Math.random() * 900000);
   }
 
   function generateAccNumber(phone) {
-    let clean = phone.replace(/\D/g,''); // remove +
-    return "810" + clean.slice(-7); // Makes it look like real NGN account
+    let clean = phone.replace(/\D/g,''); 
+    return "810" + clean.slice(-7); 
   }
 
   async function sendOTP() {
@@ -74,34 +74,16 @@
     generatedOTP = generateOTP();
     userData = {email, phone};
 
-    // DEMO MODE: Shows code in alert. Replace with real EmailJS + Termii later
-    alert("DEMO CODE: " + generatedOTP + "\n\nEmail sent to: " + email + "\nSMS sent to: " + phone);
-
-    // STEP 1: SEND EMAIL WITH EMAILJS
-    if(SERVICE_ID !== "PASTE_SERVICE_ID_HERE"){
-      emailjs.send(SERVICE_ID, TEMPLATE_ID, {
-        to_email: email,
-        otp_code: generatedOTP
-      }).then(() => console.log("Email sent")).catch(err => console.log(err));
-    }
-
-    // STEP 2: SEND SMS WITH TERMII - UNCOMMENT WHEN YOU HAVE KEY
-    /*
-    if(TERMII_API_KEY !== "PASTE_TERMII_KEY_HERE"){
-      fetch("https://api.ng.termii.com/api/sms/send", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-          to: phone,
-          from: "NGBank",
-          sms: "Your NairaGlobal code is: " + generatedOTP,
-          type: "plain",
-          channel: "generic",
-          api_key: TERMII_API_KEY
-        })
-      });
-    }
-    */
+    // SEND REAL EMAIL NOW
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+      to_email: email,
+      otp_code: generatedOTP
+    }).then(() => {
+      alert("Code sent to " + email + ". Check inbox + spam");
+    }).catch(err => {
+      alert("Email failed. Check EmailJS Dashboard > Activity");
+      console.log(err);
+    });
 
     // Show step 2
     document.getElementById('step1').classList.add('hidden');
