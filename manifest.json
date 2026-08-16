@@ -3,7 +3,7 @@
   "short_name": "NGB",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0B0E14",
+  "background_color": "#FFFFFF",
   "theme_color": "#006400",
   "description": "Your World. Your Bank. Your Future.",
   "icons": [
