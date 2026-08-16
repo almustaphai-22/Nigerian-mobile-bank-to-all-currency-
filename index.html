@@ -21,9 +21,10 @@
   <!-- STEP 1 -->
   <div id="step1" class="card p-8 rounded-2xl w-full max-w-md">
     <h1 class="text-3xl font-bold text-center mb-6 gradient-text">NairaGlobal</h1>
-    <input id="email" type="email" placeholder="Email" class="w-full bg-gray-800 p-3 rounded-lg mb-3 border border-gray-700" required>
-    <input id="phone" type="tel" placeholder="Phone 080xxxxxxxx" class="w-full bg-gray-800 p-3 rounded-lg mb-3 border-gray-700" required>
+    <input id="email" type="email" placeholder="Email" class="w-full bg-gray-800 p-3 rounded-lg mb-3 border-gray-700" required>
+    <input id="phone" type="tel" placeholder="Phone 080xxxxxxxx" class="w-full bg-gray-800 p-3 rounded-lg mb-3 border border-gray-700" required>
     <button onclick="sendOTP()" class="btn-primary w-full text-black py-3 rounded-lg font-bold">Send Verification Code</button>
+    <p id="status" class="text-xs text-center mt-3 text-gray-400"></p>
   </div>
 
   <!-- STEP 2 -->
@@ -47,11 +48,10 @@
   let generatedOTP = "";
   let userData = {};
 
-  // ✅ YOUR KEYS CONNECTED
+  // ✅ YOUR KEYS
   emailjs.init("7H-20VEnSwiKFhwzI"); 
   const SERVICE_ID = "service_j557oql";
   const TEMPLATE_ID = "template_qeoiqtj";
-  const TERMII_API_KEY = "PASTE_TERMII_KEY_HERE"; // Add later
 
   function generateOTP() {
     return Math.floor(100000 + Math.random() * 900000);
@@ -59,12 +59,13 @@
 
   function generateAccNumber(phone) {
     let clean = phone.replace(/\D/g,''); 
-    return "810" + clean.slice(-7); 
+    return "810" + clean.slice(-7);
   }
 
   async function sendOTP() {
     const email = document.getElementById('email').value;
     const phone = document.getElementById('phone').value;
+    const status = document.getElementById('status');
     
     if(!email || !phone) {
       alert("Please enter Email and Phone");
@@ -73,16 +74,20 @@
 
     generatedOTP = generateOTP();
     userData = {email, phone};
+    status.innerText = "Sending code...";
 
     // SEND REAL EMAIL NOW
     emailjs.send(SERVICE_ID, TEMPLATE_ID, {
       to_email: email,
       otp_code: generatedOTP
-    }).then(() => {
-      alert("Code sent to " + email + ". Check inbox + spam");
+    }).then((res) => {
+      status.innerText = "Code sent! Check inbox";
+      alert("✅ Code sent to " + email);
+      console.log("EMAILJS SUCCESS:", res);
     }).catch(err => {
-      alert("Email failed. Check EmailJS Dashboard > Activity");
-      console.log(err);
+      status.innerText = "Failed: " + err.text;
+      alert("❌ Email failed: " + err.text + "\n\nCheck Console F12 for details");
+      console.log("EMAILJS ERROR:", err);
     });
 
     // Show step 2
