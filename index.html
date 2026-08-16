@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>NairaGlobal - Verify</title>
-  <link rel="manifest" href="manifest.json"> <!-- THIS GOES HERE IN HEAD -->
+  <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#00D4AA">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
@@ -21,8 +21,8 @@
   <!-- STEP 1 -->
   <div id="step1" class="card p-8 rounded-2xl w-full max-w-md">
     <h1 class="text-3xl font-bold text-center mb-6 gradient-text">NairaGlobal</h1>
-    <input id="email" type="email" placeholder="Email" class="w-full bg-gray-800 p-3 rounded-lg mb-3 border-gray-700" required>
-    <input id="phone" type="tel" placeholder="Phone 080xxxxxxxx" class="w-full bg-gray-800 p-3 rounded-lg mb-3 border-gray-700" required>
+    <input id="email" type="email" placeholder="Email" class="w-full bg-gray-800 p-3 rounded-lg mb-3 border border-gray-700" required>
+    <input id="phone" type="tel" placeholder="Phone 080xxxxxxxx" class="w-full bg-gray-800 p-3 rounded-lg mb-3 border border-gray-700" required>
     <button onclick="sendOTP()" class="btn-primary w-full text-black py-3 rounded-lg font-bold">Send Verification Code</button>
   </div>
 
@@ -38,13 +38,10 @@
   <div id="dashboard" class="hidden w-full max-w-4xl p-4">
     <div class="card p-6 rounded-2xl mb-6 text-center">
       <h2 class="text-2xl font-bold">✅ Verified</h2>
-      <p class="text-gray-400">Your NGN Account: <span id="accountNumber" class="font-bold text-xl"></span></p>
+      <p class="text-gray-400">Your NGN Account: <span id="accountNumber" class="font-bold text-xl text-[#00D4AA]"></span></p>
       <a id="gumroadLink" href="PASTE_YOUR_GUMROAD_LINK_HERE" target="_blank" class="btn-primary text-black px-8 py-3 rounded-lg font-bold mt-4 inline-block">Pay $1 to Unlock</a>
     </div>
   </div>
-  
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#006400">
   
 <script>
   let generatedOTP = "";
@@ -61,11 +58,71 @@
   }
 
   function generateAccNumber(phone) {
-    return "810" + phone.slice(-7); // Makes it look like real NGN account
+    let clean = phone.replace(/\D/g,''); // remove +
+    return "810" + clean.slice(-7); // Makes it look like real NGN account
   }
 
-  async function
-<script>
-  if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
+  async function sendOTP() {
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    
+    if(!email || !phone) {
+      alert("Please enter Email and Phone");
+      return;
+    }
+
+    generatedOTP = generateOTP();
+    userData = {email, phone};
+
+    // DEMO MODE: Shows code in alert. Replace with real EmailJS + Termii later
+    alert("DEMO CODE: " + generatedOTP + "\n\nEmail sent to: " + email + "\nSMS sent to: " + phone);
+
+    // STEP 1: SEND EMAIL WITH EMAILJS
+    if(SERVICE_ID !== "PASTE_SERVICE_ID_HERE"){
+      emailjs.send(SERVICE_ID, TEMPLATE_ID, {
+        to_email: email,
+        otp_code: generatedOTP
+      }).then(() => console.log("Email sent")).catch(err => console.log(err));
+    }
+
+    // STEP 2: SEND SMS WITH TERMII - UNCOMMENT WHEN YOU HAVE KEY
+    /*
+    if(TERMII_API_KEY !== "PASTE_TERMII_KEY_HERE"){
+      fetch("https://api.ng.termii.com/api/sms/send", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          to: phone,
+          from: "NGBank",
+          sms: "Your NairaGlobal code is: " + generatedOTP,
+          type: "plain",
+          channel: "generic",
+          api_key: TERMII_API_KEY
+        })
+      });
+    }
+    */
+
+    // Show step 2
+    document.getElementById('step1').classList.add('hidden');
+    document.getElementById('step2').classList.remove('hidden');
+  }
+
+  function verifyOTP() {
+    const entered = document.getElementById('otpInput').value;
+    if(entered == generatedOTP) {
+      document.getElementById('step2').classList.add('hidden');
+      document.getElementById('dashboard').classList.remove('hidden');
+      document.getElementById('accountNumber').innerText = generateAccNumber(userData.phone);
+    } else {
+      alert("Wrong code. Try again.");
+    }
+  }
+
+  // Register Service Worker for PWA Install
+  if ('serviceWorker' in navigator) { 
+    navigator.serviceWorker.register('sw.js'); 
+  }
 </script>
 </body>
+</html>
