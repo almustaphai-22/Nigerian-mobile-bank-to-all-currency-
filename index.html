@@ -3,10 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>NairaGlobal - Verify</title>
+  <link rel="manifest" href="manifest.json"> <!-- THIS GOES HERE IN HEAD -->
+  <meta name="theme-color" content="#00D4AA">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdn.tailwindcss.com"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
-    body { background: #0B0E14; color: #EAECEF; }
+    body { background: #0B0E14; color: #EAECEF; font-family: Inter, sans-serif; }
     .gradient-text { background: linear-gradient(90deg, #00D4AA 0%, #00A8FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .card { background: #1A1F2E; border: 1px solid #2B3139; }
     .btn-primary { background: linear-gradient(90deg, #00D4AA 0%, #00A8FF 100%); }
@@ -18,7 +21,7 @@
   <!-- STEP 1 -->
   <div id="step1" class="card p-8 rounded-2xl w-full max-w-md">
     <h1 class="text-3xl font-bold text-center mb-6 gradient-text">NairaGlobal</h1>
-    <input id="email" type="email" placeholder="Email" class="w-full bg-gray-800 p-3 rounded-lg mb-3 border border-gray-700" required>
+    <input id="email" type="email" placeholder="Email" class="w-full bg-gray-800 p-3 rounded-lg mb-3 border-gray-700" required>
     <input id="phone" type="tel" placeholder="Phone 080xxxxxxxx" class="w-full bg-gray-800 p-3 rounded-lg mb-3 border-gray-700" required>
     <button onclick="sendOTP()" class="btn-primary w-full text-black py-3 rounded-lg font-bold">Send Verification Code</button>
   </div>
@@ -27,7 +30,7 @@
   <div id="step2" class="card p-8 rounded-2xl w-full max-w-md hidden">
     <h2 class="text-2xl font-bold text-center mb-4">Enter 6-Digit Code</h2>
     <p class="text-gray-400 text-center mb-4">Sent to Email + SMS</p>
-    <input id="otpInput" type="text" placeholder="123456" maxlength="6" class="w-full bg-gray-800 p-3 rounded-lg mb-3 border border-gray-700 text-center text-2xl">
+    <input id="otpInput" type="text" placeholder="123456" maxlength="6" class="w-full bg-gray-800 p-3 rounded-lg mb-3 border-gray-700 text-center text-2xl">
     <button onclick="verifyOTP()" class="btn-primary w-full text-black py-3 rounded-lg font-bold">Verify</button>
   </div>
 
@@ -44,61 +47,18 @@
   let generatedOTP = "";
   let userData = {};
 
-  // YOUR KEYS
+  // 1. PASTE YOUR KEYS HERE
   emailjs.init("7H-20VEnSwiKFhwzI"); 
   const TERMII_API_KEY = "PASTE_TERMII_KEY_HERE";
+  const SERVICE_ID = "PASTE_SERVICE_ID_HERE";
+  const TEMPLATE_ID = "PASTE_TEMPLATE_ID_HERE";
 
   function generateOTP() {
     return Math.floor(100000 + Math.random() * 900000);
   }
 
   function generateAccNumber(phone) {
-    return phone.slice(-10);
+    return "810" + phone.slice(-7); // Makes it look like real NGN account
   }
 
-  async function sendOTP() {
-    let email = document.getElementById('email').value;
-    let phone = document.getElementById('phone').value;
-    if(!email || !phone) return alert("Enter email and phone");
-
-    generatedOTP = generateOTP();
-    userData = {email, phone, account: generateAccNumber(phone)};
-
-    // SEND EMAIL
-    emailjs.send("PASTE_SERVICE_ID_HERE", "PASTE_TEMPLATE_ID_HERE", {
-      email: email,
-      code: generatedOTP
-    });
-
-    // SEND SMS WITH TERMII
-    fetch("https://api.ng.termii.com/api/sms/send", {
-      method: "POST",
-      headers: {"Content-Type": "application/json"},
-      body: JSON.stringify({
-        "api_key": TERMII_API_KEY,
-        "to": phone,
-        "from": "NairaGlob",
-        "sms": `Your NairaGlobal code is ${generatedOTP}. Valid for 5 mins.`,
-        "type": "plain",
-        "channel": "generic"
-      })
-    });
-
-    document.getElementById('step1').classList.add('hidden');
-    document.getElementById('step2').classList.remove('hidden');
-  }
-
-  function verifyOTP() {
-    let enteredOTP = document.getElementById('otpInput').value;
-    if(enteredOTP == generatedOTP) {
-      document.getElementById('accountNumber').innerText = userData.account;
-      document.getElementById('step2').classList.add('hidden');
-      document.getElementById('dashboard').classList.remove('hidden');
-    } else {
-      alert("Wrong Code. Try again.");
-    }
-  }
-  <link rel="manifest" href="manifest.json">
-</script>
-</body>
-</html>
+  async function
