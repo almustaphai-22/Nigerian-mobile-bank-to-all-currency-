@@ -7,6 +7,7 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <style>
     body { background: #0B0E14; color: #EAECEF; }
+    .gradient-text { background: linear-gradient(90deg, #00D4AA 0%, #00A8FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .card { background: #1A1F2E; border: 1px solid #2B3139; }
     .btn-primary { background: linear-gradient(90deg, #00D4AA 0%, #00A8FF 100%); }
     .hidden { display: none; }
@@ -43,16 +44,16 @@
   let generatedOTP = "";
   let userData = {};
 
-  // 1. PUT YOUR KEYS HERE
-  emailjs.init("YOUR_EMAILJS_PUBLIC_KEY"); 
-  const TERMII_API_KEY = "YOUR_TERMII_API_KEY";
+  // YOUR KEYS
+  emailjs.init("7H-20VEnSwiKFhwzI"); 
+  const TERMII_API_KEY = "PASTE_TERMII_KEY_HERE";
 
   function generateOTP() {
     return Math.floor(100000 + Math.random() * 900000);
   }
 
   function generateAccNumber(phone) {
-    return phone.slice(-10); // Use last 10 digits of phone
+    return phone.slice(-10);
   }
 
   async function sendOTP() {
@@ -63,13 +64,13 @@
     generatedOTP = generateOTP();
     userData = {email, phone, account: generateAccNumber(phone)};
 
-    // 2. SEND EMAIL
-    emailjs.send("YOUR_EMAILJS_SERVICE_ID", "YOUR_EMAILJS_TEMPLATE_ID", {
+    // SEND EMAIL
+    emailjs.send("PASTE_SERVICE_ID_HERE", "PASTE_TEMPLATE_ID_HERE", {
       email: email,
       code: generatedOTP
     });
 
-    // 3. SEND SMS WITH TERMII
+    // SEND SMS WITH TERMII
     fetch("https://api.ng.termii.com/api/sms/send", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
@@ -93,7 +94,6 @@
       document.getElementById('accountNumber').innerText = userData.account;
       document.getElementById('step2').classList.add('hidden');
       document.getElementById('dashboard').classList.remove('hidden');
-      // TODO: Save userData + account to Google Sheet here
     } else {
       alert("Wrong Code. Try again.");
     }
