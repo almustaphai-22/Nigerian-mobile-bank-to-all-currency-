@@ -42,7 +42,10 @@
       <a id="gumroadLink" href="PASTE_YOUR_GUMROAD_LINK_HERE" target="_blank" class="btn-primary text-black px-8 py-3 rounded-lg font-bold mt-4 inline-block">Pay $1 to Unlock</a>
     </div>
   </div>
-
+  
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#006400">
+  
 <script>
   let generatedOTP = "";
   let userData = {};
@@ -62,3 +65,7 @@
   }
 
   async function
+<script>
+  if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
+</script>
+</body>
