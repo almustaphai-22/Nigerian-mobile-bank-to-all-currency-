@@ -1,113 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>All Currency Bank - FX & Transfers</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-    body { 
-      background: #0a0a0a; 
-      color: #fff; 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      min-height: 100vh;
-      padding: 20px;
-    }
-    .container {
-      background: #1a1a1a;
-      padding: 30px 25px;
-      border-radius: 20px;
-      width: 100%;
-      max-width: 400px;
-      box-shadow: 0 0 30px rgba(0, 255, 200, 0.1);
-    }
-    .logo {
-      text-align: center;
-      font-size: 28px;
-      font-weight: 800;
-      background: linear-gradient(90deg, #00ffc8, #00aaff);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 8px;
-    }
-    .currencies {
-      text-align: center;
-      font-size: 12px;
-      color: #aaa;
-      margin-bottom: 25px;
-      letter-spacing: 1px;
-    }
-    input {
-      width: 100%;
-      padding: 14px;
-      margin-bottom: 15px;
-      border: none;
-      border-radius: 10px;
-      background: #2a2a2a;
-      color: #fff;
-      font-size: 15px;
-      outline: none;
-    }
-    input::placeholder { color: #777; }
-    .btn {
-      width: 100%;
-      padding: 15px;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(90deg, #00ffc8, #00aaff);
-      color: #000;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .btn:hover { transform: scale(1.02); opacity: 0.9; }
-    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
-    #message { margin-top: 15px; text-align: center; font-size: 14px; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>All Currency Bank</title>
+<style>
+  body { background:#000; color:#fff; display:flex; justify-content:center; align-items:center; min-height:100vh; font-family:'Segoe UI'; }
+  .container { background:#111; padding:30px 25px; border-radius:20px; width:90%; max-width:400px; text-align:center; }
+  .logo { width:80px; height:80px; border-radius:20px; margin-bottom:10px; object-fit:cover; }
+  h1 { background:linear-gradient(90deg,#00ffc8,#00aaff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-size:24px; margin-bottom:5px; }
+  .currencies { font-size:11px; color:#aaa; margin-bottom:20px; letter-spacing:1px; }
+  input { width:100%; padding:14px; margin-bottom:15px; border:none; border-radius:12px; background:#222; color:#fff; font-size:15px; outline:none; }
+  .btn { width:100%; padding:15px; border:none; border-radius:12px; background:linear-gradient(90deg,#00ffc8,#00aaff); color:#000; font-size:16px; font-weight:700; cursor:pointer; }
+</style>
 </head>
 <body>
   <div class="container">
-    <h1 class="logo">All Currency Bank</h1>
+    <img src="logo.png" alt="Logo" class="logo"> <!-- ADD YOUR LOGO HERE -->
+    <h1>All Currency Bank</h1>
     <p class="currencies">USD • EUR • GBP • CAD • NGN • AED</p>
 
+    <input type="text" id="fullName" placeholder="Full Name - Mustapha Ibrahim" required>
     <input type="email" id="email" placeholder="Email" required>
     <input type="tel" id="phone" placeholder="Phone 080xxxxxxxx" required>
 
-    <button class="btn" id="sendCodeBtn" onclick="sendCode()">Send Verification Code</button>
-    
-    <p id="message"></p>
+    <button class="btn" onclick="sendCode()">Send Verification Code</button>
+    <p id="msg" style="margin-top:15px;"></p>
   </div>
 
-  <script>
-    function sendCode() {
-      const email = document.getElementById('email').value;
-      const phone = document.getElementById('phone').value;
-      const btn = document.getElementById('sendCodeBtn');
-      const msg = document.getElementById('message');
+<script>
+function sendCode() {
+  const name = document.getElementById('fullName').value;
+  const email = document.getElementById('email').value;
+  const phone = document.getElementById('phone').value;
+  const msg = document.getElementById('msg');
 
-      if(email === '' || phone === '') {
-        msg.style.color = 'red';
-        msg.innerText = 'Please fill Email and Phone';
-        return;
-      }
-
-      btn.disabled = true;
-      btn.innerText = 'Sending...';
-      msg.style.color = '#00ffc8';
-      msg.innerText = 'Sending code...';
-
-      // TODO: Connect this to EmailJS here
-      // emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {email: email, phone: phone})
-
-      setTimeout(() => {
-        msg.innerText = 'Code sent! Check your email/SMS';
-        btn.disabled = false;
-        btn.innerText = 'Send Verification Code';
-      }, 2000);
-    }
-  </script>
+  if(name === '' || email === '' || phone === '') {
+    msg.style.color = 'red';
+    msg.innerText = 'Please fill all fields';
+    return;
+  }
+  
+  localStorage.setItem('userName', name); // Save name for dashboard
+  msg.style.color = '#00ffc8';
+  msg.innerText = 'Sending code to ' + email + '...';
+  
+  // TODO: Add EmailJS here
+}
+</script>
 </body>
 </html>
