@@ -6,6 +6,7 @@
 
 <title>Global Currency Bank - Sign Up</title>
 
+<!-- EmailJS -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <style>
@@ -32,7 +33,7 @@ body {
   border-radius: 30px;
   padding: 28px 22px;
   color: white;
-  box-shadow: 0 0 35px rgba(30, 80, 150, 0.25);
+  box-shadow: 0 0 35px rgba(30,80,150,.25);
 }
 
 .back {
@@ -46,7 +47,6 @@ body {
   margin-bottom: 22px;
 }
 
-/* YOUR GLOBAL CURRENCY BANK LOGO */
 .logo {
   width: 95px;
   height: 95px;
@@ -54,7 +54,7 @@ body {
   display: block;
   margin: 0 auto 12px;
   border-radius: 22px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 8px 25px rgba(0,0,0,.45);
 }
 
 h1 {
@@ -92,7 +92,6 @@ input {
 
 input:focus {
   border-color: #e4b947;
-  box-shadow: 0 0 0 2px rgba(228, 185, 71, 0.08);
 }
 
 input::placeholder {
@@ -113,14 +112,14 @@ button {
 }
 
 button:active {
-  transform: scale(0.98);
+  transform: scale(.98);
 }
 
 #message {
   text-align: center;
   font-size: 12px;
   margin-top: 12px;
-  min-height: 16px;
+  min-height: 18px;
 }
 
 .login {
@@ -146,7 +145,7 @@ button:active {
 
   <div class="header">
 
-    <!-- EXACT LOGO FILE YOU UPLOADED -->
+    <!-- YOUR LOGO -->
     <img
       src="Screenshot_2026-08-17-18-53-58-99.png"
       alt="Global Currency Bank Logo"
@@ -168,7 +167,6 @@ button:active {
       id="name"
       type="text"
       placeholder="Enter your full name"
-      autocomplete="name"
     >
   </div>
 
@@ -179,7 +177,6 @@ button:active {
       id="email"
       type="email"
       placeholder="Enter your email address"
-      autocomplete="email"
     >
   </div>
 
@@ -190,7 +187,6 @@ button:active {
       id="phone"
       type="tel"
       placeholder="Enter your phone number"
-      autocomplete="tel"
     >
   </div>
 
@@ -201,7 +197,6 @@ button:active {
       id="password"
       type="password"
       placeholder="Create a password"
-      autocomplete="new-password"
     >
   </div>
 
@@ -212,11 +207,10 @@ button:active {
       id="confirmPassword"
       type="password"
       placeholder="Confirm your password"
-      autocomplete="new-password"
     >
   </div>
 
-  <button onclick="createAccount()">
+  <button id="signupButton" onclick="createAccount()">
     Sign Up
   </button>
 
@@ -231,17 +225,38 @@ button:active {
 
 <script>
 
+/* ==========================================
+   EMAILJS SETTINGS
+   ========================================== */
+
+const EMAILJS_PUBLIC_KEY = "7H-20VEn5wiKflwzI";
+const EMAILJS_SERVICE_ID = "service_j557oql";
+const EMAILJS_TEMPLATE_ID = "template_qoeiqtj";
+
+
+/* Initialize EmailJS */
+
 emailjs.init({
-  publicKey: "7H-20VEn5wiKflwzI"
+  publicKey: EMAILJS_PUBLIC_KEY
 });
 
-function generateCode() {
+
+/* ==========================================
+   GENERATE 6 DIGIT VERIFICATION CODE
+   ========================================== */
+
+function generateVerificationCode() {
 
   return Math.floor(
     100000 + Math.random() * 900000
   ).toString();
 
 }
+
+
+/* ==========================================
+   CREATE ACCOUNT
+   ========================================== */
 
 function createAccount() {
 
@@ -263,15 +278,18 @@ function createAccount() {
   const message =
     document.getElementById("message");
 
+  const button =
+    document.getElementById("signupButton");
+
 
   /* Check fields */
 
   if (
-    !name ||
-    !email ||
-    !phone ||
-    !password ||
-    !confirmPassword
+    name === "" ||
+    email === "" ||
+    phone === "" ||
+    password === "" ||
+    confirmPassword === ""
   ) {
 
     message.style.color = "#ff6b6b";
@@ -283,20 +301,20 @@ function createAccount() {
   }
 
 
-  /* Check password length */
+  /* Check password */
 
   if (password.length < 8) {
 
     message.style.color = "#ff6b6b";
 
     message.innerText =
-      "Password must contain at least 8 characters.";
+      "Password must be at least 8 characters.";
 
     return;
   }
 
 
-  /* Check passwords */
+  /* Check matching passwords */
 
   if (password !== confirmPassword) {
 
@@ -309,16 +327,17 @@ function createAccount() {
   }
 
 
-  /* Generate verification code */
+  /* Create verification code */
 
-  const code = generateCode();
+  const verificationCode =
+    generateVerificationCode();
 
 
-  /* Save temporary verification information */
+  /* Save temporary information */
 
   sessionStorage.setItem(
     "verificationCode",
-    code
+    verificationCode
   );
 
   sessionStorage.setItem(
@@ -342,45 +361,58 @@ function createAccount() {
   );
 
 
-  /* Show sending message */
+  /* Disable button */
 
-  message.style.color = "#e6b943";
+  button.disabled = true;
+
+  button.innerText =
+    "Sending Code...";
+
+  message.style.color = "#e4b947";
 
   message.innerText =
-    "Sending verification code...";
+    "Sending verification code to " + email + "...";
 
 
-  /* SEND EMAIL THROUGH EMAILJS */
+  /* ==========================================
+     SEND CODE USING EMAILJS
+     ========================================== */
 
   emailjs.send(
-    "service_j557oql",
-    "template_qoeiqtj",
+    EMAILJS_SERVICE_ID,
+    EMAILJS_TEMPLATE_ID,
     {
+
       to_email: email,
+
       user_name: name,
-      otp_code: code,
-      purpose: "Account verification"
+
+      otp_code: verificationCode,
+
+      purpose: "New Account Registration"
+
     }
   )
 
   .then(function(response) {
 
     console.log(
-      "Email sent successfully:",
+      "EmailJS success:",
       response
     );
 
-    message.style.color = "#00dcae";
+    message.style.color =
+      "#00dcae";
 
     message.innerText =
-      "Verification code sent to your email.";
+      "Code sent! Check your email.";
 
     setTimeout(function() {
 
       window.location.href =
         "verify.html";
 
-    }, 1000);
+    }, 1200);
 
   })
 
@@ -391,10 +423,16 @@ function createAccount() {
       error
     );
 
-    message.style.color = "#ff6b6b";
+    button.disabled = false;
+
+    button.innerText =
+      "Sign Up";
+
+    message.style.color =
+      "#ff6b6b";
 
     message.innerText =
-      "Could not send verification code. Please try again.";
+      "Code could not be sent. Check your EmailJS settings.";
 
   });
 
@@ -403,4 +441,4 @@ function createAccount() {
 </script>
 
 </body>
-</html>
+  </html>
