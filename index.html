@@ -2,161 +2,112 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>GlobalBank - Digital Bank</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <title>All Currency Bank - FX & Transfers</title>
   <style>
-    body { background: #0B0E14; color: #EAECEF; font-family: Inter, sans-serif; }
-    .gradient-text { background: linear-gradient(90deg, #00D4AA 0%, #00A8FF 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .card { background: #1A1F2E; border: 1px solid #2B3139; }
-    .btn-primary { background: linear-gradient(90deg, #00D4AA 0%, #00A8FF 100%); color: black; }
-    .hidden { display: none; }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+    body { 
+      background: #0a0a0a; 
+      color: #fff; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      background: #1a1a1a;
+      padding: 30px 25px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 0 30px rgba(0, 255, 200, 0.1);
+    }
+    .logo {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(90deg, #00ffc8, #00aaff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    .currencies {
+      text-align: center;
+      font-size: 12px;
+      color: #aaa;
+      margin-bottom: 25px;
+      letter-spacing: 1px;
+    }
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 10px;
+      background: #2a2a2a;
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+    }
+    input::placeholder { color: #777; }
+    .btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(90deg, #00ffc8, #00aaff);
+      color: #000;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .btn:hover { transform: scale(1.02); opacity: 0.9; }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    #message { margin-top: 15px; text-align: center; font-size: 14px; }
   </style>
 </head>
-<body class="min-h-screen">
+<body>
+  <div class="container">
+    <h1 class="logo">All Currency Bank</h1>
+    <p class="currencies">USD • EUR • GBP • CAD • NGN • AED</p>
 
-  <!-- AUTH + OTP FORMS SAME AS BEFORE -->
-  <div id="auth" class="flex items-center justify-center px-4 min-h-screen">
-    <div id="signupForm" class="card p-8 rounded-2xl w-full max-w-md">
-      <h1 class="text-3xl font-bold text-center mb-2 gradient-text">GlobalBank</h1>
-      <input id="signupEmail" type="email" placeholder="Email" class="w-full bg-gray-800 p-3 rounded-lg mb-3">
-      <input id="signupPhone" type="tel" placeholder="Phone" class="w-full bg-gray-800 p-3 rounded-lg mb-3">
-      <input id="signupPin" type="password" placeholder="Set 4-Digit Transaction PIN" maxlength="4" class="w-full bg-gray-800 p-3 rounded-lg mb-3">
-      <button id="signupBtn" class="btn-primary w-full py-3 rounded-lg font-bold mb-3">Sign Up</button>
-      <p class="text-center text-sm"><span id="showLogin" class="text-[#00D4AA] cursor-pointer">Login</span></p>
-    </div>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="tel" id="phone" placeholder="Phone 080xxxxxxxx" required>
 
-    <div id="loginForm" class="card p-8 rounded-2xl w-full max-w-md hidden">
-      <h1 class="text-3xl font-bold text-center mb-2 gradient-text">GlobalBank</h1>
-      <input id="loginEmail" type="email" placeholder="Email" class="w-full bg-gray-800 p-3 rounded-lg mb-3">
-      <button id="loginBtn" class="btn-primary w-full py-3 rounded-lg font-bold mb-3">Send Login Code</button>
-      <p class="text-center text-sm"><span id="showSignup" class="text-[#00D4AA] cursor-pointer">Sign Up</span></p>
-    </div>
-
-    <div id="otpForm" class="card p-8 rounded-2xl w-full max-w-md hidden">
-      <h2 class="text-2xl font-bold text-center mb-4">Enter Login Code</h2>
-      <input id="otpInput" type="text" maxlength="6" class="w-full bg-gray-800 p-3 rounded-lg mb-3 text-center text-2xl">
-      <button id="verifyBtn" class="btn-primary w-full py-3 rounded-lg font-bold">Verify</button>
-    </div>
+    <button class="btn" id="sendCodeBtn" onclick="sendCode()">Send Verification Code</button>
+    
+    <p id="message"></p>
   </div>
 
-  <!-- DASHBOARD -->
-  <div id="dashboard" class="hidden p-4 max-w-6xl mx-auto">
-    <div class="flex justify-between mb-6">
-      <h1 class="text-3xl font-bold gradient-text">GlobalBank</h1>
-      <button id="logoutBtn" class="text-red-400">Logout</button>
-    </div>
-    
-    <div class="card p-6 rounded-2xl mb-6 bg-gradient-to-r from-[#00D4AA] to-[#00A8FF] text-black">
-      <p>Available Balance</p>
-      <h2 class="text-4xl font-bold"><span id="currencySymbol">₦</span><span id="balance">0.00</span></h2>
-    </div>
+  <script>
+    function sendCode() {
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      const btn = document.getElementById('sendCodeBtn');
+      const msg = document.getElementById('message');
 
-    <button id="sendMoneyBtn" class="card p-4 rounded-xl w-full mb-3">💸 Send Money</button>
-    <button id="supportBtn" class="card p-4 rounded-xl w-full mb-3">💬 Chat Support</button>
+      if(email === '' || phone === '') {
+        msg.style.color = 'red';
+        msg.innerText = 'Please fill Email and Phone';
+        return;
+      }
 
-    <!-- TRANSACTION PIN MODAL -->
-    <div id="pinModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center">
-      <div class="card p-6 rounded-2xl w-80">
-        <h3 class="font-bold mb-3">Enter Transaction PIN</h3>
-        <input id="pinInput" type="password" maxlength="4" class="w-full bg-gray-800 p-3 rounded-lg mb-3 text-center">
-        <button id="confirmPinBtn" class="btn-primary w-full py-2 rounded-lg">Confirm</button>
-      </div>
-    </div>
+      btn.disabled = true;
+      btn.innerText = 'Sending...';
+      msg.style.color = '#00ffc8';
+      msg.innerText = 'Sending code...';
 
-    <!-- SUPPORT CHAT MODAL -->
-    <div id="chatModal" class="hidden fixed inset-0 bg-black/70 flex items-center justify-center">
-      <div class="card p-6 rounded-2xl w-96">
-        <h3 class="font-bold mb-3">Support Chat</h3>
-        <div id="chatBox" class="h-40 overflow-y-auto bg-gray-900 p-2 rounded mb-3 text-sm"></div>
-        <input id="chatInput" placeholder="Describe your issue..." class="w-full bg-gray-800 p-2 rounded-lg mb-2">
-        <button id="sendChatBtn" class="btn-primary w-full py-2 rounded-lg">Send</button>
-        <button onclick="document.getElementById('chatModal').classList.add('hidden')" class="w-full mt-2 text-gray-400">Close</button>
-      </div>
-    </div>
-  </div>
-  
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-  let generatedOTP = ""; let currentUser = {};
-  emailjs.init("7H-20VEn5wiKfWzl"); 
-  const SERVICE_ID = "service_j557oql"; const TEMPLATE_ID = "template_qeoiqtj";
+      // TODO: Connect this to EmailJS here
+      // emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {email: email, phone: phone})
 
-  function getUsers() { return JSON.parse(localStorage.getItem('globalbank_users') || '[]'); }
-  function saveUsers(users) { localStorage.setItem('globalbank_users', JSON.stringify(users)); }
-  function generateOTP() { return Math.floor(100000 + Math.random() * 900000); }
-
-  // SIGNUP WITH PIN
-  document.getElementById('signupBtn').onclick = async () => {
-    const email = document.getElementById('signupEmail').value;
-    const phone = document.getElementById('signupPhone').value;
-    const pin = document.getElementById('signupPin').value;
-    let users = getUsers();
-    if(users.find(u => u.email === email)) return alert("Account exists. Login");
-    if(pin.length !== 4) return alert("PIN must be 4 digits");
-    
-    currentUser = {email, phone, pin, balance: 1000}; // give 1000 for testing
-    generatedOTP = generateOTP();
-    await emailjs.send(SERVICE_ID, TEMPLATE_ID, {to_email: email, otp_code: generatedOTP});
-    document.getElementById('signupForm').classList.add('hidden');
-    document.getElementById('otpForm').classList.remove('hidden');
-  }
-
-  // LOGIN
-  document.getElementById('loginBtn').onclick = async () => {
-    const email = document.getElementById('loginEmail').value;
-    let user = getUsers().find(u => u.email === email);
-    if(!user) return alert("No account. Sign Up first");
-    currentUser = user;
-    generatedOTP = generateOTP();
-    await emailjs.send(SERVICE_ID, TEMPLATE_ID, {to_email: email, otp_code: generatedOTP});
-    document.getElementById('loginForm').classList.add('hidden');
-    document.getElementById('otpForm').classList.remove('hidden');
-  }
-
-  // VERIFY
-  document.getElementById('verifyBtn').onclick = () => {
-    if(document.getElementById('otpInput').value != generatedOTP) return alert("Wrong code");
-    let users = getUsers();
-    if(!users.find(u => u.email === currentUser.email)) { users.push(currentUser); saveUsers(users); }
-    showDashboard();
-  }
-
-  function showDashboard() {
-    document.getElementById('auth').classList.add('hidden');
-    document.getElementById('dashboard').classList.remove('hidden');
-    document.getElementById('balance').innerText = currentUser.balance.toFixed(2);
-  }
-
-  // TRANSACTION PIN CHECK
-  document.getElementById('sendMoneyBtn').onclick = () => {
-    document.getElementById('pinModal').classList.remove('hidden');
-  }
-  document.getElementById('confirmPinBtn').onclick = () => {
-    if(document.getElementById('pinInput').value == currentUser.pin) {
-      alert("✅ Transaction Approved");
-      currentUser.balance -= 100; // demo debit
-      saveUsers(getUsers().map(u => u.email === currentUser.email ? currentUser : u));
-      document.getElementById('balance').innerText = currentUser.balance.toFixed(2);
-    } else alert("❌ Wrong Transaction PIN");
-    document.getElementById('pinModal').classList.add('hidden');
-  }
-
-  // SUPPORT CHAT
-  document.getElementById('supportBtn').onclick = () => {
-    document.getElementById('chatModal').classList.remove('hidden');
-  }
-  document.getElementById('sendChatBtn').onclick = () => {
-    let msg = document.getElementById('chatInput').value;
-    if(!msg) return;
-    document.getElementById('chatBox').innerHTML += `<p><b>You:</b> ${msg}</p>`;
-    document.getElementById('chatBox').innerHTML += `<p><b>Support:</b> We got your issue. Will check your debit/credit</p>`;
-    document.getElementById('chatInput').value = "";
-  }
-
-  document.getElementById('logoutBtn').onclick = () => location.reload();
-});
-</script>
+      setTimeout(() => {
+        msg.innerText = 'Code sent! Check your email/SMS';
+        btn.disabled = false;
+        btn.innerText = 'Send Verification Code';
+      }, 2000);
+    }
+  </script>
 </body>
-  </html>
+</html>
