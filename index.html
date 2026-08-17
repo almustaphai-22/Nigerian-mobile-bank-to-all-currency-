@@ -3,50 +3,314 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>All Currency Bank</title>
+
+<title>Global Currency Bank</title>
+
 <style>
-  body { background:#000; color:#fff; display:flex; justify-content:center; align-items:center; min-height:100vh; font-family:'Segoe UI'; }
-  .container { background:#111; padding:30px 25px; border-radius:20px; width:90%; max-width:400px; text-align:center; }
-  .logo { width:80px; height:80px; border-radius:20px; margin-bottom:10px; object-fit:cover; }
-  h1 { background:linear-gradient(90deg,#00ffc8,#00aaff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-size:24px; margin-bottom:5px; }
-  .currencies { font-size:11px; color:#aaa; margin-bottom:20px; letter-spacing:1px; }
-  input { width:100%; padding:14px; margin-bottom:15px; border:none; border-radius:12px; background:#222; color:#fff; font-size:15px; outline:none; }
-  .btn { width:100%; padding:15px; border:none; border-radius:12px; background:linear-gradient(90deg,#00ffc8,#00aaff); color:#000; font-size:16px; font-weight:700; cursor:pointer; }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top, #073c3a 0%, #020606 40%, #000 100%);
+  color: #fff;
+  font-family: "Segoe UI", Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.container {
+  width: 100%;
+  max-width: 430px;
+  background: rgba(13, 18, 18, 0.96);
+  border: 1px solid rgba(0, 255, 200, 0.18);
+  border-radius: 28px;
+  padding: 32px 25px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+}
+
+.brand {
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.logo {
+  width: 82px;
+  height: 82px;
+  border-radius: 22px;
+  object-fit: cover;
+  margin-bottom: 14px;
+  box-shadow: 0 0 30px rgba(0, 255, 200, 0.18);
+}
+
+h1 {
+  font-size: 25px;
+  font-weight: 800;
+  background: linear-gradient(90deg, #00ffc8, #00aaff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.subtitle {
+  color: #8e9a99;
+  font-size: 13px;
+  margin-top: 7px;
+}
+
+.currencies {
+  margin-top: 12px;
+  color: #00dcb0;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  color: #aab4b3;
+  font-size: 12px;
+  margin-bottom: 7px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #293333;
+  border-radius: 13px;
+  background: #171e1e;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s;
+}
+
+input:focus,
+select:focus {
+  border-color: #00ffc8;
+  box-shadow: 0 0 0 3px rgba(0, 255, 200, 0.08);
+}
+
+input::placeholder {
+  color: #687271;
+}
+
+select {
+  cursor: pointer;
+}
+
+.btn {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(90deg, #00ffc8, #00aaff);
+  color: #00100d;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-top: 7px;
+  transition: 0.2s;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(0, 255, 200, 0.2);
+}
+
+.login {
+  text-align: center;
+  margin-top: 20px;
+  color: #899493;
+  font-size: 13px;
+}
+
+.login span {
+  color: #00ffc8;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.security {
+  text-align: center;
+  margin-top: 22px;
+  color: #5e6968;
+  font-size: 10px;
+}
+
+#msg {
+  text-align: center;
+  margin-top: 15px;
+  font-size: 13px;
+}
+
+@media (max-width: 450px) {
+  .container {
+    padding: 28px 20px;
+  }
+}
 </style>
 </head>
+
 <body>
-  <div class="container">
-    <img src="logo.png" alt="Logo" class="logo"> <!-- ADD YOUR LOGO HERE -->
-    <h1>All Currency Bank</h1>
-    <p class="currencies">USD • EUR • GBP • CAD • NGN • AED</p>
 
-    <input type="text" id="fullName" placeholder="Full Name - Mustapha Ibrahim" required>
-    <input type="email" id="email" placeholder="Email" required>
-    <input type="tel" id="phone" placeholder="Phone 080xxxxxxxx" required>
+<div class="container">
 
-    <button class="btn" onclick="sendCode()">Send Verification Code</button>
-    <p id="msg" style="margin-top:15px;"></p>
+  <div class="brand">
+
+    <!-- PUT YOUR BANK LOGO FILE HERE -->
+    <img src="logo.png" alt="Global Currency Bank Logo" class="logo">
+
+    <h1>Global Currency Bank</h1>
+
+    <p class="subtitle">
+      Your world. Your currency. One secure account.
+    </p>
+
+    <p class="currencies">
+      USD • EUR • GBP • CAD • NGN • AED
+    </p>
+
   </div>
 
-<script>
-function sendCode() {
-  const name = document.getElementById('fullName').value;
-  const email = document.getElementById('email').value;
-  const phone = document.getElementById('phone').value;
-  const msg = document.getElementById('msg');
+  <div class="section-title">
+    Create your account
+  </div>
 
-  if(name === '' || email === '' || phone === '') {
-    msg.style.color = 'red';
-    msg.innerText = 'Please fill all fields';
+  <div class="input-group">
+    <label>Full Name</label>
+    <input
+      type="text"
+      id="fullName"
+      placeholder="Enter your full name"
+      required
+    >
+  </div>
+
+  <div class="input-group">
+    <label>Email Address</label>
+    <input
+      type="email"
+      id="email"
+      placeholder="Enter your email"
+      required
+    >
+  </div>
+
+  <div class="input-group">
+    <label>Phone Number</label>
+    <input
+      type="tel"
+      id="phone"
+      placeholder="080xxxxxxxx"
+      required
+    >
+  </div>
+
+  <div class="input-group">
+    <label>Account Type</label>
+
+    <select id="accountType">
+      <option value="">Select account type</option>
+      <option value="Personal">Personal Account</option>
+      <option value="Business">Business Account</option>
+    </select>
+  </div>
+
+  <div class="input-group">
+    <label>Password</label>
+
+    <input
+      type="password"
+      id="password"
+      placeholder="Create a secure password"
+      required
+    >
+  </div>
+
+  <button class="btn" onclick="createAccount()">
+    Create Account
+  </button>
+
+  <p id="msg"></p>
+
+  <div class="login">
+    Already have an account?
+    <span onclick="login()">Log In</span>
+  </div>
+
+  <div class="security">
+    🔒 Your information is protected with secure encryption
+  </div>
+
+</div>
+
+<script>
+
+function createAccount() {
+
+  const name = document.getElementById("fullName").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const accountType = document.getElementById("accountType").value;
+  const password = document.getElementById("password").value;
+  const msg = document.getElementById("msg");
+
+  if (
+    name === "" ||
+    email === "" ||
+    phone === "" ||
+    accountType === "" ||
+    password === ""
+  ) {
+
+    msg.style.color = "#ff5555";
+    msg.innerText = "Please complete all required fields.";
     return;
   }
-  
-  localStorage.setItem('userName', name); // Save name for dashboard
-  msg.style.color = '#00ffc8';
-  msg.innerText = 'Sending code to ' + email + '...';
-  
-  // TODO: Add EmailJS here
+
+  if (password.length < 8) {
+
+    msg.style.color = "#ff5555";
+    msg.innerText = "Password must contain at least 8 characters.";
+    return;
+  }
+
+  localStorage.setItem("userName", name);
+  localStorage.setItem("userEmail", email);
+  localStorage.setItem("userPhone", phone);
+  localStorage.setItem("accountType", accountType);
+
+  msg.style.color = "#00ffc8";
+  msg.innerText = "Account information saved successfully.";
+
+  setTimeout(() => {
+    window.location.href = "dashboard.html";
+  }, 1200);
 }
+
+
+function login() {
+  window.location.href = "login.html";
+}
+
 </script>
+
 </body>
 </html>
