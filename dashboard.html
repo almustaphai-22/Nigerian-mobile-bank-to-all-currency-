@@ -11,35 +11,32 @@
  .logo-title{display:flex;align-items:center;gap:10px}
  .logo-title img{width:35px;height:35px;border-radius:8px}
  .logo-title h2{font-size:15px;font-weight:700;background:linear-gradient(90deg,#00ffc8,#00aaff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
- .header-icons{display:flex;gap:15px;font-size:20px;cursor:pointer}
+ .header-icons{display:flex;gap:15px;font-size:20px}
 
- .balance-card{margin:0 20px 20px;background:linear-gradient(135deg,#0d2a5a,#001127);padding:25px;border-radius:20px;border:1px solid #1a3d73;position:relative}
+ .balance-card{margin:0 20px 20px;background:linear-gradient(135deg,#0d2a5a,#001127);padding:25px;border-radius:20px;border:1px solid #1a3d73}
  .balance-card p{color:#8aa4c7;font-size:12px}
  .balance-row{display:flex;align-items:center;gap:10px;margin:8px 0}
  .balance-card h1{font-size:32px}
  .eye{font-size:20px;cursor:pointer;opacity:0.7}
- .balance-card span{color:#00ff88;font-size:12px}
 
  .actions{display:flex;justify-content:space-around;margin:0 20px 25px}
  .action-btn{text-align:center;color:#cbd5e1;font-size:12px;cursor:pointer}
  .action-icon{width:55px;height:55px;background:#0f2142;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:22px}
-
- .tabs{display:flex;gap:10px;margin:0 20px 15px;overflow-x:auto}
- .tab{padding:8px 16px;border-radius:20px;background:#0a1a33;color:#8aa4c7;font-size:12px;white-space:nowrap;cursor:pointer}
- .tab.active{background:linear-gradient(90deg,#00ffc8,#00aaff);color:#000;font-weight:700}
 
  .section{margin:0 20px 25px}
  .section-header{display:flex;justify-content:space-between;margin-bottom:15px}
  .section-header h3{font-size:16px}
  .section-header a{color:#00aaff;font-size:12px;text-decoration:none}
 
- .account{background:#0a1a33;padding:15px;border-radius:15px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
- .acc-left{display:flex;align-items:center;gap:12px}
- .flag{font-size:24px;width:35px;text-align:center}
- .acc-name{font-size:14px;font-weight:600}
- .acc-sub{font-size:11px;color:#8aa4c7}
- .acc-balance{font-size:15px;font-weight:700;text-align:right}
- .no-balance{color:#65758a;font-size:12px;text-align:center;padding:20px}
+ .currency-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+ .currency{background:#0a1a33;padding:12px;border-radius:12px;border:1px solid #1a3d73}
+ .currency.top{background:linear-gradient(135deg,#0f2142,#0a1a33);border-color:#00aaff}
+ .cur-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+ .flag{font-size:20px}
+ .cur-name{font-size:12px;font-weight:700}
+ .cur-rate{font-size:11px;color:#00ff88}
+ .cur-balance{font-size:13px;color:#8aa4c7}
+ .my-balance{color:#00aaff;font-weight:700}
 
  .navbar{position:fixed;bottom:0;left:0;right:0;background:#04132e;display:flex;justify-content:space-around;padding:12px 0;border-top:1px solid #1a3d73}
  .nav-item{text-align:center;font-size:10px;color:#7a8ca5;cursor:pointer}
@@ -66,33 +63,24 @@
       <h1 id="totalBalance">$0.00</h1>
       <span class="eye" onclick="toggleBalance()">👁️</span>
     </div>
-    <span id="balanceChange">Add funds to get started</span>
+    <span style="color:#8aa4c7;font-size:11px">Rates update every 5 minutes</span>
   </div>
 
   <!-- ACTIONS -->
   <div class="actions">
-    <div class="action-btn" onclick="alert('Send Money')"><div class="action-icon">↗</div>Send</div>
-    <div class="action-btn" onclick="alert('Receive Money')"><div class="action-icon">↓</div>Receive</div>
-    <div class="action-btn" onclick="alert('Exchange Currency')"><div class="action-icon">⇄</div>Exchange</div>
-    <div class="action-btn" onclick="alert('More Options')"><div class="action-icon">⋯</div>More</div>
+    <div class="action-btn"><div class="action-icon">↗</div>Send</div>
+    <div class="action-btn"><div class="action-icon">↓</div>Receive</div>
+    <div class="action-btn"><div class="action-icon">⇄</div>Exchange</div>
+    <div class="action-btn"><div class="action-icon">⋯</div>More</div>
   </div>
 
-  <!-- TABS FOR CURRENCIES -->
-  <div class="tabs">
-    <div class="tab active" onclick="showTab('world')">World Currencies</div>
-    <div class="tab" onclick="showTab('mobile')">Mobile Money</div>
-  </div>
-
-  <!-- WORLD CURRENCIES -->
-  <div class="section" id="worldTab">
-    <div class="section-header"><h3>World Accounts</h3><a href="#">Add +</a></div>
-    <div id="worldAccounts"></div>
-  </div>
-
-  <!-- MOBILE MONEY -->
-  <div class="section" id="mobileTab" style="display:none">
-    <div class="section-header"><h3>Mobile Money Wallets</h3><a href="#">Add +</a></div>
-    <div id="mobileAccounts"></div>
+  <!-- ALL WORLD CURRENCIES -->
+  <div class="section">
+    <div class="section-header">
+      <h3>World Currencies</h3>
+      <a href="#">Exchange</a>
+    </div>
+    <div class="currency-grid" id="currencyGrid"></div>
   </div>
 
   <!-- BOTTOM NAV -->
@@ -106,99 +94,76 @@
 
 <script>
   let balanceVisible = true;
-  let totalBalance = 0;
 
   // Load user data
   const name = localStorage.getItem('userName') || 'User';
   document.getElementById('userName').innerText = name;
 
-  // Load balances from localStorage. If none, it stays 0
   const userData = JSON.parse(localStorage.getItem('allCurrencyUser')) || {};
-  const balances = userData.balances || {
-    USD: 0, EUR: 0, GBP: 0, CAD: 0, NGN: 0, AED: 0,
-    MTN: 0, Airtel: 0, Glo: 0, Mobile9: 0
-  };
+  const balances = userData.balances || {};
 
-  // Calculate total
-  totalBalance = balances.USD + balances.EUR + balances.GBP + balances.CAD + balances.NGN/1600 + balances.AED/3.67;
+  // ALL WORLD CURRENCIES with USD rates. Later we connect API
+  const currencies = [
+    {code:'USD', name:'US Dollar', flag:'🇺🇸', rate:1.00, symbol:'$'},
+    {code:'EUR', name:'Euro', flag:'🇪🇺', rate:0.92, symbol:'€'},
+    {code:'GBP', name:'British Pound', flag:'🇬🇧', rate:0.79, symbol:'£'},
+    {code:'CAD', name:'Canadian Dollar', flag:'🇨🇦', rate:1.36, symbol:'$'},
+    {code:'AUD', name:'Australian Dollar', flag:'🇦🇺', rate:1.52, symbol:'$'},
+    {code:'NGN', name:'Nigerian Naira', flag:'🇳🇬', rate:1600.50, symbol:'₦'},
+    {code:'GHS', name:'Ghana Cedi', flag:'🇬🇭', rate:15.80, symbol:'₵'},
+    {code:'KES', name:'Kenyan Shilling', flag:'🇰🇪', rate:129.40, symbol:'KSh'},
+    {code:'ZAR', name:'South African Rand', flag:'🇿🇦', rate:18.20, symbol:'R'},
+    {code:'AED', name:'UAE Dirham', flag:'🇦🇪', rate:3.67, symbol:'د.إ'},
+    {code:'SAR', name:'Saudi Riyal', flag:'🇸🇦', rate:3.75, symbol:'﷼'},
+    {code:'JPY', name:'Japanese Yen', flag:'🇯🇵', rate:149.80, symbol:'¥'},
+    {code:'CNY', name:'Chinese Yuan', flag:'🇨🇳', rate:7.24, symbol:'¥'},
+    {code:'INR', name:'Indian Rupee', flag:'🇮🇳', rate:83.50, symbol:'₹'},
+    {code:'BRL', name:'Brazilian Real', flag:'🇧🇷', rate:5.45, symbol:'R$'},
+    {code:'MXN', name:'Mexican Peso', flag:'🇲🇽', rate:18.90, symbol:'$'},
+  ];
 
-  function updateBalanceDisplay(){
+  let totalBalance = 0;
+
+  function renderCurrencies(){
+    const grid = document.getElementById('currencyGrid');
+    grid.innerHTML = '';
+    
+    currencies.forEach(cur => {
+      const myBal = balances[cur.code] || 0;
+      if(myBal > 0){
+        totalBalance += myBal / cur.rate; // convert to USD
+      }
+
+      grid.innerHTML += `
+      <div class="currency ${myBal > 0 ? 'top' : ''}">
+        <div class="cur-top">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="flag">${cur.flag}</div>
+            <div class="cur-name">${cur.code}</div>
+          </div>
+          <div class="cur-rate">1 USD = ${cur.rate} ${cur.code}</div>
+        </div>
+        <div class="cur-balance">
+          ${myBal > 0 ? `<span class="my-balance">${cur.symbol} ${myBal.toLocaleString()}</span>` : 'Balance: $0.00'}
+        </div>
+      </div>`;
+    });
+  }
+
+  function updateTotal(){
     const el = document.getElementById('totalBalance');
-    if(totalBalance <= 0){
-      el.innerText = '$0.00';
-      document.getElementById('balanceChange').innerText = 'Add funds to get started';
-    } else {
-      el.innerText = balanceVisible? `$${totalBalance.toLocaleString('en-US', {minimumFractionDigits:2})}` : '••••••';
-      document.getElementById('balanceChange').innerText = '↑ 0% from last month';
-    }
+    el.innerText = balanceVisible ? `$${totalBalance.toLocaleString('en-US', {minimumFractionDigits:2})}` : '••••••';
   }
 
   function toggleBalance(){
     balanceVisible =!balanceVisible;
     document.querySelector('.eye').innerText = balanceVisible? '👁️' : '🙈';
-    updateBalanceDisplay();
-  }
-
-  function renderAccounts(){
-    // World Accounts
-    const worldDiv = document.getElementById('worldAccounts');
-    const worldData = [
-      {flag:'🇺🇸', name:'USD Account', sub:'United States Dollar', bal:balances.USD, sym:'$'},
-      {flag:'🇪🇺', name:'EUR Account', sub:'Euro', bal:balances.EUR, sym:'€'},
-      {flag:'🇬🇧', name:'GBP Account', sub:'British Pound', bal:balances.GBP, sym:'£'},
-      {flag:'🇳🇬', name:'NGN Account', sub:'Nigerian Naira', bal:balances.NGN, sym:'₦'}
-    ];
-
-    worldDiv.innerHTML = '';
-    worldData.forEach(acc => {
-      if(acc.bal > 0){
-        worldDiv.innerHTML += `
-        <div class="account">
-          <div class="acc-left"><div class="flag">${acc.flag}</div><div><div class="acc-name">${acc.name}</div><div class="acc-sub">${acc.sub}</div></div></div>
-          <div class="acc-balance">${acc.sym} ${acc.bal.toLocaleString()}</div>
-        </div>`;
-      }
-    });
-    if(worldDiv.innerHTML === '') worldDiv.innerHTML = '<div class="no-balance">No currency accounts funded yet</div>';
-
-    // Mobile Accounts
-    const mobileDiv = document.getElementById('mobileAccounts');
-    const mobileData = [
-      {flag:'📱', name:'MTN Mobile Money', sub:'0803 *** 22', bal:balances.MTN},
-      {flag:'📱', name:'Airtel Money', sub:'0802 *** *** 22', bal:balances.Airtel}
-    ];
-
-    mobileDiv.innerHTML = '';
-    mobileData.forEach(acc => {
-      if(acc.bal > 0){
-        mobileDiv.innerHTML += `
-        <div class="account">
-          <div class="acc-left"><div class="flag">${acc.flag}</div><div><div class="acc-name">${acc.name}</div><div class="acc-sub">${acc.sub}</div></div></div>
-          <div class="acc-balance">₦ ${acc.bal.toLocaleString()}</div>
-        </div>`;
-      }
-    });
-    if(mobileDiv.innerHTML === '') mobileDiv.innerHTML = '<div class="no-balance">No mobile wallets funded yet</div>';
-  }
-
-  function showTab(tab) {
-    document.getElementById('worldTab').style.display = 'none';
-    document.getElementById('mobileTab').style.display = 'none';
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-
-    if(tab === 'world'){
-      document.getElementById('worldTab').style.display = 'block';
-      document.querySelectorAll('.tab')[0].classList.add('active');
-    }
-    if(tab === 'mobile'){
-      document.getElementById('mobileTab').style.display = 'block';
-      document.querySelectorAll('.tab')[1].classList.add('active');
-    }
+    updateTotal();
   }
 
   // Initial load
-  updateBalanceDisplay();
-  renderAccounts();
+  renderCurrencies();
+  updateTotal();
 </script>
 
 </body>
