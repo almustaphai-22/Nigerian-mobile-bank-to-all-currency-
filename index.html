@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Global Currency Bank - Login</title>
+<title>Global Currency Bank</title>
 
 <style>
-
 * {
   box-sizing: border-box;
 }
@@ -27,346 +25,118 @@ body {
 .app {
   width: 100%;
   max-width: 430px;
-  background: linear-gradient(180deg,#031a38,#001127);
+  background: linear-gradient(180deg, #031a38, #001127);
   border: 2px solid #4168a5;
   border-radius: 30px;
-  padding: 30px 22px;
+  padding: 40px 25px;
   color: white;
-  box-shadow: 0 0 30px rgba(30,100,180,.25);
-}
-
-.header {
   text-align: center;
-  margin-bottom: 28px;
+  box-shadow: 0 0 35px rgba(30,100,180,.3);
 }
 
 .logo {
-  width: 95px;
-  height: 95px;
-  border-radius: 22px;
+  width: 110px;
+  height: 110px;
   object-fit: cover;
+  border-radius: 25px;
   display: block;
-  margin: 0 auto 10px;
+  margin: 0 auto 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,.5);
 }
 
 h1 {
-  font-size: 24px;
+  font-size: 27px;
   margin: 5px 0;
 }
 
 .subtitle {
   color: #e4b947;
-  font-size: 12px;
+  font-size: 13px;
+  margin-bottom: 35px;
 }
 
 .welcome {
-  margin-bottom: 20px;
-}
-
-.welcome h2 {
-  margin-bottom: 5px;
-  font-size: 20px;
-}
-
-.welcome p {
-  color: #9ba8ba;
-  font-size: 13px;
-}
-
-.field {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
   color: #aab6c6;
-  font-size: 12px;
-  margin-bottom: 6px;
-}
-
-input {
-  width: 100%;
-  height: 50px;
-  border-radius: 11px;
-  border: 1px solid #29496e;
-  background: #0b294b;
-  color: white;
-  padding: 0 14px;
-  outline: none;
   font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 30px;
 }
 
-input:focus {
-  border-color: #e6bd50;
-}
-
-.forgot {
-  text-align: right;
-  margin-top: -5px;
-  margin-bottom: 15px;
-}
-
-.forgot a {
-  color: #e6bd50;
-  text-decoration: none;
-  font-size: 12px;
-}
-
-button {
+.button {
+  display: block;
   width: 100%;
-  height: 50px;
-  border: 0;
-  border-radius: 10px;
-  background: linear-gradient(#f7d267,#dca32f);
-  color: #111;
-  font-size: 16px;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-#message {
-  text-align: center;
-  font-size: 13px;
-  margin-top: 15px;
-}
-
-.divider {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 25px 0;
-  color: #718096;
-  font-size: 12px;
-}
-
-.divider::before,
-.divider::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: #183657;
-}
-
-.signup {
-  text-align: center;
-  color: #9ba8ba;
-  font-size: 13px;
-}
-
-.signup a {
-  color: #e6b950;
+  height: 52px;
+  line-height: 52px;
+  border-radius: 11px;
   text-decoration: none;
   font-weight: bold;
+  font-size: 15px;
+  margin-top: 14px;
 }
 
-.signup a:hover,
-.forgot a:hover {
-  text-decoration: underline;
+.login-button {
+  background: linear-gradient(#f7d267, #dca32f);
+  color: #111;
+}
+
+.signup-button {
+  border: 1px solid #4168a5;
+  background: #0b294b;
+  color: white;
+}
+
+.button:active {
+  transform: scale(.98);
 }
 
 .security {
-  text-align: center;
-  margin-top: 22px;
+  margin-top: 28px;
   color: #65758a;
   font-size: 10px;
 }
-
 </style>
-
 </head>
 
 <body>
 
 <div class="app">
 
-  <div class="header">
+  <img
+    src="./Screenshot_2026-08-17-18-53-58-99.png"
+    class="logo"
+    alt="Global Currency Bank Logo"
+  >
 
-    <img
-      src="./Screenshot_2026-08-17-18-53-58-99.png"
-      class="logo"
-      alt="Global Currency Bank Logo"
-    >
+  <h1>Global Currency Bank</h1>
 
-    <h1>Global Currency Bank</h1>
-
-    <div class="subtitle">
-      Banking Beyond Borders
-    </div>
-
+  <div class="subtitle">
+    Banking Beyond Borders
   </div>
 
   <div class="welcome">
-
-    <h2>Welcome Back</h2>
-
-    <p>
-      Login to access your account
-    </p>
-
+    Welcome to Global Currency Bank.<br>
+    Secure access to your currency account.
   </div>
 
-  <div class="field">
-
-    <label>Email Address</label>
-
-    <input
-      id="email"
-      type="email"
-      placeholder="Enter your email"
-      autocomplete="email"
-    >
-
-  </div>
-
-  <div class="field">
-
-    <label>Password</label>
-
-    <input
-      id="password"
-      type="password"
-      placeholder="Enter your password"
-      autocomplete="current-password"
-    >
-
-  </div>
-
-  <!-- FORGOT PASSWORD -->
-  <div class="forgot">
-
-    <a href="./forgot-password.html">
-      Forgot Password?
-    </a>
-
-  </div>
-
-  <!-- LOGIN BUTTON -->
-  <button type="button" onclick="login()">
+  <a
+    href="./login.html"
+    class="button login-button"
+  >
     Login
-  </button>
+  </a>
 
-  <div id="message"></div>
-
-  <div class="divider">
-    or
-  </div>
-
-  <!-- SIGN UP LINK -->
-  <div class="sign up">
-
-    Don't have an account?
-
-    <a href="./signup.html">
-      Sign Up
-    </a>
-
-  </div>
+  <a
+    href="./signup.html"
+    class="button signup-button"
+  >
+    Create Account
+  </a>
 
   <div class="security">
-    🔒 Your account information is protected
+    🔒 Secure account access
   </div>
 
 </div>
-
-
-<script>
-
-function login() {
-
-  const email =
-    document.getElementById("email")
-      .value.trim().toLowerCase();
-
-  const password =
-    document.getElementById("password")
-      .value;
-
-  const message =
-    document.getElementById("message");
-
-
-  if (!email || !password) {
-
-    message.style.color = "#ff6b6b";
-
-    message.innerText =
-      "Please enter your email and password.";
-
-    return;
-  }
-
-
-  const savedUser =
-    JSON.parse(
-      localStorage.getItem(
-        "globalCurrencyUser"
-      )
-    );
-
-
-  if (!savedUser) {
-
-    message.style.color = "#ff6b6b";
-
-    message.innerText =
-      "No account found. Please sign up first.";
-
-    return;
-  }
-
-
-  if (
-    email !==
-    savedUser.email.toLowerCase()
-  ) {
-
-    message.style.color = "#ff6b6b";
-
-    message.innerText =
-      "Email address not found.";
-
-    return;
-  }
-
-
-  if (
-    localStorage.getItem(
-      "accountVerified"
-    ) !== "true"
-  ) {
-
-    message.style.color = "#ff6b6b";
-
-    message.innerText =
-      "Please verify your account first.";
-
-    return;
-  }
-
-
-  localStorage.setItem(
-    "loggedIn",
-    "true"
-  );
-
-
-  message.style.color =
-    "#00dcae";
-
-  message.innerText =
-    "Login successful. Opening your account...";
-
-
-  setTimeout(function() {
-
-    window.location.href =
-      "./dashboard.html";
-
-  }, 800);
-
-}
-
-</script>
 
 </body>
 </html>
