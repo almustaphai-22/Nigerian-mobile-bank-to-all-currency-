@@ -15,244 +15,162 @@ content="width=device-width, initial-scale=1.0">
 }
 
 body {
-
   margin: 0;
   min-height: 100vh;
-
   background: #000;
-
   font-family: Arial, sans-serif;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   padding: 15px;
 }
 
 .app {
-
   width: 100%;
   max-width: 430px;
-
-  background:
-    linear-gradient(
-      180deg,
-      #031a38,
-      #001127
-    );
-
+  background: linear-gradient(
+    180deg,
+    #031a38,
+    #001127
+  );
   border: 2px solid #4168a5;
-
   border-radius: 30px;
-
   padding: 30px 22px;
-
   color: white;
-
-  box-shadow:
-    0 0 30px rgba(30,100,180,.25);
+  box-shadow: 0 0 30px rgba(30,100,180,.25);
 }
 
 .header {
-
   text-align: center;
-
   margin-bottom: 28px;
 }
 
 .logo {
-
   width: 95px;
   height: 95px;
-
   border-radius: 22px;
-
   object-fit: cover;
-
-  margin-bottom: 10px;
+  display: block;
+  margin: 0 auto 10px;
 }
 
 h1 {
-
   font-size: 24px;
-
   margin: 5px 0;
 }
 
 .subtitle {
-
   color: #e4b947;
-
   font-size: 12px;
 }
 
 .welcome {
-
   margin-bottom: 20px;
 }
 
 .welcome h2 {
-
   margin-bottom: 5px;
-
   font-size: 20px;
 }
 
 .welcome p {
-
   color: #9ba8ba;
-
   font-size: 13px;
 }
 
 .field {
-
   margin-bottom: 15px;
 }
 
 label {
-
   display: block;
-
   color: #aab6c6;
-
   font-size: 12px;
-
   margin-bottom: 6px;
 }
 
 input {
-
   width: 100%;
-
   height: 50px;
-
   border-radius: 11px;
-
   border: 1px solid #29496e;
-
   background: #0b294b;
-
   color: white;
-
   padding: 0 14px;
-
   outline: none;
-
   font-size: 14px;
 }
 
 input:focus {
-
   border-color: #e6bd50;
 }
 
 .forgot {
-
   text-align: right;
-
   margin-top: -5px;
-
   margin-bottom: 15px;
 }
 
 .forgot a {
-
   color: #e6bd50;
-
   text-decoration: none;
-
   font-size: 12px;
 }
 
 button {
-
   width: 100%;
-
   height: 50px;
-
   border: 0;
-
   border-radius: 10px;
-
-  background:
-    linear-gradient(
-      #f7d267,
-      #dca32f
-    );
-
+  background: linear-gradient(
+    #f7d267,
+    #dca32f
+  );
   color: #111;
-
   font-size: 16px;
-
   font-weight: 800;
-
   cursor: pointer;
 }
 
 #message {
-
   text-align: center;
-
   font-size: 13px;
-
   margin-top: 15px;
 }
 
 .divider {
-
   display: flex;
-
   align-items: center;
-
   gap: 10px;
-
   margin: 25px 0;
-
   color: #718096;
-
   font-size: 12px;
 }
 
 .divider::before,
 .divider::after {
-
   content: "";
-
   flex: 1;
-
   height: 1px;
-
   background: #183657;
 }
 
 .signup {
-
   text-align: center;
-
   color: #9ba8ba;
-
   font-size: 13px;
 }
 
 .signup a {
-
-  color: #e6bd50;
-
+  color: #e6b50;
   text-decoration: none;
-
   font-weight: bold;
 }
 
 .security {
-
   text-align: center;
-
   margin-top: 22px;
-
   color: #65758a;
-
   font-size: 10px;
 }
 
@@ -266,11 +184,11 @@ button {
 
   <div class="header">
 
-    <!-- YOUR GLOBAL CURRENCY BANK LOGO -->
+    <!-- YOUR EXACT LOGO FILE -->
     <img
-      src="logo.png"
+      src="Screenshot_2026-08-17-18-53-58-99.png"
       class="logo"
-      alt="Global Currency Bank"
+      alt="Global Currency Bank Logo"
     >
 
     <h1>Global Currency Bank</h1>
@@ -280,7 +198,6 @@ button {
     </div>
 
   </div>
-
 
   <div class="welcome">
 
@@ -292,12 +209,9 @@ button {
 
   </div>
 
-
   <div class="field">
 
-    <label>
-      Email Address
-    </label>
+    <label>Email Address</label>
 
     <input
       id="email"
@@ -307,12 +221,9 @@ button {
 
   </div>
 
-
   <div class="field">
 
-    <label>
-      Password
-    </label>
+    <label>Password</label>
 
     <input
       id="password"
@@ -322,7 +233,6 @@ button {
 
   </div>
 
-
   <div class="forgot">
 
     <a href="forgot-password.html">
@@ -331,19 +241,15 @@ button {
 
   </div>
 
-
   <button onclick="login()">
     Login
   </button>
 
-
   <div id="message"></div>
-
 
   <div class="divider">
     or
   </div>
-
 
   <div class="signup">
 
@@ -355,33 +261,26 @@ button {
 
   </div>
 
-
   <div class="security">
     🔒 Your account information is protected
   </div>
 
 </div>
 
-
 <script>
 
 function login() {
 
   const email =
-    document
-      .getElementById("email")
-      .value
-      .trim()
-      .toLowerCase();
+    document.getElementById("email")
+      .value.trim().toLowerCase();
 
   const password =
-    document
-      .getElementById("password")
+    document.getElementById("password")
       .value;
 
   const message =
     document.getElementById("message");
-
 
   if (!email || !password) {
 
@@ -391,13 +290,7 @@ function login() {
       "Please enter your email and password.";
 
     return;
-
   }
-
-
-  /*
-    GET SAVED ACCOUNT
-  */
 
   const savedUser =
     JSON.parse(
@@ -405,7 +298,6 @@ function login() {
         "globalCurrencyUser"
       )
     );
-
 
   if (!savedUser) {
 
@@ -415,9 +307,7 @@ function login() {
       "No account found. Please sign up first.";
 
     return;
-
   }
-
 
   if (
     email !==
@@ -430,14 +320,7 @@ function login() {
       "Email address not found.";
 
     return;
-
   }
-
-
-  /*
-    For this prototype, account verification
-    is required before login.
-  */
 
   if (
     localStorage.getItem(
@@ -451,25 +334,18 @@ function login() {
       "Please verify your account first.";
 
     return;
-
   }
-
-
-  /*
-    LOGIN SUCCESS
-  */
 
   localStorage.setItem(
     "loggedIn",
     "true"
   );
 
-
-  message.style.color = "#00dcae";
+  message.style.color =
+    "#00dcae";
 
   message.innerText =
     "Login successful. Opening your account...";
-
 
   setTimeout(function() {
 
