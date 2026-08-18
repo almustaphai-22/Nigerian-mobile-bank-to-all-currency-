@@ -1,1 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Global Currency Bank - Sign Up</title>
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #000;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.app {
+  width: 100%;
+  max-width: 430px;
+  background: linear-gradient(180deg,#031a38,#001127);
+  border: 2px solid #4168a5;
+  border-radius: 30px;
+  padding: 28px 22px;
+  color: white;
+  box-shadow: 0 0 35px rgba(30,80,150,.25);
+}
+
+.back {
+  font-size: 30px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.logo {
+  width: 95px;
+  height: 95px;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 12px;
+  border-radius: 22px;
+  box-shadow: 0 8px 25px rgba(0,0,0,.45);
+}
+
+h1 {
+  font-size: 20px;
+  margin: 8px 0 3px;
+}
+
+.subtitle {
+  color: #e4b947;
+  font-size: 11px;
+}
+
+.field {
+  margin-bottom: 12px;
+}
+
+label {
+  display: block;
+  color: #aab6c6;
+  font-size: 11px;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  height: 48px;
+  border-radius: 10px;
+  border: 1px solid #29496e;
+  background: #0b294b;
+  color: white;
+  padding: 0 13px;
+  outline: none;
+  font-size: 13px;
+}
+
+input:focus {
+  border-color: #e4b947;
+}
+
+input::placeholder {
+  color: #9eabbc;
+}
+
+button {
+  width: 100%;
+  height: 48px;
+  border: 0;
+  border-radius: 9px;
+  background: linear-gradient(#f7d267,#dca32f);
+  color: #151515;
+  font-weight: 800;
+  margin-top: 8px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button:active {
+  transform: scale(.98);
+}
+
+#message {
+  text-align: center;
+  font-size: 12px;
+  margin-top: 12px;
+  min-height: 18px;
+}
+
+.login {
+  text-align: center;
+  margin-top: 20px;
+  color: #9ba8ba;
+  font-size: 12px;
+}
+
+.login a {
+  color: #e6b943;
+  text-decoration: none;
+  font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="back" onclick="history.back()">‹</div>
+
+  <div class="header">
+
+    <!-- YOUR LOGO -->
+    <img
+      src="Screenshot_2026-08-17-18-53-58-99.png"
+      alt="Global Currency Bank Logo"
+      class="logo"
+    >
+
+    <h1>Create Account</h1>
+
+    <div class="subtitle">
+      Join Global Currency Bank today
+    </div>
+
+  </div>
+
+  <div class="field">
+    <label>Full Name</label>
+
+    <input
+      id="name"
+      type="text"
+      placeholder="Enter your full name"
+    >
+  </div>
+
+  <div class="field">
+    <label>Email Address</label>
+
+    <input
+      id="email"
+      type="email"
+      placeholder="Enter your email address"
+    >
+  </div>
+
+  <div class="field">
+    <label>Phone Number</label>
+
+    <input
+      id="phone"
+      type="tel"
+      placeholder="Enter your phone number"
+    >
+  </div>
+
+  <div class="field">
+    <label>Password</label>
+
+    <input
+      id="password"
+      type="password"
+      placeholder="Create a password"
+    >
+  </div>
+
+  <div class="field">
+    <label>Confirm Password</label>
+
+    <input
+      id="confirmPassword"
+      type="password"
+      placeholder="Confirm your password"
+    >
+  </div>
+
+  <button id="signupButton" onclick="createAccount()">
+    Sign Up
+  </button>
+
+  <div id="message"></div>
+
+  <div class="login">
+    Already have an account?
+    <a href="index.html">Login</a>
+  </div>
+
+</div>
+
+<script>
+
+/* ==========================================
+   EMAILJS SETTINGS
+   ========================================== */
+
+const EMAILJS_PUBLIC_KEY = "7H-20VEn5wiKflwzI";
+const EMAILJS_SERVICE_ID = "service_j557oql";
+const EMAILJS_TEMPLATE_ID = "template_qoeiqtj";
+
+
+/* Initialize EmailJS */
+
+emailjs.init({
+  publicKey: EMAILJS_PUBLIC_KEY
+});
+
+
+/* ==========================================
+   GENERATE 6 DIGIT VERIFICATION CODE
+   ========================================== */
+
+function generateVerificationCode() {
+
+  return Math.floor(
+    100000 + Math.random() * 900000
+  ).toString();
+
+}
+
+
+/* ==========================================
+   CREATE ACCOUNT
+   ========================================== */
+
+function createAccount() {
+
+  const name =
+    document.getElementById("name").value.trim();
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const phone =
+    document.getElementById("phone").value.trim();
+
+  const password =
+    document.getElementById("password").value;
+
+  const confirmPassword =
+    document.getElementById("confirmPassword").value;
+
+  const message =
+    document.getElementById("message");
+
+  const button =
+    document.getElementById("signupButton");
+
+
+  /* Check fields */
+
+  if (
+    name === "" ||
+    email === "" ||
+    phone === "" ||
+    password === "" ||
+    confirmPassword === ""
+  ) {
+
+    message.style.color = "#ff6b6b";
+
+    message.innerText =
+      "Please complete all fields.";
+
+    return;
+  }
+
+
+  /* Check password */
+
+  if (password.length < 8) {
+
+    message.style.color = "#ff6b6b";
+
+    message.innerText =
+      "Password must be at least 8 characters.";
+
+    return;
+  }
+
+
+  /* Check matching passwords */
+
+  if (password !== confirmPassword) {
+
+    message.style.color = "#ff6b6b";
+
+    message.innerText =
+      "Passwords do not match.";
+
+    return;
+  }
+
+
+  /* Create verification code */
+
+  const verificationCode =
+    generateVerificationCode();
+
+
+  /* Save temporary information */
+
+  sessionStorage.setItem(
+    "verificationCode",
+    verificationCode
+  );
+
+  sessionStorage.setItem(
+    "verificationEmail",
+    email
+  );
+
+  sessionStorage.setItem(
+    "verificationPurpose",
+    "signup"
+  );
+
+  sessionStorage.setItem(
+    "newUserName",
+    name
+  );
+
+  sessionStorage.setItem(
+    "newUserPhone",
+    phone
+  );
+
+
+  /* Disable button */
+
+  button.disabled = true;
+
+  button.innerText =
+    "Sending Code...";
+
+  message.style.color = "#e4b947";
+
+  message.innerText =
+    "Sending verification code to " + email + "...";
+
+
+  /* ==========================================
+     SEND CODE USING EMAILJS
+     ========================================== */
+
+  emailjs.send(
+    EMAILJS_SERVICE_ID,
+    EMAILJS_TEMPLATE_ID,
+    {
+
+      to_email: email,
+
+      user_name: name,
+
+      otp_code: verificationCode,
+
+      purpose: "New Account Registration"
+
+    }
+  )
+
+  .then(function(response) {
+
+    console.log(
+      "EmailJS success:",
+      response
+    );
+
+    message.style.color =
+      "#00dcae";
+
+    message.innerText =
+      "Code sent! Check your email.";
+
+    setTimeout(function() {
+
+      window.location.href =
+        "verify.html";
+
+    }, 1200);
+
+  })
+
+  .catch(function(error) {
+
+    console.error(
+      "EmailJS error:",
+      error
+    );
+
+    button.disabled = false;
+
+    button.innerText =
+      "Sign Up";
+
+    message.style.color =
+      "#ff6b6b";
+
+    message.innerText =
+      "Code could not be sent. Check your EmailJS settings.";
+
+  });
+
+}
+
+</script>
+
+</body>
+</html>
