@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Cards - All Currency Bank</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+  body{background:#020a1a;color:#fff;min-height:100vh;padding:20px;padding-bottom:80px}
+  h2{margin-bottom:20px;font-size:22px}
+  
+  .card{
+    height:210px;
+    background: url('Screenshot_2026-08-17-18-53-58-99.png') no-repeat center;
+    background-size: cover;
+    background-color: #0d2a5a;
+    border-radius:20px;
+    padding:20px;
+    position:relative;
+    box-shadow:0 10px 30px rgba(0,170,255,.2);
+    border:1px solid #1a3d73;
+  }
+  .card-logo{width:40px;height:40px;border-radius:10px;position:absolute;top:20px;right:20px}
+  .card-chip{width:45px;height:35px;background:linear-gradient(135deg,#f7d267,#dca32f);border-radius:8px;margin-top:50px}
+  .card-number{font-size:20px;letter-spacing:3px;margin-top:15px;font-weight:600}
+  .card-bottom{display:flex;justify-content:space-between;align-items:end;margin-top:15px}
+  .card-name{font-size:12px;text-transform:uppercase}
+  .card-name span{display:block;color:#8aa4c7;font-size:10px}
+  .card-date{font-size:12px}
+  
+  .actions{display:flex;gap:10px;margin-top:20px}
+  .btn{flex:1;padding:14px;border-radius:12px;border:1px solid #1a3d73;background:#0a1a33;color:#fff;font-weight:700;cursor:pointer}
+  .btn.freeze{background:linear-gradient(90deg,#ff4e50,#f9d423);color:#000;border:0}
+  
+  .navbar{position:fixed;bottom:0;left:0;right:0;background:#04132e;display:flex;justify-content:space-around;padding:12px 0;border-top:1px solid #1a3d73}
+  .nav-item{text-align:center;font-size:10px;color:#7a8ca5;cursor:pointer}
+  .nav-item.active{color:#00aaff}
+  .nav-icon{font-size:22px;margin-bottom:4px}
+</style>
+</head>
+<body>
+
+<h2>My Cards</h2>
+
+<div class="card">
+  <img src="Screenshot_2026-08-17-18-53-58-99.png" class="card-logo">
+  <div class="card-chip"></div>
+  <div class="card-number">4532  ****  ****  1234</div>
+  <div class="card-bottom">
+    <div class="card-name">
+      <span>CARD HOLDER</span>
+      <span id="cardName">USER NAME</span>
+    </div>
+    <div class="card-date">
+      <span>EXP</span>
+      <span>09/29</span>
+    </div>
+  </div>
+</div>
+
+<div class="actions">
+  <button class="btn" onclick="alert('Show/Hide CVV')">Show Details</button>
+  <button class="btn freeze" onclick="alert('Card Frozen')">Freeze</button>
+</div>
+
+<!-- BOTTOM NAV -->
+<div class="navbar">
+  <div class="nav-item" onclick="location.href='dashboard.html'"><div class="nav-icon">🏠</div>Home</div>
+  <div class="nav-item" onclick="location.href='accounts.html'"><div class="nav-icon">💼</div>Accounts</div>
+  <div class="nav-item" onclick="location.href='transfers.html'"><div class="nav-icon">↔</div>Transfers</div>
+  <div class="nav-item active"><div class="nav-icon">💳</div>Cards</div>
+  <div class="nav-item" onclick="location.href='settings.html'"><div class="nav-icon">⚙️</div>Settings</div>
+</div>
+
+<script>
+  // PULL THE NAME FROM SIGNUP. NO HARDCODE
+  const userName = localStorage.getItem('userName') || 'CARD HOLDER';
+  document.getElementById('cardName').innerText = userName.toUpperCase();
+</script>
+
+</body>
+</html>
