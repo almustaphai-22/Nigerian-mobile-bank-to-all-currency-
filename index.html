@@ -1,444 +1,486 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<title>Global Currency Bank - Sign Up</title>
-
-<!-- EmailJS -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<title>Global Currency Bank - Login</title>
 
 <style>
+
 * {
   box-sizing: border-box;
 }
 
 body {
+
   margin: 0;
   min-height: 100vh;
+
   background: #000;
+
   font-family: Arial, sans-serif;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
   padding: 15px;
 }
 
 .app {
+
   width: 100%;
   max-width: 430px;
-  background: linear-gradient(180deg,#031a38,#001127);
-  border: 2px solid #4168a5;
-  border-radius: 30px;
-  padding: 28px 22px;
-  color: white;
-  box-shadow: 0 0 35px rgba(30,80,150,.25);
-}
 
-.back {
-  font-size: 30px;
-  margin-bottom: 10px;
-  cursor: pointer;
+  background:
+    linear-gradient(
+      180deg,
+      #031a38,
+      #001127
+    );
+
+  border: 2px solid #4168a5;
+
+  border-radius: 30px;
+
+  padding: 30px 22px;
+
+  color: white;
+
+  box-shadow:
+    0 0 30px rgba(30,100,180,.25);
 }
 
 .header {
+
   text-align: center;
-  margin-bottom: 22px;
+
+  margin-bottom: 28px;
 }
 
 .logo {
+
   width: 95px;
   height: 95px;
-  object-fit: cover;
-  display: block;
-  margin: 0 auto 12px;
+
   border-radius: 22px;
-  box-shadow: 0 8px 25px rgba(0,0,0,.45);
+
+  object-fit: cover;
+
+  margin-bottom: 10px;
 }
 
 h1 {
-  font-size: 20px;
-  margin: 8px 0 3px;
+
+  font-size: 24px;
+
+  margin: 5px 0;
 }
 
 .subtitle {
+
   color: #e4b947;
-  font-size: 11px;
+
+  font-size: 12px;
 }
 
-.field {
-  margin-bottom: 12px;
+.welcome {
+
+  margin-bottom: 20px;
 }
 
-label {
-  display: block;
-  color: #aab6c6;
-  font-size: 11px;
+.welcome h2 {
+
   margin-bottom: 5px;
+
+  font-size: 20px;
 }
 
-input {
-  width: 100%;
-  height: 48px;
-  border-radius: 10px;
-  border: 1px solid #29496e;
-  background: #0b294b;
-  color: white;
-  padding: 0 13px;
-  outline: none;
+.welcome p {
+
+  color: #9ba8ba;
+
   font-size: 13px;
 }
 
-input:focus {
-  border-color: #e4b947;
+.field {
+
+  margin-bottom: 15px;
 }
 
-input::placeholder {
-  color: #9eabbc;
+label {
+
+  display: block;
+
+  color: #aab6c6;
+
+  font-size: 12px;
+
+  margin-bottom: 6px;
 }
 
-button {
+input {
+
   width: 100%;
-  height: 48px;
-  border: 0;
-  border-radius: 9px;
-  background: linear-gradient(#f7d267,#dca32f);
-  color: #151515;
-  font-weight: 800;
-  margin-top: 8px;
-  cursor: pointer;
+
+  height: 50px;
+
+  border-radius: 11px;
+
+  border: 1px solid #29496e;
+
+  background: #0b294b;
+
+  color: white;
+
+  padding: 0 14px;
+
+  outline: none;
+
   font-size: 14px;
 }
 
-button:active {
-  transform: scale(.98);
+input:focus {
+
+  border-color: #e6bd50;
+}
+
+.forgot {
+
+  text-align: right;
+
+  margin-top: -5px;
+
+  margin-bottom: 15px;
+}
+
+.forgot a {
+
+  color: #e6bd50;
+
+  text-decoration: none;
+
+  font-size: 12px;
+}
+
+button {
+
+  width: 100%;
+
+  height: 50px;
+
+  border: 0;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      #f7d267,
+      #dca32f
+    );
+
+  color: #111;
+
+  font-size: 16px;
+
+  font-weight: 800;
+
+  cursor: pointer;
 }
 
 #message {
+
   text-align: center;
-  font-size: 12px;
-  margin-top: 12px;
-  min-height: 18px;
+
+  font-size: 13px;
+
+  margin-top: 15px;
 }
 
-.login {
+.divider {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin: 25px 0;
+
+  color: #718096;
+
+  font-size: 12px;
+}
+
+.divider::before,
+.divider::after {
+
+  content: "";
+
+  flex: 1;
+
+  height: 1px;
+
+  background: #183657;
+}
+
+.signup {
+
   text-align: center;
-  margin-top: 20px;
+
   color: #9ba8ba;
-  font-size: 12px;
+
+  font-size: 13px;
 }
 
-.login a {
-  color: #e6b943;
+.signup a {
+
+  color: #e6bd50;
+
   text-decoration: none;
+
   font-weight: bold;
 }
+
+.security {
+
+  text-align: center;
+
+  margin-top: 22px;
+
+  color: #65758a;
+
+  font-size: 10px;
+}
+
 </style>
+
 </head>
 
 <body>
 
 <div class="app">
 
-  <div class="back" onclick="history.back()">‹</div>
-
   <div class="header">
 
-    <!-- YOUR LOGO -->
+    <!-- YOUR GLOBAL CURRENCY BANK LOGO -->
     <img
-      src="Screenshot_2026-08-17-18-53-58-99.png"
-      alt="Global Currency Bank Logo"
+      src="logo.png"
       class="logo"
+      alt="Global Currency Bank"
     >
 
-    <h1>Create Account</h1>
+    <h1>Global Currency Bank</h1>
 
     <div class="subtitle">
-      Join Global Currency Bank today
+      Banking Beyond Borders
     </div>
 
   </div>
 
-  <div class="field">
-    <label>Full Name</label>
 
-    <input
-      id="name"
-      type="text"
-      placeholder="Enter your full name"
-    >
+  <div class="welcome">
+
+    <h2>Welcome Back</h2>
+
+    <p>
+      Login to access your account
+    </p>
+
   </div>
 
+
   <div class="field">
-    <label>Email Address</label>
+
+    <label>
+      Email Address
+    </label>
 
     <input
       id="email"
       type="email"
-      placeholder="Enter your email address"
+      placeholder="Enter your email"
     >
+
   </div>
 
-  <div class="field">
-    <label>Phone Number</label>
-
-    <input
-      id="phone"
-      type="tel"
-      placeholder="Enter your phone number"
-    >
-  </div>
 
   <div class="field">
-    <label>Password</label>
+
+    <label>
+      Password
+    </label>
 
     <input
       id="password"
       type="password"
-      placeholder="Create a password"
+      placeholder="Enter your password"
     >
+
   </div>
 
-  <div class="field">
-    <label>Confirm Password</label>
 
-    <input
-      id="confirmPassword"
-      type="password"
-      placeholder="Confirm your password"
-    >
+  <div class="forgot">
+
+    <a href="forgot-password.html">
+      Forgot Password?
+    </a>
+
   </div>
 
-  <button id="signupButton" onclick="createAccount()">
-    Sign Up
+
+  <button onclick="login()">
+    Login
   </button>
+
 
   <div id="message"></div>
 
-  <div class="login">
-    Already have an account?
-    <a href="index.html">Login</a>
+
+  <div class="divider">
+    or
+  </div>
+
+
+  <div class="signup">
+
+    Don't have an account?
+
+    <a href="signup.html">
+      Sign Up
+    </a>
+
+  </div>
+
+
+  <div class="security">
+    🔒 Your account information is protected
   </div>
 
 </div>
 
+
 <script>
 
-/* ==========================================
-   EMAILJS SETTINGS
-   ========================================== */
-
-const EMAILJS_PUBLIC_KEY = "7H-20VEn5wiKflwzI";
-const EMAILJS_SERVICE_ID = "service_j557oql";
-const EMAILJS_TEMPLATE_ID = "template_qoeiqtj";
-
-
-/* Initialize EmailJS */
-
-emailjs.init({
-  publicKey: EMAILJS_PUBLIC_KEY
-});
-
-
-/* ==========================================
-   GENERATE 6 DIGIT VERIFICATION CODE
-   ========================================== */
-
-function generateVerificationCode() {
-
-  return Math.floor(
-    100000 + Math.random() * 900000
-  ).toString();
-
-}
-
-
-/* ==========================================
-   CREATE ACCOUNT
-   ========================================== */
-
-function createAccount() {
-
-  const name =
-    document.getElementById("name").value.trim();
+function login() {
 
   const email =
-    document.getElementById("email").value.trim();
-
-  const phone =
-    document.getElementById("phone").value.trim();
+    document
+      .getElementById("email")
+      .value
+      .trim()
+      .toLowerCase();
 
   const password =
-    document.getElementById("password").value;
-
-  const confirmPassword =
-    document.getElementById("confirmPassword").value;
+    document
+      .getElementById("password")
+      .value;
 
   const message =
     document.getElementById("message");
 
-  const button =
-    document.getElementById("signupButton");
+
+  if (!email || !password) {
+
+    message.style.color = "#ff6b6b";
+
+    message.innerText =
+      "Please enter your email and password.";
+
+    return;
+
+  }
 
 
-  /* Check fields */
+  /*
+    GET SAVED ACCOUNT
+  */
+
+  const savedUser =
+    JSON.parse(
+      localStorage.getItem(
+        "globalCurrencyUser"
+      )
+    );
+
+
+  if (!savedUser) {
+
+    message.style.color = "#ff6b6b";
+
+    message.innerText =
+      "No account found. Please sign up first.";
+
+    return;
+
+  }
+
 
   if (
-    name === "" ||
-    email === "" ||
-    phone === "" ||
-    password === "" ||
-    confirmPassword === ""
+    email !==
+    savedUser.email.toLowerCase()
   ) {
 
     message.style.color = "#ff6b6b";
 
     message.innerText =
-      "Please complete all fields.";
+      "Email address not found.";
 
     return;
+
   }
 
 
-  /* Check password */
+  /*
+    For this prototype, account verification
+    is required before login.
+  */
 
-  if (password.length < 8) {
+  if (
+    localStorage.getItem(
+      "accountVerified"
+    ) !== "true"
+  ) {
 
     message.style.color = "#ff6b6b";
 
     message.innerText =
-      "Password must be at least 8 characters.";
+      "Please verify your account first.";
 
     return;
+
   }
 
 
-  /* Check matching passwords */
+  /*
+    LOGIN SUCCESS
+  */
 
-  if (password !== confirmPassword) {
-
-    message.style.color = "#ff6b6b";
-
-    message.innerText =
-      "Passwords do not match.";
-
-    return;
-  }
-
-
-  /* Create verification code */
-
-  const verificationCode =
-    generateVerificationCode();
-
-
-  /* Save temporary information */
-
-  sessionStorage.setItem(
-    "verificationCode",
-    verificationCode
-  );
-
-  sessionStorage.setItem(
-    "verificationEmail",
-    email
-  );
-
-  sessionStorage.setItem(
-    "verificationPurpose",
-    "signup"
-  );
-
-  sessionStorage.setItem(
-    "newUserName",
-    name
-  );
-
-  sessionStorage.setItem(
-    "newUserPhone",
-    phone
+  localStorage.setItem(
+    "loggedIn",
+    "true"
   );
 
 
-  /* Disable button */
-
-  button.disabled = true;
-
-  button.innerText =
-    "Sending Code...";
-
-  message.style.color = "#e4b947";
+  message.style.color = "#00dcae";
 
   message.innerText =
-    "Sending verification code to " + email + "...";
+    "Login successful. Opening your account...";
 
 
-  /* ==========================================
-     SEND CODE USING EMAILJS
-     ========================================== */
+  setTimeout(function() {
 
-  emailjs.send(
-    EMAILJS_SERVICE_ID,
-    EMAILJS_TEMPLATE_ID,
-    {
+    window.location.href =
+      "dashboard.html";
 
-      to_email: email,
-
-      user_name: name,
-
-      otp_code: verificationCode,
-
-      purpose: "New Account Registration"
-
-    }
-  )
-
-  .then(function(response) {
-
-    console.log(
-      "EmailJS success:",
-      response
-    );
-
-    message.style.color =
-      "#00dcae";
-
-    message.innerText =
-      "Code sent! Check your email.";
-
-    setTimeout(function() {
-
-      window.location.href =
-        "verify.html";
-
-    }, 1200);
-
-  })
-
-  .catch(function(error) {
-
-    console.error(
-      "EmailJS error:",
-      error
-    );
-
-    button.disabled = false;
-
-    button.innerText =
-      "Sign Up";
-
-    message.style.color =
-      "#ff6b6b";
-
-    message.innerText =
-      "Code could not be sent. Check your EmailJS settings.";
-
-  });
+  }, 800);
 
 }
 
 </script>
 
 </body>
-  </html>
+</html>
