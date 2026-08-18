@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - All Currency Bank</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+  body{background:#020a1a;color:#fff;min-height:100vh;padding-bottom:80px}
+  .header{padding:20px 20px 10px;display:flex;justify-content:space-between;align-items:center}
+  .logo-title{display:flex;align-items:center;gap:10px}
+  .logo-title img{width:35px;height:35px;border-radius:8px}
+  .logo-title h2{font-size:15px;font-weight:700}
+  .header-icons{display:flex;gap:15px;font-size:20px}
+  
+  .balance-card{margin:10px 20px;background:linear-gradient(135deg,#0d2a5a,#001127);padding:25px;border-radius:20px;border:1px solid #1a3d73}
+  .balance-card p{color:#8aa4c7;font-size:12px}
+  .balance-card h1{font-size:32px;margin:8px 0}
+  .balance-card span{color:#00ff88;font-size:12px}
+  
+  .actions{display:flex;justify-content:space-around;margin:20px}
+  .action-btn{text-align:center;color:#cbd5e1;font-size:12px}
+  .action-icon{width:55px;height:55px;background:#0f2142;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:22px}
+  
+  .section{margin:25px 20px}
+  .section-header{display:flex;justify-content:space-between;margin-bottom:15px}
+  .section-header h3{font-size:16px}
+  .section-header a{color:#00aaff;font-size:12px;text-decoration:none}
+  
+  .account{background:#0a1a33;padding:15px;border-radius:15px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .acc-left{display:flex;align-items:center;gap:12px}
+  .flag{font-size:24px}
+  .acc-name{font-size:14px}
+  .acc-balance{font-size:15px;font-weight:700}
+  
+  .txn{background:#0a1a33;padding:15px;border-radius:15px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .txn-left{display:flex;align-items:center;gap:12px}
+  .txn-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .in{background:#0f3d2e;color:#00ff88}
+  .out{background:#3d1f1f;color:#ff4d4d}
+  .txn-amount{font-weight:700}
+  .txn-amount.in{color:#00ff88}
+  .txn-amount.out{color:#ff4d4d}
+  
+  .navbar{position:fixed;bottom:0;left:0;right:0;background:#04132e;display:flex;justify-content:space-around;padding:12px 0;border-top:1px solid #1a3d73}
+  .nav-item{text-align:center;font-size:10px;color:#7a8ca5}
+  .nav-item.active{color:#00aaff}
+  .nav-icon{font-size:22px;margin-bottom:4px}
+</style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo-title">
+      <img src="Screenshot_2026-08-17-18-53-58-99.png" alt="logo">
+      <h2>ALL CURRENCY BANK</h2>
+    </div>
+    <div class="header-icons">🔔 👤</div>
+  </div>
+
+  <!-- GREETING + BALANCE -->
+  <div class="balance-card">
+    <p>Good morning, <span id="userName">User</span></p>
+    <p style="margin-top:10px">Total Balance</p>
+    <h1>$25,680.45</h1>
+    <span>↑ 4.3% from last month</span>
+  </div>
+
+  <!-- ACTIONS -->
+  <div class="actions">
+    <div class="action-btn"><div class="action-icon">↗</div>Send</div>
+    <div class="action-btn"><div class="action-icon">↓</div>Receive</div>
+    <div class="action-btn"><div class="action-icon">⇄</div>Exchange</div>
+    <div class="action-btn"><div class="action-icon">⋯</div>More</div>
+  </div>
+
+  <!-- ACCOUNTS -->
+  <div class="section">
+    <div class="section-header">
+      <h3>Accounts</h3>
+      <a href="#">See All</a>
+    </div>
+    <div class="account">
+      <div class="acc-left"><div class="flag">🇺🇸</div><div><div class="acc-name">USD Account</div></div></div>
+      <div class="acc-balance">$ 15,250.00</div>
+    </div>
+    <div class="account">
+      <div class="acc-left"><div class="flag">🇪🇺</div><div><div class="acc-name">EUR Account</div></div></div>
+      <div class="
