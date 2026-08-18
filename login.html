@@ -1,391 +1,117 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Global Currency Bank - Login</title>
+<title>All Currency Bank - Login</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  min-height: 100vh;
-  background: #000;
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 15px;
-}
-
-.app {
-  width: 100%;
-  max-width: 430px;
-  background: linear-gradient(180deg, #031a38, #001127);
-  border: 2px solid #4168a5;
-  border-radius: 30px;
-  padding: 30px 22px;
-  color: white;
-  box-shadow: 0 0 30px rgba(30,100,180,.25);
-}
-
-.back {
-  font-size: 30px;
-  margin-bottom: 8px;
-}
-
-.back a {
-  color: white;
-  text-decoration: none;
-}
-
-.header {
-  text-align: center;
-  margin-bottom: 28px;
-}
-
-.logo {
-  width: 95px;
-  height: 95px;
-  border-radius: 22px;
-  object-fit: cover;
-  display: block;
-  margin: 0 auto 10px;
-}
-
-h1 {
-  font-size: 24px;
-  margin: 5px 0;
-}
-
-.subtitle {
-  color: #e4b947;
-  font-size: 12px;
-}
-
-.welcome {
-  margin-bottom: 20px;
-}
-
-.welcome h2 {
-  margin-bottom: 5px;
-  font-size: 20px;
-}
-
-.welcome p {
-  color: #9ba8ba;
-  font-size: 13px;
-}
-
-.field {
-  margin-bottom: 15px;
-}
-
-label {
-  display: block;
-  color: #aab6c6;
-  font-size: 12px;
-  margin-bottom: 6px;
-}
-
-input {
-  width: 100%;
-  height: 50px;
-  border-radius: 11px;
-  border: 1px solid #29496e;
-  background: #0b294b;
-  color: white;
-  padding: 0 14px;
-  outline: none;
-  font-size: 14px;
-}
-
-input:focus {
-  border-color: #e6bd50;
-}
-
-.forgot {
-  text-align: right;
-  margin-top: -5px;
-  margin-bottom: 15px;
-}
-
-.forgot a {
-  color: #e6bd50;
-  text-decoration: none;
-  font-size: 12px;
-}
-
-button {
-  width: 100%;
-  height: 50px;
-  border: 0;
-  border-radius: 10px;
-  background: linear-gradient(#f7d267, #dca32f);
-  color: #111;
-  font-size: 16px;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-button:disabled {
-  opacity: .6;
-}
-
-#message {
-  text-align: center;
-  font-size: 13px;
-  margin-top: 15px;
-  min-height: 18px;
-}
-
-.divider {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 25px 0;
-  color: #718096;
-  font-size: 12px;
-}
-
-.divider::before,
-.divider::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: #183657;
-}
-
-.signup {
-  text-align: center;
-  color: #9ba8ba;
-  font-size: 13px;
-}
-
-.signup a {
-  color: #e6b950;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.security {
-  text-align: center;
-  margin-top: 22px;
-  color: #65758a;
-  font-size: 10px;
-}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:#000;font-family:Arial,sans-serif;display:flex;justify-content:center;align-items:center;padding:15px}
+.app{width:100%;max-width:430px;background:linear-gradient(180deg,#031a38,#001127);border:2px solid #4168a5;border-radius:30px;padding:30px 22px;color:white;box-shadow:0 0 30px rgba(30,100,180,.25)}
+.back{font-size:30px;margin-bottom:8px}
+.back a{color:white;text-decoration:none}
+.header{text-align:center;margin-bottom:28px}
+.logo{width:95px;height:95px;border-radius:22px;object-fit:cover;display:block;margin:0 auto 10px}
+h1{font-size:24px;margin:5px 0;background:linear-gradient(90deg,#00ffc8,#00aaff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.subtitle{color:#e4b947;font-size:12px}
+.welcome{margin-bottom:20px}
+.welcome h2{margin-bottom:5px;font-size:20px}
+.welcome p{color:#9ba8ba;font-size:13px}
+.field{margin-bottom:15px}
+label{display:block;color:#aab6c6;font-size:12px;margin-bottom:6px}
+input{width:100%;height:50px;border-radius:11px;border:1px solid #29496e;background:#0b294b;color:white;padding:0 14px;outline:none;font-size:14px}
+input:focus{border-color:#e6bd50}
+.forgot{text-align:right;margin-top:-5px;margin-bottom:15px}
+.forgot a{color:#e6bd50;text-decoration:none;font-size:12px}
+button{width:100%;height:50px;border:0;border-radius:10px;background:linear-gradient(#f7d267,#dca32f);color:#111;font-size:16px;font-weight:800;cursor:pointer}
+button:disabled{opacity:.6}
+#message{text-align:center;font-size:13px;margin-top:15px;min-height:18px}
+.divider{display:flex;align-items:center;gap:10px;margin:25px 0;color:#718096;font-size:12px}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:#183657}
+.signup{text-align:center;color:#9ba8ba;font-size:13px}
+.signup a{color:#e6b950;text-decoration:none;font-weight:bold}
+.security{text-align:center;margin-top:22px;color:#65758a;font-size:10px}
 </style>
-
 </head>
 
 <body>
-
 <div class="app">
-
-  <div class="back">
-    <a href="./index.html">‹</a>
-  </div>
+  <div class="back"><a href="./index.html">‹</a></div>
 
   <div class="header">
-
-    <img
-      src="./Screenshot_2026-08-17-18-53-58-99.png"
-      class="logo"
-      alt="Global Currency Bank Logo"
-    >
-
-    <h1>Global Currency Bank</h1>
-
-    <div class="subtitle">
-      Banking Beyond Borders
-    </div>
-
+    <img src="./Screenshot_2026-08-17-18-53-58-99.png" class="logo" alt="All Currency Bank Logo">
+    <h1>All Currency Bank</h1>
+    <div class="subtitle">Banking Beyond Borders</div>
   </div>
 
   <div class="welcome">
-
     <h2>Welcome Back</h2>
-
-    <p>
-      Login to access your account
-    </p>
-
+    <p>Login to access your account</p>
   </div>
 
-  <div class="field">
+  <div class="field"><label>Email Address</label><input id="email" type="email" placeholder="Enter your email" autocomplete="email"></div>
+  <div class="field"><label>Password</label><input id="password" type="password" placeholder="Enter your password" autocomplete="current-password"></div>
 
-    <label>Email Address</label>
+  <div class="forgot"><a href="./forgot-password.html">Forgot Password?</a></div>
 
-    <input
-      id="email"
-      type="email"
-      placeholder="Enter your email"
-      autocomplete="email"
-    >
-
-  </div>
-
-  <div class="field">
-
-    <label>Password</label>
-
-    <input
-      id="password"
-      type="password"
-      placeholder="Enter your password"
-      autocomplete="current-password"
-    >
-
-  </div>
-
-  <div class="forgot">
-
-    <a href="./forgot-password.html">
-      Forgot Password?
-    </a>
-
-  </div>
-
-  <button
-    id="loginButton"
-    type="button"
-    onclick="login()"
-  >
-    Login
-  </button>
-
+  <button id="loginButton" type="button" onclick="login()">Login</button>
   <div id="message"></div>
 
-  <div class="divider">
-    or
-  </div>
+  <div class="divider">or</div>
 
-  <div class="signup">
+  <div class="signup">Don't have an account? <a href="./Signup.html">Sign Up</a></div>
 
-    Don't have an account?
-
-    <a href="./signup.html">
-      Sign Up
-    </a>
-
-  </div>
-
-  <div class="security">
-    🔒 Your account information is protected
-  </div>
-
+  <div class="security">🔒 Your account information is protected</div>
 </div>
 
-
 <script>
-
-function login() {
-
-  const email =
-    document.getElementById("email")
-      .value
-      .trim()
-      .toLowerCase();
-
-  const password =
-    document.getElementById("password")
-      .value;
-
-  const message =
-    document.getElementById("message");
-
-  const button =
-    document.getElementById("loginButton");
-
-
-  if (!email || !password) {
-
-    message.style.color = "#ff6b6b";
-
-    message.innerText =
-      "Please enter your email and password.";
-
-    return;
-  }
-
-
-  const savedUser =
-    JSON.parse(
-      localStorage.getItem(
-        "globalCurrencyUser"
-      )
-    );
-
-
-  if (!savedUser) {
-
-    message.style.color = "#ff6b6b";
-
-    message.innerText =
-      "No account found. Please create an account first.";
-
-    return;
-  }
-
-
-  if (
-    email !==
-    savedUser.email.toLowerCase()
-  ) {
-
-    message.style.color = "#ff6b6b";
-
-    message.innerText =
-      "Email address not found.";
-
-    return;
-  }
-
-
-  if (
-    password !==
-    savedUser.password
-  ) {
-
-    message.style.color = "#ff6b6b";
-
-    message.innerText =
-      "Incorrect password.";
-
-    return;
-  }
-
-
-  button.disabled = true;
-
-  localStorage.setItem(
-    "loggedIn",
-    "true"
-  );
-
-
-  message.style.color =
-    "#00dcae";
-
-  message.innerText =
-    "Login successful...";
-
-
-  setTimeout(function() {
-
-    window.location.href =
-      "./dashboard.html";
-
-  }, 700);
-
+function generateCode(){
+  const code = Math.floor(100000 + Math.random() * 900000);
+  localStorage.setItem('verificationCode', code);
+  console.log("DEMO CODE:", code); // Remove later
+  alert("Your Login Code: " + code); // Remove later. EmailJS will send this
 }
 
-</script>
+function login() {
+  const email = document.getElementById("email").value.trim().toLowerCase();
+  const password = document.getElementById("password").value;
+  const message = document.getElementById("message");
+  const button = document.getElementById("loginButton");
 
+  if(!email || !password){
+    message.style.color = "#ff6b6b"; message.innerText = "Please enter your email and password."; return;
+  }
+
+  // FIXED: Check allCurrencyUser to match signup
+  const savedUser = JSON.parse(localStorage.getItem("allCurrencyUser"));
+
+  if(!savedUser){
+    message.style.color = "#ff6b6b"; message.innerText = "No account found. Please create an account first."; return;
+  }
+  if(email !== savedUser.email.toLowerCase()){
+    message.style.color = "#ff6b6b"; message.innerText = "Email address not found."; return;
+  }
+  if(password !== savedUser.password){
+    message.style.color = "#ff6b6b"; message.innerText = "Incorrect password."; return;
+  }
+
+  // Save email and name for next pages
+  localStorage.setItem("userEmail", email);
+  localStorage.setItem("userName", savedUser.name);
+  
+  // Generate and "send" code
+  generateCode();
+
+  button.disabled = true;
+  message.style.color = "#00dcae";
+  message.innerText = "Code sent to " + email + ". Verifying...";
+
+  // GO TO VERIFY PAGE INSTEAD OF DASHBOARD
+  setTimeout(function() {
+    window.location.href = "./verify.html";
+  }, 1500);
+}
+</script>
 </body>
 </html>
