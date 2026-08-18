@@ -7,39 +7,40 @@
 <style>
   *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
   body{background:#020a1a;color:#fff;min-height:100vh;padding-bottom:80px}
-  
  .header{padding:20px;display:flex;justify-content:space-between;align-items:center}
  .logo-title{display:flex;align-items:center;gap:10px}
  .logo-title img{width:35px;height:35px;border-radius:8px}
  .logo-title h2{font-size:15px;font-weight:700;background:linear-gradient(90deg,#00ffc8,#00aaff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
- .header-icons{display:flex;gap:15px;font-size:20px}
-  
- .balance-card{margin:0 20px 20px;background:linear-gradient(135deg,#0d2a5a,#001127);padding:25px;border-radius:20px;border:1px solid #1a3d73}
+ .header-icons{display:flex;gap:15px;font-size:20px;cursor:pointer}
+
+ .balance-card{margin:0 20px 20px;background:linear-gradient(135deg,#0d2a5a,#001127);padding:25px;border-radius:20px;border:1px solid #1a3d73;position:relative}
  .balance-card p{color:#8aa4c7;font-size:12px}
- .balance-card h1{font-size:32px;margin:8px 0}
+ .balance-row{display:flex;align-items:center;gap:10px;margin:8px 0}
+ .balance-card h1{font-size:32px}
+ .eye{font-size:20px;cursor:pointer;opacity:0.7}
  .balance-card span{color:#00ff88;font-size:12px}
-  
+
  .actions{display:flex;justify-content:space-around;margin:0 20px 25px}
  .action-btn{text-align:center;color:#cbd5e1;font-size:12px;cursor:pointer}
  .action-icon{width:55px;height:55px;background:#0f2142;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:22px}
- .action-btn:hover.action-icon{background:#1a3d73}
-  
+
  .tabs{display:flex;gap:10px;margin:0 20px 15px;overflow-x:auto}
  .tab{padding:8px 16px;border-radius:20px;background:#0a1a33;color:#8aa4c7;font-size:12px;white-space:nowrap;cursor:pointer}
  .tab.active{background:linear-gradient(90deg,#00ffc8,#00aaff);color:#000;font-weight:700}
-  
+
  .section{margin:0 20px 25px}
  .section-header{display:flex;justify-content:space-between;margin-bottom:15px}
  .section-header h3{font-size:16px}
  .section-header a{color:#00aaff;font-size:12px;text-decoration:none}
-  
+
  .account{background:#0a1a33;padding:15px;border-radius:15px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
  .acc-left{display:flex;align-items:center;gap:12px}
  .flag{font-size:24px;width:35px;text-align:center}
  .acc-name{font-size:14px;font-weight:600}
  .acc-sub{font-size:11px;color:#8aa4c7}
  .acc-balance{font-size:15px;font-weight:700;text-align:right}
-  
+ .no-balance{color:#65758a;font-size:12px;text-align:center;padding:20px}
+
  .navbar{position:fixed;bottom:0;left:0;right:0;background:#04132e;display:flex;justify-content:space-around;padding:12px 0;border-top:1px solid #1a3d73}
  .nav-item{text-align:center;font-size:10px;color:#7a8ca5;cursor:pointer}
  .nav-item.active{color:#00aaff}
@@ -61,8 +62,11 @@
   <div class="balance-card">
     <p>Good morning, <span id="userName">User</span></p>
     <p style="margin-top:10px">Total Balance</p>
-    <h1>$25,680.45</h1>
-    <span>↑ 4.3% from last month</span>
+    <div class="balance-row">
+      <h1 id="totalBalance">$0.00</h1>
+      <span class="eye" onclick="toggleBalance()">👁️</span>
+    </div>
+    <span id="balanceChange">Add funds to get started</span>
   </div>
 
   <!-- ACTIONS -->
@@ -77,65 +81,18 @@
   <div class="tabs">
     <div class="tab active" onclick="showTab('world')">World Currencies</div>
     <div class="tab" onclick="showTab('mobile')">Mobile Money</div>
-    <div class="tab" onclick="showTab('crypto')">Crypto</div>
   </div>
 
   <!-- WORLD CURRENCIES -->
   <div class="section" id="worldTab">
-    <div class="section-header">
-      <h3>World Accounts</h3>
-      <a href="#">Add +</a>
-    </div>
-    
-    <div class="account">
-      <div class="acc-left"><div class="flag">🇺🇸</div><div><div class="acc-name">USD Account</div><div class="acc-sub">United States Dollar</div></div></div>
-      <div class="acc-balance">$ 15,250.00</div>
-    </div>
-    <div class="account">
-      <div class="acc-left"><div class="flag">🇪🇺</div><div><div class="acc-name">EUR Account</div><div class="acc-sub">Euro</div></div></div>
-      <div class="acc-balance">€ 7,890.35</div>
-    </div>
-    <div class="account">
-      <div class="acc-left"><div class="flag">🇬🇧</div><div><div class="acc-name">GBP Account</div><div class="acc-sub">British Pound</div></div></div>
-      <div class="acc-balance">£ 2,540.10</div>
-    </div>
-    <div class="account">
-      <div class="acc-left"><div class="flag">🇨🇦</div><div><div class="acc-name">CAD Account</div><div class="acc-sub">Canadian Dollar</div></div></div>
-      <div class="acc-balance">$ 1,200.50</div>
-    </div>
-    <div class="account">
-      <div class="acc-left"><div class="flag">🇳🇬</div><div><div class="acc-name">NGN Account</div><div class="acc-sub">Nigerian Naira</div></div></div>
-      <div class="acc-balance">₦ 3,500,000.00</div>
-    </div>
-    <div class="account">
-      <div class="acc-left"><div class="flag">🇦🇪</div><div><div class="acc-name">AED Account</div><div class="acc-sub">UAE Dirham</div></div></div>
-      <div class="acc-balance">د.إ 18,900.00</div>
-    </div>
+    <div class="section-header"><h3>World Accounts</h3><a href="#">Add +</a></div>
+    <div id="worldAccounts"></div>
   </div>
 
   <!-- MOBILE MONEY -->
   <div class="section" id="mobileTab" style="display:none">
-    <div class="section-header">
-      <h3>Mobile Money Wallets</h3>
-      <a href="#">Add +</a>
-    </div>
-    
-    <div class="account">
-      <div class="acc-left"><div class="flag">📱</div><div><div class="acc-name">MTN Mobile Money</div><div class="acc-sub">0803 *** *** 22</div></div></div>
-      <div class="acc-balance">₦ 125,400.00</div>
-    </div>
-    <div class="account">
-      <div class="acc-left"><div class="flag">📱</div><div><div class="acc-name">Airtel Money</div><div class="acc-sub">0802 *** *** 22</div></div></div>
-      <div class="acc-balance">₦ 89,200.00</div>
-    </div>
-    <div class="account">
-      <div class="acc-left"><div class="flag">📱</div><div><div class="acc-name">Glo Mobile Money</div><div class="acc-sub">0805 *** *** 22</div></div></div>
-      <div class="acc-balance">₦ 45,600.00</div>
-    </div>
-    <div class="account">
-      <div class="acc-left"><div class="flag">📱</div><div><div class="acc-name">9Mobile Wallet</div><div class="acc-sub">0809 *** *** 22</div></div></div>
-      <div class="acc-balance">₦ 32,100.00</div>
-    </div>
+    <div class="section-header"><h3>Mobile Money Wallets</h3><a href="#">Add +</a></div>
+    <div id="mobileAccounts"></div>
   </div>
 
   <!-- BOTTOM NAV -->
@@ -148,17 +105,87 @@
   </div>
 
 <script>
-  // Show the name from signup
+  let balanceVisible = true;
+  let totalBalance = 0;
+
+  // Load user data
   const name = localStorage.getItem('userName') || 'User';
   document.getElementById('userName').innerText = name;
-  
-  // Tab switcher
+
+  // Load balances from localStorage. If none, it stays 0
+  const userData = JSON.parse(localStorage.getItem('allCurrencyUser')) || {};
+  const balances = userData.balances || {
+    USD: 0, EUR: 0, GBP: 0, CAD: 0, NGN: 0, AED: 0,
+    MTN: 0, Airtel: 0, Glo: 0, Mobile9: 0
+  };
+
+  // Calculate total
+  totalBalance = balances.USD + balances.EUR + balances.GBP + balances.CAD + balances.NGN/1600 + balances.AED/3.67;
+
+  function updateBalanceDisplay(){
+    const el = document.getElementById('totalBalance');
+    if(totalBalance <= 0){
+      el.innerText = '$0.00';
+      document.getElementById('balanceChange').innerText = 'Add funds to get started';
+    } else {
+      el.innerText = balanceVisible? `$${totalBalance.toLocaleString('en-US', {minimumFractionDigits:2})}` : '••••••';
+      document.getElementById('balanceChange').innerText = '↑ 0% from last month';
+    }
+  }
+
+  function toggleBalance(){
+    balanceVisible =!balanceVisible;
+    document.querySelector('.eye').innerText = balanceVisible? '👁️' : '🙈';
+    updateBalanceDisplay();
+  }
+
+  function renderAccounts(){
+    // World Accounts
+    const worldDiv = document.getElementById('worldAccounts');
+    const worldData = [
+      {flag:'🇺🇸', name:'USD Account', sub:'United States Dollar', bal:balances.USD, sym:'$'},
+      {flag:'🇪🇺', name:'EUR Account', sub:'Euro', bal:balances.EUR, sym:'€'},
+      {flag:'🇬🇧', name:'GBP Account', sub:'British Pound', bal:balances.GBP, sym:'£'},
+      {flag:'🇳🇬', name:'NGN Account', sub:'Nigerian Naira', bal:balances.NGN, sym:'₦'}
+    ];
+
+    worldDiv.innerHTML = '';
+    worldData.forEach(acc => {
+      if(acc.bal > 0){
+        worldDiv.innerHTML += `
+        <div class="account">
+          <div class="acc-left"><div class="flag">${acc.flag}</div><div><div class="acc-name">${acc.name}</div><div class="acc-sub">${acc.sub}</div></div></div>
+          <div class="acc-balance">${acc.sym} ${acc.bal.toLocaleString()}</div>
+        </div>`;
+      }
+    });
+    if(worldDiv.innerHTML === '') worldDiv.innerHTML = '<div class="no-balance">No currency accounts funded yet</div>';
+
+    // Mobile Accounts
+    const mobileDiv = document.getElementById('mobileAccounts');
+    const mobileData = [
+      {flag:'📱', name:'MTN Mobile Money', sub:'0803 *** 22', bal:balances.MTN},
+      {flag:'📱', name:'Airtel Money', sub:'0802 *** *** 22', bal:balances.Airtel}
+    ];
+
+    mobileDiv.innerHTML = '';
+    mobileData.forEach(acc => {
+      if(acc.bal > 0){
+        mobileDiv.innerHTML += `
+        <div class="account">
+          <div class="acc-left"><div class="flag">${acc.flag}</div><div><div class="acc-name">${acc.name}</div><div class="acc-sub">${acc.sub}</div></div></div>
+          <div class="acc-balance">₦ ${acc.bal.toLocaleString()}</div>
+        </div>`;
+      }
+    });
+    if(mobileDiv.innerHTML === '') mobileDiv.innerHTML = '<div class="no-balance">No mobile wallets funded yet</div>';
+  }
+
   function showTab(tab) {
     document.getElementById('worldTab').style.display = 'none';
     document.getElementById('mobileTab').style.display = 'none';
-    
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-    
+
     if(tab === 'world'){
       document.getElementById('worldTab').style.display = 'block';
       document.querySelectorAll('.tab')[0].classList.add('active');
@@ -168,6 +195,10 @@
       document.querySelectorAll('.tab')[1].classList.add('active');
     }
   }
+
+  // Initial load
+  updateBalanceDisplay();
+  renderAccounts();
 </script>
 
 </body>
