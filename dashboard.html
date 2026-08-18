@@ -3,27 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dashboard - All Currency Bank</title>
+<title>Dashboard - Global Currency Bank</title>
 <style>
   *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif;-webkit-tap-highlight-color:transparent}
-  body{background:#020a1a;color:#fff;min-height:100vh;padding-bottom:90px} /* added padding for nav */
-  
+  body{background:#020a1a;color:#fff;min-height:100vh;padding-bottom:120px} /* 120px for chrome bar */
  .header{padding:20px;display:flex;justify-content:space-between;align-items:center}
  .logo-title{display:flex;align-items:center;gap:10px}
  .logo-title img{width:35px;height:35px;border-radius:8px}
  .logo-title h2{font-size:15px;font-weight:700;background:linear-gradient(90deg,#00ffc8,#00aaff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-
  .balance-card{margin:0 20px 20px;background:linear-gradient(135deg,#0d2a5a,#001127);padding:25px;border-radius:20px;border:1px solid #1a3d73}
  .balance-card p{color:#8aa4c7;font-size:12px}
  .balance-row{display:flex;align-items:center;gap:10px;margin:8px 0}
  .balance-card h1{font-size:32px}
  .eye{font-size:20px;cursor:pointer;opacity:0.7}
-
  .actions{display:flex;justify-content:space-around;margin:0 20px 25px}
- .action-btn{text-align:center;color:#cbd5e1;font-size:12px;cursor:pointer;padding:10px;transition:0.2s}
- .action-btn:active{transform:scale(0.95);opacity:0.7}
+ .action-btn{text-align:center;color:#cbd5e1;font-size:12px;cursor:pointer;padding:10px}
+ .action-btn:active{transform:scale(0.95)}
  .action-icon{width:55px;height:55px;background:#0f2142;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:22px}
-
  .currency-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 20px}
  .currency{background:#0a1a33;padding:12px;border-radius:12px;border:1px solid #1a3d73}
  .currency.top{background:linear-gradient(135deg,#0f2142,#0a1a33);border-color:#00aaff}
@@ -33,31 +29,20 @@
  .cur-rate{font-size:11px;color:#00ff88}
  .cur-balance{font-size:13px;color:#8aa4c7}
  .my-balance{color:#00aaff;font-weight:700}
-
- /* FIXED NAVBAR - THIS IS THE KEY */
- .navbar{
-   position:fixed;bottom:0;left:0;right:0;background:#04132e;
-   display:flex;justify-content:space-around;padding:12px 0;
-   border-top:1px solid #1a3d73;z-index:9999; /* sits on top */
- }
- .nav-item{
-   text-align:center;font-size:10px;color:#7a8ca5;cursor:pointer;
-   padding:8px 15px;transition:0.2s;min-width:60px /* bigger tap area */
- }
- .nav-item:active{transform:scale(0.9);opacity:0.7}
+ .navbar{position:fixed;bottom:0;left:0;right:0;background:#04132e;display:flex;justify-content:space-around;padding:12px 0;border-top:1px solid #1a3d73;z-index:9999}
+ .nav-item{text-align:center;font-size:10px;color:#7a8ca5;cursor:pointer;padding:8px 15px;min-width:60px}
+ .nav-item:active{transform:scale(0.9)}
  .nav-item.active{color:#00aaff}
- .nav-icon{font-size:22px;margin-bottom:4px;pointer-events:none} /* icon doesn't block tap */
+ .nav-icon{font-size:22px;margin-bottom:4px;pointer-events:none}
 </style>
 </head>
 <body>
-
   <div class="header">
     <div class="logo-title">
       <img src="Screenshot_2026-08-17-18-53-58-99.png" alt="logo">
-      <h2>ALL CURRENCY BANK</h2>
+      <h2>GLOBAL CURRENCY BANK</h2>
     </div>
   </div>
-
   <div class="balance-card">
     <p>Good morning, <span id="userName">User</span></p>
     <p style="margin-top:10px">Total Balance</p>
@@ -66,36 +51,34 @@
       <span class="eye" onclick="toggleBalance()">👁️</span>
     </div>
   </div>
-
   <div class="actions">
     <div class="action-btn" onclick="location.href='transfers.html'"><div class="action-icon">↗</div>Send</div>
     <div class="action-btn" onclick="location.href='transfers.html'"><div class="action-icon">↓</div>Receive</div>
     <div class="action-btn" onclick="alert('Exchange Coming Soon')"><div class="action-icon">⇄</div>Exchange</div>
     <div class="action-btn" onclick="alert('More Options')"><div class="action-icon">⋯</div>More</div>
   </div>
-
   <div class="currency-grid" id="currencyGrid"></div>
-
-  <!-- BOTTOM NAV -->
   <div class="navbar">
     <div class="nav-item active"><div class="nav-icon">🏠</div>Home</div>
-    <div class="nav-item" onclick="location.href='account.html'"><div class="nav-icon">💼</div>Accounts</div>
-    <div class="nav-item" onclick="location.href='transfer.html'"><div class="nav-icon">↔</div>Transfers</div>
-    <div class="nav-item" onclick="location.href='card.html'"><div class="nav-icon">💳</div>Cards</div>
+    <div class="nav-item" onclick="location.href='accounts.html'"><div class="nav-icon">💼</div>Accounts</div>
+    <div class="nav-item" onclick="location.href='transfers.html'"><div class="nav-icon">↔</div>Transfers</div>
+    <div class="nav-item" onclick="location.href='cards.html'"><div class="nav-icon">💳</div>Cards</div>
     <div class="nav-item" onclick="location.href='settings.html'"><div class="nav-icon">⚙️</div>Settings</div>
   </div>
-
 <script>
+  // AUTH PROTECTION: Kick to index if not logged in
+  if(!localStorage.getItem('userName')){ window.location.href = 'index.html'; }
+
   let balanceVisible = true;
   const name = localStorage.getItem('userName') || 'User';
   document.getElementById('userName').innerText = name;
-  // ... rest of your JS stays same
   const userData = JSON.parse(localStorage.getItem('allCurrencyUser')) || {};
   const balances = userData.balances || {};
   const currencies = [
     {code:'USD', flag:'🇺🇸', rate:1.00, symbol:'$'},
     {code:'NGN', flag:'🇳🇬', rate:1600.50, symbol:'₦'},
     {code:'GHS', flag:'🇬🇭', rate:15.80, symbol:'₵'},
+    {code:'EUR', flag:'🇪🇺', rate:0.93, symbol:'€'},
   ];
   let totalBalance = 0;
   function renderCurrencies(){
