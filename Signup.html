@@ -6,7 +6,6 @@
 
 <title>Global Currency Bank - Sign Up</title>
 
-<!-- EmailJS -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 <style>
@@ -111,15 +110,17 @@ button {
   font-size: 14px;
 }
 
-button:active {
-  transform: scale(.98);
+button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
 }
 
 #message {
   text-align: center;
   font-size: 12px;
   margin-top: 12px;
-  min-height: 18px;
+  min-height: 35px;
+  line-height: 18px;
 }
 
 .login {
@@ -145,7 +146,6 @@ button:active {
 
   <div class="header">
 
-    <!-- YOUR LOGO -->
     <img
       src="Screenshot_2026-08-17-18-53-58-99.png"
       alt="Global Currency Bank Logo"
@@ -162,55 +162,55 @@ button:active {
 
   <div class="field">
     <label>Full Name</label>
-
     <input
       id="name"
       type="text"
       placeholder="Enter your full name"
+      autocomplete="name"
     >
   </div>
 
   <div class="field">
     <label>Email Address</label>
-
     <input
       id="email"
       type="email"
       placeholder="Enter your email address"
+      autocomplete="email"
     >
   </div>
 
   <div class="field">
     <label>Phone Number</label>
-
     <input
       id="phone"
       type="tel"
       placeholder="Enter your phone number"
+      autocomplete="tel"
     >
   </div>
 
   <div class="field">
     <label>Password</label>
-
     <input
       id="password"
       type="password"
       placeholder="Create a password"
+      autocomplete="new-password"
     >
   </div>
 
   <div class="field">
     <label>Confirm Password</label>
-
     <input
       id="confirmPassword"
       type="password"
       placeholder="Confirm your password"
+      autocomplete="new-password"
     >
   </div>
 
-  <button id="signupButton" onclick="createAccount()">
+  <button id="signupButton" type="button">
     Sign Up
   </button>
 
@@ -223,29 +223,43 @@ button:active {
 
 </div>
 
+
 <script>
 
-/* ==========================================
-   EMAILJS SETTINGS
-   ========================================== */
+/* =========================================
+   YOUR EMAILJS DETAILS
+   ========================================= */
 
-const EMAILJS_PUBLIC_KEY = "7H-20VEn5wiKflwzI";
-const EMAILJS_SERVICE_ID = "service_j557oql";
-const EMAILJS_TEMPLATE_ID = "template_qoeiqtj";
+const PUBLIC_KEY = "7H-20VEn5wiKflwzI";
+const SERVICE_ID = "service_j557oql";
+const TEMPLATE_ID = "template_qoeiqtj";
 
 
-/* Initialize EmailJS */
+/* =========================================
+   INITIALIZE EMAILJS
+   ========================================= */
 
 emailjs.init({
-  publicKey: EMAILJS_PUBLIC_KEY
+  publicKey: PUBLIC_KEY
 });
 
 
-/* ==========================================
-   GENERATE 6 DIGIT VERIFICATION CODE
-   ========================================== */
+/* =========================================
+   ELEMENTS
+   ========================================= */
 
-function generateVerificationCode() {
+const button =
+  document.getElementById("signupButton");
+
+const message =
+  document.getElementById("message");
+
+
+/* =========================================
+   GENERATE CODE
+   ========================================= */
+
+function generateCode() {
 
   return Math.floor(
     100000 + Math.random() * 900000
@@ -254,11 +268,11 @@ function generateVerificationCode() {
 }
 
 
-/* ==========================================
-   CREATE ACCOUNT
-   ========================================== */
+/* =========================================
+   SIGN UP
+   ========================================= */
 
-function createAccount() {
+button.addEventListener("click", async function() {
 
   const name =
     document.getElementById("name").value.trim();
@@ -275,69 +289,78 @@ function createAccount() {
   const confirmPassword =
     document.getElementById("confirmPassword").value;
 
-  const message =
-    document.getElementById("message");
 
-  const button =
-    document.getElementById("signupButton");
-
-
-  /* Check fields */
+  /* CHECK FIELDS */
 
   if (
-    name === "" ||
-    email === "" ||
-    phone === "" ||
-    password === "" ||
-    confirmPassword === ""
+    !name ||
+    !email ||
+    !phone ||
+    !password ||
+    !confirmPassword
   ) {
 
-    message.style.color = "#ff6b6b";
-
-    message.innerText =
-      "Please complete all fields.";
+    showMessage(
+      "Please complete all fields.",
+      "#ff6b6b"
+    );
 
     return;
   }
 
 
-  /* Check password */
+  /* CHECK EMAIL */
+
+  if (!email.includes("@")) {
+
+    showMessage(
+      "Please enter a valid email address.",
+      "#ff6b6b"
+    );
+
+    return;
+  }
+
+
+  /* CHECK PASSWORD */
 
   if (password.length < 8) {
 
-    message.style.color = "#ff6b6b";
-
-    message.innerText =
-      "Password must be at least 8 characters.";
+    showMessage(
+      "Password must contain at least 8 characters.",
+      "#ff6b6b"
+    );
 
     return;
   }
 
 
-  /* Check matching passwords */
+  /* CHECK PASSWORD MATCH */
 
   if (password !== confirmPassword) {
 
-    message.style.color = "#ff6b6b";
-
-    message.innerText =
-      "Passwords do not match.";
+    showMessage(
+      "Passwords do not match.",
+      "#ff6b6b"
+    );
 
     return;
   }
 
 
-  /* Create verification code */
+  /* GENERATE VERIFICATION CODE */
 
-  const verificationCode =
-    generateVerificationCode();
+  const code =
+    generateCode();
 
 
-  /* Save temporary information */
+  /*
+    SAVE VERIFICATION DATA
+  */
 
   sessionStorage.setItem(
     "verificationCode",
-    verificationCode
+    code
   );
 
   sessionStorage.setItem(
@@ -361,84 +384,135 @@ function createAccount() {
   );
 
 
-  /* Disable button */
+  /*
+    IMPORTANT:
+    This is only temporary prototype data.
+    Do NOT use localStorage for real banking
+    passwords in a production application.
+  */
+
+  sessionStorage.setItem(
+    "newUserPassword",
+    password
+  );
+
 
   button.disabled = true;
 
   button.innerText =
     "Sending Code...";
 
-  message.style.color = "#e4b947";
 
-  message.innerText =
-    "Sending verification code to " + email + "...";
+  showMessage(
+    "Sending verification code to " +
+    email + "...",
+    "#e4b947"
+  );
 
 
-  /* ==========================================
-     SEND CODE USING EMAILJS
-     ========================================== */
+  /*
+    SEND EMAIL
+  */
 
-  emailjs.send(
-    EMAILJS_SERVICE_ID,
-    EMAILJS_TEMPLATE_ID,
-    {
+  try {
 
-      to_email: email,
+    const response =
+      await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
 
-      user_name: name,
+          to_email: email,
 
-      otp_code: verificationCode,
+          user_name: name,
 
-      purpose: "New Account Registration"
+          otp_code: code,
 
-    }
-  )
+          purpose: "New Account Registration"
 
-  .then(function(response) {
+        }
+      );
+
 
     console.log(
-      "EmailJS success:",
+      "EmailJS response:",
       response
     );
 
-    message.style.color =
-      "#00dcae";
 
-    message.innerText =
-      "Code sent! Check your email.";
+    showMessage(
+      "✓ Verification code sent! Check your email.",
+      "#00dcae"
+    );
+
+
+    /*
+      GO TO VERIFICATION PAGE
+    */
 
     setTimeout(function() {
 
       window.location.href =
         "verify.html";
 
-    }, 1200);
+    }, 1000);
 
-  })
 
-  .catch(function(error) {
+  } catch (error) {
 
     console.error(
-      "EmailJS error:",
+      "EMAILJS ERROR:",
       error
     );
+
 
     button.disabled = false;
 
     button.innerText =
       "Sign Up";
 
-    message.style.color =
-      "#ff6b6b";
 
-    message.innerText =
-      "Code could not be sent. Check your EmailJS settings.";
+    /*
+      SHOW THE ACTUAL ERROR
+      INSTEAD OF JUST SAYING FAILED
+    */
 
-  });
+    let errorText =
+      "Unable to send verification code.";
+
+    if (error && error.text) {
+
+      errorText =
+        error.text;
+
+    }
+
+
+    showMessage(
+      errorText,
+      "#ff6b6b"
+    );
+
+  }
+
+});
+
+
+/* =========================================
+   MESSAGE FUNCTION
+   ========================================= */
+
+function showMessage(text, color) {
+
+  message.style.color =
+    color;
+
+  message.innerText =
+    text;
 
 }
 
 </script>
 
 </body>
-</html>
+  </html>
