@@ -1,1258 +1,391 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Global Currency Bank</title>
+<title>Global Currency Bank - Login</title>
 
 <style>
 * {
   box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
-:root {
-  --bg: #020b18;
-  --panel: #071d38;
-  --panel2: #0a2850;
-  --gold: #e7bd55;
-  --gold2: #ffd86b;
-  --blue: #168cff;
-  --text: #ffffff;
-  --muted: #91a1b7;
-  --green: #24e6a5;
-  --red: #ff5c68;
 }
 
 body {
   margin: 0;
-  background:
-    radial-gradient(circle at top, #0b2b52 0%, #020914 55%, #000 100%);
-  color: var(--text);
-  font-family: Arial, Helvetica, sans-serif;
   min-height: 100vh;
-}
-
-/* ==============================
-   AUTH SCREEN
-============================== */
-
-#authScreen {
-  min-height: 100vh;
+  background: #000;
+  font-family: Arial, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 15px;
 }
 
-.authBox {
+.app {
   width: 100%;
   max-width: 430px;
-  background: linear-gradient(180deg,#08254a,#031225);
-  border: 1px solid #315d91;
+  background: linear-gradient(180deg, #031a38, #001127);
+  border: 2px solid #4168a5;
   border-radius: 30px;
-  padding: 30px 23px;
-  box-shadow: 0 25px 70px rgba(0,0,0,.55);
+  padding: 30px 22px;
+  color: white;
+  box-shadow: 0 0 30px rgba(30,100,180,.25);
+}
+
+.back {
+  font-size: 30px;
+  margin-bottom: 8px;
+}
+
+.back a {
+  color: white;
+  text-decoration: none;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 28px;
 }
 
 .logo {
-  width: 92px;
-  height: 92px;
-  display: block;
-  margin: auto;
-  object-fit: cover;
+  width: 95px;
+  height: 95px;
   border-radius: 22px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.5);
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 10px;
 }
 
-.bankTitle {
-  text-align: center;
-  margin-top: 14px;
-  font-size: 23px;
-  font-weight: 800;
+h1 {
+  font-size: 24px;
+  margin: 5px 0;
 }
 
-.tagline {
-  text-align: center;
-  color: var(--gold);
+.subtitle {
+  color: #e4b947;
   font-size: 12px;
-  margin-top: 5px;
 }
 
-.authSubtitle {
-  text-align: center;
-  color: #9cabc0;
-  margin: 25px 0 18px;
-  font-size: 14px;
+.welcome {
+  margin-bottom: 20px;
 }
 
-.authButtons {
-  display: grid;
-  gap: 12px;
+.welcome h2 {
+  margin-bottom: 5px;
+  font-size: 20px;
 }
 
-.authButtons button,
-.primaryBtn {
-  height: 52px;
-  border: 0;
-  border-radius: 12px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.signInBtn {
-  background: linear-gradient(135deg,#ffd96c,#dba331);
-  color: #101010;
-}
-
-.signUpBtn {
-  background: #0a2b51;
-  color: white;
-  border: 1px solid #315b8e !important;
-}
-
-.authForm {
-  display: none;
-}
-
-.authForm h2 {
-  text-align: center;
-  margin: 8px 0 20px;
+.welcome p {
+  color: #9ba8ba;
+  font-size: 13px;
 }
 
 .field {
-  margin-bottom: 13px;
+  margin-bottom: 15px;
 }
 
-.field label {
+label {
   display: block;
-  color: #a9b8ca;
+  color: #aab6c6;
   font-size: 12px;
   margin-bottom: 6px;
 }
 
-.field input,
-.field select {
+input {
   width: 100%;
-  height: 49px;
-  border: 1px solid #294c74;
+  height: 50px;
   border-radius: 11px;
-  background: #071f3d;
+  border: 1px solid #29496e;
+  background: #0b294b;
   color: white;
-  padding: 0 13px;
+  padding: 0 14px;
   outline: none;
+  font-size: 14px;
 }
 
-.field input:focus,
-.field select:focus {
-  border-color: var(--gold);
+input:focus {
+  border-color: #e6bd50;
 }
 
-.backAuth {
-  color: var(--gold);
-  text-align: center;
-  margin-top: 18px;
-  cursor: pointer;
-  font-size: 13px;
+.forgot {
+  text-align: right;
+  margin-top: -5px;
+  margin-bottom: 15px;
 }
 
-.authMessage {
-  min-height: 20px;
-  text-align: center;
+.forgot a {
+  color: #e6bd50;
+  text-decoration: none;
   font-size: 12px;
-  margin: 10px 0;
 }
 
-/* ==============================
-   DASHBOARD
-============================== */
-
-#dashboard {
-  display: none;
-  min-height: 100vh;
-  padding-bottom: 85px;
-}
-
-.appHeader {
-  max-width: 600px;
-  margin: auto;
-  padding: 22px 20px 8px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.smallLogo {
-  width: 48px;
-  height: 48px;
-  border-radius: 13px;
-  object-fit: cover;
-}
-
-.brandText strong {
-  display: block;
-  font-size: 15px;
-  letter-spacing: .5px;
-}
-
-.brandText span {
-  color: var(--gold);
-  font-size: 9px;
-}
-
-.headerIcons {
-  display: flex;
-  gap: 9px;
-}
-
-.iconButton {
-  width: 43px;
-  height: 43px;
-  border-radius: 50%;
-  border: 1px solid #31587f;
-  background: #082343;
-  color: white;
-  font-size: 19px;
-  cursor: pointer;
-}
-
-.main {
-  max-width: 600px;
-  margin: auto;
-  padding: 5px 18px;
-}
-
-/* Balance */
-
-.balanceCard {
-  position: relative;
-  overflow: hidden;
-  padding: 22px;
-  border-radius: 23px;
-  background:
-    linear-gradient(135deg,#0a2d5c,#061b35);
-  border: 1px solid #173f6d;
-  min-height: 190px;
-}
-
-.balanceCard:after {
-  content: "🌎";
-  position: absolute;
-  right: -5px;
-  top: 25px;
-  opacity: .08;
-  font-size: 130px;
-}
-
-.balanceLabel {
-  color: #c5cfdb;
-  font-size: 15px;
-}
-
-.balanceAmount {
-  font-size: 35px;
-  font-weight: 800;
-  margin-top: 10px;
-  letter-spacing: 1px;
-}
-
-.balanceGrowth {
-  color: var(--green);
-  margin-top: 8px;
-  font-size: 14px;
-}
-
-/* Action buttons */
-
-.actions {
-  display: grid;
-  grid-template-columns: repeat(4,1fr);
-  gap: 10px;
-  margin: 18px 0 24px;
-}
-
-.action {
-  background: #082a54;
-  border: 1px solid #153e69;
-  border-radius: 16px;
-  min-height: 103px;
-  color: white;
-  cursor: pointer;
-  padding: 10px 5px;
-}
-
-.actionIcon {
-  width: 45px;
-  height: 45px;
-  border-radius: 13px;
-  margin: 0 auto 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #0b3770;
-  font-size: 23px;
-}
-
-.action span {
-  font-size: 13px;
-}
-
-/* Section */
-
-.sectionHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 17px 0 10px;
-}
-
-.sectionHeader h2 {
-  font-size: 20px;
-  margin: 0;
-}
-
-.seeAll {
-  color: var(--blue);
-  cursor: pointer;
-  font-size: 13px;
-}
-
-/* Currency accounts */
-
-.currencyBox {
-  background: linear-gradient(180deg,#092a52,#061f3e);
-  border: 1px solid #173f6a;
-  border-radius: 19px;
-  overflow: hidden;
-}
-
-.currencyRow {
-  display: flex;
-  align-items: center;
-  padding: 15px 17px;
-  border-bottom: 1px solid #193d62;
-}
-
-.currencyRow:last-child {
-  border-bottom: 0;
-}
-
-.flag {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  background: #15365c;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  margin-right: 12px;
-}
-
-.currencyInfo {
-  flex: 1;
-}
-
-.currencyInfo strong {
-  display: block;
-  font-size: 15px;
-}
-
-.currencyInfo span {
-  color: #899bb2;
-  font-size: 11px;
-}
-
-.currencyAmount {
-  text-align: right;
-}
-
-.currencyAmount strong {
-  display: block;
-  font-size: 14px;
-}
-
-.currencyAmount span {
-  color: #7d90aa;
-  font-size: 11px;
-}
-
-.arrow {
-  color: #748aa6;
-  font-size: 25px;
-  margin-left: 8px;
-}
-
-/* Transactions */
-
-.transactions {
-  background: #082746;
-  border: 1px solid #173d65;
-  border-radius: 19px;
-  overflow: hidden;
-}
-
-.transaction {
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  border-bottom: 1px solid #173c61;
-}
-
-.transaction:last-child {
-  border-bottom: 0;
-}
-
-.transIcon {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 12px;
-  font-size: 20px;
-}
-
-.received {
-  background: rgba(0,210,150,.18);
-  color: var(--green);
-}
-
-.sent {
-  background: rgba(255,70,90,.18);
-  color: var(--red);
-}
-
-.transInfo {
-  flex: 1;
-}
-
-.transInfo strong {
-  display: block;
-  font-size: 14px;
-}
-
-.transInfo span {
-  color: #8c9caf;
-  font-size: 11px;
-}
-
-.transMoney {
-  text-align: right;
-}
-
-.transMoney strong {
-  display: block;
-}
-
-.transMoney small {
-  color: #8999ae;
-}
-
-/* ==============================
-   CURRENCY SEARCH
-============================== */
-
-.currencyPanel {
-  display: none;
-}
-
-.search {
+button {
   width: 100%;
-  height: 48px;
-  border-radius: 13px;
-  background: #092747;
-  border: 1px solid #21496f;
-  color: white;
-  padding: 0 15px;
-  margin: 8px 0 12px;
-  outline: none;
+  height: 50px;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(#f7d267, #dca32f);
+  color: #111;
+  font-size: 16px;
+  font-weight: 800;
+  cursor: pointer;
 }
 
-.currencyList {
-  max-height: 440px;
-  overflow-y: auto;
+button:disabled {
+  opacity: .6;
 }
 
-.currencyOption {
+#message {
+  text-align: center;
+  font-size: 13px;
+  margin-top: 15px;
+  min-height: 18px;
+}
+
+.divider {
   display: flex;
   align-items: center;
-  padding: 12px;
-  background: #082746;
-  border-bottom: 1px solid #183d60;
+  gap: 10px;
+  margin: 25px 0;
+  color: #718096;
+  font-size: 12px;
 }
 
-.currencyOption .flag {
-  width: 38px;
-  height: 38px;
-  margin-right: 10px;
-}
-
-.currencyOptionInfo {
+.divider::before,
+.divider::after {
+  content: "";
   flex: 1;
+  height: 1px;
+  background: #183657;
 }
 
-.currencyOptionInfo strong {
-  font-size: 14px;
+.signup {
+  text-align: center;
+  color: #9ba8ba;
+  font-size: 13px;
 }
 
-.currencyOptionInfo small {
-  display: block;
-  color: #8395aa;
-  margin-top: 3px;
-}
-
-.currencyCode {
-  color: var(--gold);
+.signup a {
+  color: #e6b950;
+  text-decoration: none;
   font-weight: bold;
 }
 
-/* ==============================
-   MODAL
-============================== */
-
-.modal {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.75);
-  z-index: 100;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-.modalBox {
-  width: 100%;
-  max-width: 600px;
-  background: linear-gradient(180deg,#0a2b50,#031426);
-  border-radius: 25px 25px 0 0;
-  padding: 25px 20px 30px;
-  border: 1px solid #31567d;
-  animation: slideUp .25s ease;
-}
-
-@keyframes slideUp {
-  from {
-    transform: translateY(100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-
-.modalHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 18px;
-}
-
-.modalHeader h2 {
-  margin: 0;
-}
-
-.close {
-  background: #163b60;
-  border: 0;
-  color: white;
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
-  cursor: pointer;
-}
-
-/* ==============================
-   BOTTOM NAV
-============================== */
-
-.bottomNav {
-  position: fixed;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 600px;
-  height: 76px;
-  background: rgba(2,15,30,.97);
-  border-top: 1px solid #173653;
-  display: grid;
-  grid-template-columns: repeat(5,1fr);
-  z-index: 50;
-}
-
-.navItem {
-  border: 0;
-  background: transparent;
-  color: #7d8ca0;
+.security {
+  text-align: center;
+  margin-top: 22px;
+  color: #65758a;
   font-size: 10px;
-  cursor: pointer;
-}
-
-.navItem div {
-  font-size: 21px;
-  margin-bottom: 4px;
-}
-
-.navItem.active {
-  color: #168cff;
-}
-
-/* ==============================
-   RESPONSIVE
-============================== */
-
-@media(max-width:390px) {
-
-  .actions {
-    gap: 6px;
-  }
-
-  .action {
-    min-height: 95px;
-  }
-
-  .action span {
-    font-size: 11px;
-  }
-
-  .balanceAmount {
-    font-size: 30px;
-  }
-
 }
 </style>
+
 </head>
 
 <body>
 
-<!-- =====================================================
-     AUTH SCREEN
-===================================================== -->
+<div class="app">
 
-<div id="authScreen">
+  <div class="back">
+    <a href="./index.html">‹</a>
+  </div>
 
-  <div class="authBox">
+  <div class="header">
 
     <img
-      src="Screenshot_2026-08-17-18-53-58-99.png"
+      src="./Screenshot_2026-08-17-18-53-58-99.png"
       class="logo"
-      alt="Global Currency Bank"
+      alt="Global Currency Bank Logo"
     >
 
-    <div class="bankTitle">
-      Global Currency Bank
-    </div>
+    <h1>Global Currency Bank</h1>
 
-    <div class="tagline">
+    <div class="subtitle">
       Banking Beyond Borders
     </div>
 
-    <!-- CHOICE -->
-
-    <div id="choiceScreen">
-
-      <div class="authSubtitle">
-        Welcome to Global Currency Bank
-      </div>
-
-      <div class="authButtons">
-
-        <button
-          class="signInBtn"
-          onclick="showSignIn()">
-          Sign In
-        </button>
-
-        <button
-          class="signUpBtn"
-          onclick="showSignUp()">
-          Create Account
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <!-- SIGN IN -->
-
-    <div id="signInForm" class="authForm">
-
-      <h2>Welcome Back</h2>
-
-      <div class="field">
-        <label>Email Address</label>
-        <input
-          id="loginEmail"
-          type="email"
-          placeholder="Enter your email"
-        >
-      </div>
-
-      <div class="field">
-        <label>Password</label>
-        <input
-          id="loginPassword"
-          type="password"
-          placeholder="Enter your password"
-        >
-      </div>
-
-      <button
-        class="primaryBtn signInBtn"
-        onclick="loginUser()">
-        Sign In
-      </button>
-
-      <div
-        id="loginMessage"
-        class="authMessage">
-      </div>
-
-      <div
-        class="backAuth"
-        onclick="showChoice()">
-        ← Back
-      </div>
-
-    </div>
-
-
-    <!-- SIGN UP -->
-
-    <div id="signUpForm" class="authForm">
-
-      <h2>Create Account</h2>
-
-      <div class="field">
-        <label>Full Name</label>
-        <input
-          id="signupName"
-          type="text"
-          placeholder="Full name"
-        >
-      </div>
-
-      <div class="field">
-        <label>Email Address</label>
-        <input
-          id="signupEmail"
-          type="email"
-          placeholder="Email address"
-        >
-      </div>
-
-      <div class="field">
-        <label>Phone Number</label>
-        <input
-          id="signupPhone"
-          type="tel"
-          placeholder="Phone number"
-        >
-      </div>
-
-      <div class="field">
-        <label>Password</label>
-        <input
-          id="signupPassword"
-          type="password"
-          placeholder="Create password"
-        >
-      </div>
-
-      <div class="field">
-        <label>Confirm Password</label>
-        <input
-          id="signupConfirm"
-          type="password"
-          placeholder="Confirm password"
-        >
-      </div>
-
-      <button
-        class="primaryBtn signInBtn"
-        onclick="registerUser()">
-        Create Account
-      </button>
-
-      <div
-        id="signupMessage"
-        class="authMessage">
-      </div>
-
-      <div
-        class="backAuth"
-        onclick="showChoice()">
-        ← Back
-      </div>
-
-    </div>
-
   </div>
 
-</div>
+  <div class="welcome">
 
+    <h2>Welcome Back</h2>
 
-<!-- =====================================================
-     DASHBOARD
-===================================================== -->
-
-<div id="dashboard">
-
-  <header class="appHeader">
-
-    <div class="brand">
-
-      <img
-        src="Screenshot_2026-08-17-18-53-58-99.png"
-        class="smallLogo"
-        alt="Logo"
-      >
-
-      <div class="brandText">
-        <strong>GLOBAL CURRENCY BANK</strong>
-        <span>BANKING BEYOND BORDERS</span>
-      </div>
-
-    </div>
-
-    <div class="headerIcons">
-
-      <button
-        class="iconButton"
-        onclick="openModal('notificationModal')">
-        🔔
-      </button>
-
-      <button
-        class="iconButton"
-        onclick="openModal('profileModal')">
-        👤
-      </button>
-
-    </div>
-
-  </header>
-
-
-  <main class="main">
-
-    <!-- BALANCE -->
-
-    <section class="balanceCard">
-
-      <div class="balanceLabel">
-        Total Balance 👁
-      </div>
-
-      <div
-        class="balanceAmount"
-        id="totalBalance">
-        $25,680.45
-      </div>
-
-      <div class="balanceGrowth">
-        ↑ 4.3% from last month
-      </div>
-
-    </section>
-
-
-    <!-- ACTIONS -->
-
-    <section class="actions">
-
-      <button
-        class="action"
-        onclick="openSend()">
-
-        <div class="actionIcon">↗</div>
-        <span>Send</span>
-
-      </button>
-
-      <button
-        class="action"
-        onclick="openReceive()">
-
-        <div class="actionIcon">↓</div>
-        <span>Receive</span>
-
-      </button>
-
-      <button
-        class="action"
-        onclick="openExchange()">
-
-        <div class="actionIcon">⇄</div>
-        <span>Exchange</span>
-
-      </button>
-
-      <button
-        class="action"
-        onclick="showCurrencies()">
-
-        <div class="actionIcon">•••</div>
-        <span>More</span>
-
-      </button>
-
-    </section>
-
-
-    <!-- ACCOUNTS -->
-
-    <div class="sectionHeader">
-
-      <h2>Accounts</h2>
-
-      <span
-        class="seeAll"
-        onclick="showCurrencies()">
-        See All
-      </span>
-
-    </div>
-
-    <div
-      class="currencyBox"
-      id="mainAccounts">
-    </div>
-
-
-    <!-- TRANSACTIONS -->
-
-    <div class="sectionHeader">
-
-      <h2>Recent Transactions</h2>
-
-      <span
-        class="seeAll"
-        onclick="openModal('transactionsModal')">
-        See All
-      </span>
-
-    </div>
-
-    <div class="transactions">
-
-      <div class="transaction">
-
-        <div class="transIcon received">
-          ↗
-        </div>
-
-        <div class="transInfo">
-          <strong>Money Received</strong>
-          <span>From John Doe</span>
-        </div>
-
-        <div class="transMoney">
-          <strong style="color:#24e6a5">
-            +$1,250.00
-          </strong>
-          <small>Today</small>
-        </div>
-
-      </div>
-
-
-      <div class="transaction">
-
-        <div class="transIcon sent">
-          ↗
-        </div>
-
-        <div class="transInfo">
-          <strong>Money Sent</strong>
-          <span>To Sarah Smith</span>
-        </div>
-
-        <div class="transMoney">
-          <strong style="color:#ff5c68">
-            -$850.00
-          </strong>
-          <small>Yesterday</small>
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <!-- ALL CURRENCIES -->
-
-    <section
-      id="currencyPanel"
-      class="currencyPanel">
-
-      <div class="sectionHeader">
-        <h2>Global Currencies</h2>
-      </div>
-
-      <input
-        id="currencySearch"
-        class="search"
-        placeholder="Search currency or country..."
-        oninput="searchCurrencies()"
-      >
-
-      <div
-        id="currencyList"
-        class="currencyList">
-      </div>
-
-    </section>
-
-  </main>
-
-
-  <!-- BOTTOM NAV -->
-
-  <nav class="bottomNav">
-
-    <button
-      class="navItem active"
-      onclick="goHome(this)">
-      <div>⌂</div>
-      Home
-    </button>
-
-    <button
-      class="navItem"
-      onclick="showCurrencies(this)">
-      <div>▣</div>
-      Accounts
-    </button>
-
-    <button
-      class="navItem"
-      onclick="openSend()">
-      <div>⇄</div>
-      Transfers
-    </button>
-
-    <button
-      class="navItem"
-      onclick="openModal('cardsModal')">
-      <div>▭</div>
-      Cards
-    </button>
-
-    <button
-      class="navItem"
-      onclick="openModal('settingsModal')">
-      <div>⚙</div>
-      Settings
-    </button>
-
-  </nav>
-
-</div>
-
-
-<!-- =====================================================
-     SEND MODAL
-===================================================== -->
-
-<div
-  id="sendModal"
-  class="modal"
-  onclick="closeOutside(event,'sendModal')">
-
-  <div class="modalBox">
-
-    <div class="modalHeader">
-
-      <h2>Send Money</h2>
-
-      <button
-        class="close"
-        onclick="closeModal('sendModal')">
-        ×
-      </button>
-
-    </div>
-
-    <div class="field">
-      <label>Recipient</label>
-      <input
-        id="recipient"
-        placeholder="Email or phone number">
-    </div>
-
-    <div class="field">
-      <label>Amount</label>
-      <input
-        id="sendAmount"
-        type="number"
-        placeholder="0.00">
-    </div>
-
-    <button
-      class="primaryBtn signInBtn"
-      onclick="sendMoney()">
-      Continue
-    </button>
-
-    <div
-      id="sendMessage"
-      class="authMessage">
-    </div>
-
-  </div>
-
-</div>
-
-
-<!-- =====================================================
-     RECEIVE MODAL
-===================================================== -->
-
-<div
-  id="receiveModal"
-  class="modal"
-  onclick="closeOutside(event,'receiveModal')">
-
-  <div class="modalBox">
-
-    <div class="modalHeader">
-
-      <h2>Receive Money</h2>
-
-      <button
-        class="close"
-        onclick="closeModal('receiveModal')">
-        ×
-      </button>
-
-    </div>
-
-    <p style="color:#9aabc0">
-      Share your Global Currency Bank receiving information.
+    <p>
+      Login to access your account
     </p>
 
-    <div
-      style="
-      background:#08294e;
-      border-radius:15px;
-      padding:20px;
-      text-align:center;
-      margin:15px 0;">
-      
-      <div style="font-size:12px;color:#8fa0b6">
-        Your Account
-      </div>
+  </div>
 
-      <strong id="receiveEmail">
-        -
-      </strong>
+  <div class="field">
 
-    </div>
+    <label>Email Address</label>
 
-    <button
-      class="primaryBtn signInBtn"
-      onclick="copyAccount()">
-      Copy Account
-    </button>
+    <input
+      id="email"
+      type="email"
+      placeholder="Enter your email"
+      autocomplete="email"
+    >
 
+  </div>
+
+  <div class="field">
+
+    <label>Password</label>
+
+    <input
+      id="password"
+      type="password"
+      placeholder="Enter your password"
+      autocomplete="current-password"
+    >
+
+  </div>
+
+  <div class="forgot">
+
+    <a href="./forgot-password.html">
+      Forgot Password?
+    </a>
+
+  </div>
+
+  <button
+    id="loginButton"
+    type="button"
+    onclick="login()"
+  >
+    Login
+  </button>
+
+  <div id="message"></div>
+
+  <div class="divider">
+    or
+  </div>
+
+  <div class="signup">
+
+    Don't have an account?
+
+    <a href="./signup.html">
+      Sign Up
+    </a>
+
+  </div>
+
+  <div class="security">
+    🔒 Your account information is protected
   </div>
 
 </div>
 
 
-<!-- =====================================================
-     EXCHANGE MODAL
-===================================================== -->
+<script>
 
-<div
-  id="exchangeModal"
-  class="modal"
-  onclick="closeOutside(event,'exchangeModal')">
+function login() {
 
-  <div class="modalBox">
+  const email =
+    document.getElementById("email")
+      .value
+      .trim()
+      .toLowerCase();
 
-    <div class="modalHeader">
+  const password =
+    document.getElementById("password")
+      .value;
 
-      <h2>Currency Exchange</h2>
+  const message =
+    document.getElementById("message");
 
-      <button
-        class="close"
-        onclick="closeModal('exchangeModal')">
-        ×
-      </button>
-
-    </div>
-
-    <div class="field">
-
-      <label>From</label>
-
-      <select id="fromCurrency">
-        <option>USD</option>
-        <option>EUR</option>
-        <option>GBP</option>
-        <option>NGN</option>
-        <option>CAD</option>
-        <option>AUD</option>
-        <option>JPY</option>
-      </select>
-
-    </div>
-
-    <div class="field">
-
-      <label>To</label>
-
-      <select id="toCurrency">
-        <option>EUR</option>
-        <option>USD</option>
-        <option>GBP</option>
-        <option>NGN</option>
-        <option>CAD</option>
-        <option>AUD</option>
-        <option>JPY</option>
-      </select>
-
-    </div>
-
-    <div class="field">
-
-      <label>Amount</label>
-
-      <input
-        id="exchangeAmount"
-        type="number"
-        placeholder="Enter amount">
-
-    </div>
-
-    <button
-      class="primaryBtn signInBtn"
-      onclick="exchangeMoney()">
-      Exchange
-    </button>
-
-    <div
-      id="exchangeMessage"
-      class="authMessage">
-    </div>
-
-  </div>
-
-</div>
+  const button =
+    document.getElementById("loginButton");
 
 
-<!-- =====================================================
-     NOTIFICATION MODAL
-===
+  if (!email || !password) {
+
+    message.style.color = "#ff6b6b";
+
+    message.innerText =
+      "Please enter your email and password.";
+
+    return;
+  }
+
+
+  const savedUser =
+    JSON.parse(
+      localStorage.getItem(
+        "globalCurrencyUser"
+      )
+    );
+
+
+  if (!savedUser) {
+
+    message.style.color = "#ff6b6b";
+
+    message.innerText =
+      "No account found. Please create an account first.";
+
+    return;
+  }
+
+
+  if (
+    email !==
+    savedUser.email.toLowerCase()
+  ) {
+
+    message.style.color = "#ff6b6b";
+
+    message.innerText =
+      "Email address not found.";
+
+    return;
+  }
+
+
+  if (
+    password !==
+    savedUser.password
+  ) {
+
+    message.style.color = "#ff6b6b";
+
+    message.innerText =
+      "Incorrect password.";
+
+    return;
+  }
+
+
+  button.disabled = true;
+
+  localStorage.setItem(
+    "loggedIn",
+    "true"
+  );
+
+
+  message.style.color =
+    "#00dcae";
+
+  message.innerText =
+    "Login successful...";
+
+
+  setTimeout(function() {
+
+    window.location.href =
+      "./dashboard.html";
+
+  }, 700);
+
+}
+
+</script>
+
+</body>
+</html>
