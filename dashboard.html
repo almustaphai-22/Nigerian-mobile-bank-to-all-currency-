@@ -7,45 +7,43 @@
 <style>
   *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
   body{background:#020a1a;color:#fff;min-height:100vh;padding-bottom:80px}
-  .header{padding:20px 20px 10px;display:flex;justify-content:space-between;align-items:center}
-  .logo-title{display:flex;align-items:center;gap:10px}
-  .logo-title img{width:35px;height:35px;border-radius:8px}
-  .logo-title h2{font-size:15px;font-weight:700}
-  .header-icons{display:flex;gap:15px;font-size:20px}
   
-  .balance-card{margin:10px 20px;background:linear-gradient(135deg,#0d2a5a,#001127);padding:25px;border-radius:20px;border:1px solid #1a3d73}
-  .balance-card p{color:#8aa4c7;font-size:12px}
-  .balance-card h1{font-size:32px;margin:8px 0}
-  .balance-card span{color:#00ff88;font-size:12px}
+ .header{padding:20px;display:flex;justify-content:space-between;align-items:center}
+ .logo-title{display:flex;align-items:center;gap:10px}
+ .logo-title img{width:35px;height:35px;border-radius:8px}
+ .logo-title h2{font-size:15px;font-weight:700;background:linear-gradient(90deg,#00ffc8,#00aaff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+ .header-icons{display:flex;gap:15px;font-size:20px}
   
-  .actions{display:flex;justify-content:space-around;margin:20px}
-  .action-btn{text-align:center;color:#cbd5e1;font-size:12px}
-  .action-icon{width:55px;height:55px;background:#0f2142;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:22px}
+ .balance-card{margin:0 20px 20px;background:linear-gradient(135deg,#0d2a5a,#001127);padding:25px;border-radius:20px;border:1px solid #1a3d73}
+ .balance-card p{color:#8aa4c7;font-size:12px}
+ .balance-card h1{font-size:32px;margin:8px 0}
+ .balance-card span{color:#00ff88;font-size:12px}
   
-  .section{margin:25px 20px}
-  .section-header{display:flex;justify-content:space-between;margin-bottom:15px}
-  .section-header h3{font-size:16px}
-  .section-header a{color:#00aaff;font-size:12px;text-decoration:none}
+ .actions{display:flex;justify-content:space-around;margin:0 20px 25px}
+ .action-btn{text-align:center;color:#cbd5e1;font-size:12px;cursor:pointer}
+ .action-icon{width:55px;height:55px;background:#0f2142;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:22px}
+ .action-btn:hover.action-icon{background:#1a3d73}
   
-  .account{background:#0a1a33;padding:15px;border-radius:15px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-  .acc-left{display:flex;align-items:center;gap:12px}
-  .flag{font-size:24px}
-  .acc-name{font-size:14px}
-  .acc-balance{font-size:15px;font-weight:700}
+ .tabs{display:flex;gap:10px;margin:0 20px 15px;overflow-x:auto}
+ .tab{padding:8px 16px;border-radius:20px;background:#0a1a33;color:#8aa4c7;font-size:12px;white-space:nowrap;cursor:pointer}
+ .tab.active{background:linear-gradient(90deg,#00ffc8,#00aaff);color:#000;font-weight:700}
   
-  .txn{background:#0a1a33;padding:15px;border-radius:15px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-  .txn-left{display:flex;align-items:center;gap:12px}
-  .txn-icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-  .in{background:#0f3d2e;color:#00ff88}
-  .out{background:#3d1f1f;color:#ff4d4d}
-  .txn-amount{font-weight:700}
-  .txn-amount.in{color:#00ff88}
-  .txn-amount.out{color:#ff4d4d}
+ .section{margin:0 20px 25px}
+ .section-header{display:flex;justify-content:space-between;margin-bottom:15px}
+ .section-header h3{font-size:16px}
+ .section-header a{color:#00aaff;font-size:12px;text-decoration:none}
   
-  .navbar{position:fixed;bottom:0;left:0;right:0;background:#04132e;display:flex;justify-content:space-around;padding:12px 0;border-top:1px solid #1a3d73}
-  .nav-item{text-align:center;font-size:10px;color:#7a8ca5}
-  .nav-item.active{color:#00aaff}
-  .nav-icon{font-size:22px;margin-bottom:4px}
+ .account{background:#0a1a33;padding:15px;border-radius:15px;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+ .acc-left{display:flex;align-items:center;gap:12px}
+ .flag{font-size:24px;width:35px;text-align:center}
+ .acc-name{font-size:14px;font-weight:600}
+ .acc-sub{font-size:11px;color:#8aa4c7}
+ .acc-balance{font-size:15px;font-weight:700;text-align:right}
+  
+ .navbar{position:fixed;bottom:0;left:0;right:0;background:#04132e;display:flex;justify-content:space-around;padding:12px 0;border-top:1px solid #1a3d73}
+ .nav-item{text-align:center;font-size:10px;color:#7a8ca5;cursor:pointer}
+ .nav-item.active{color:#00aaff}
+ .nav-icon{font-size:22px;margin-bottom:4px}
 </style>
 </head>
 <body>
@@ -69,22 +67,108 @@
 
   <!-- ACTIONS -->
   <div class="actions">
-    <div class="action-btn"><div class="action-icon">↗</div>Send</div>
-    <div class="action-btn"><div class="action-icon">↓</div>Receive</div>
-    <div class="action-btn"><div class="action-icon">⇄</div>Exchange</div>
-    <div class="action-btn"><div class="action-icon">⋯</div>More</div>
+    <div class="action-btn" onclick="alert('Send Money')"><div class="action-icon">↗</div>Send</div>
+    <div class="action-btn" onclick="alert('Receive Money')"><div class="action-icon">↓</div>Receive</div>
+    <div class="action-btn" onclick="alert('Exchange Currency')"><div class="action-icon">⇄</div>Exchange</div>
+    <div class="action-btn" onclick="alert('More Options')"><div class="action-icon">⋯</div>More</div>
   </div>
 
-  <!-- ACCOUNTS -->
-  <div class="section">
+  <!-- TABS FOR CURRENCIES -->
+  <div class="tabs">
+    <div class="tab active" onclick="showTab('world')">World Currencies</div>
+    <div class="tab" onclick="showTab('mobile')">Mobile Money</div>
+    <div class="tab" onclick="showTab('crypto')">Crypto</div>
+  </div>
+
+  <!-- WORLD CURRENCIES -->
+  <div class="section" id="worldTab">
     <div class="section-header">
-      <h3>Accounts</h3>
-      <a href="#">See All</a>
+      <h3>World Accounts</h3>
+      <a href="#">Add +</a>
     </div>
+    
     <div class="account">
-      <div class="acc-left"><div class="flag">🇺🇸</div><div><div class="acc-name">USD Account</div></div></div>
+      <div class="acc-left"><div class="flag">🇺🇸</div><div><div class="acc-name">USD Account</div><div class="acc-sub">United States Dollar</div></div></div>
       <div class="acc-balance">$ 15,250.00</div>
     </div>
     <div class="account">
-      <div class="acc-left"><div class="flag">🇪🇺</div><div><div class="acc-name">EUR Account</div></div></div>
-      <div class="
+      <div class="acc-left"><div class="flag">🇪🇺</div><div><div class="acc-name">EUR Account</div><div class="acc-sub">Euro</div></div></div>
+      <div class="acc-balance">€ 7,890.35</div>
+    </div>
+    <div class="account">
+      <div class="acc-left"><div class="flag">🇬🇧</div><div><div class="acc-name">GBP Account</div><div class="acc-sub">British Pound</div></div></div>
+      <div class="acc-balance">£ 2,540.10</div>
+    </div>
+    <div class="account">
+      <div class="acc-left"><div class="flag">🇨🇦</div><div><div class="acc-name">CAD Account</div><div class="acc-sub">Canadian Dollar</div></div></div>
+      <div class="acc-balance">$ 1,200.50</div>
+    </div>
+    <div class="account">
+      <div class="acc-left"><div class="flag">🇳🇬</div><div><div class="acc-name">NGN Account</div><div class="acc-sub">Nigerian Naira</div></div></div>
+      <div class="acc-balance">₦ 3,500,000.00</div>
+    </div>
+    <div class="account">
+      <div class="acc-left"><div class="flag">🇦🇪</div><div><div class="acc-name">AED Account</div><div class="acc-sub">UAE Dirham</div></div></div>
+      <div class="acc-balance">د.إ 18,900.00</div>
+    </div>
+  </div>
+
+  <!-- MOBILE MONEY -->
+  <div class="section" id="mobileTab" style="display:none">
+    <div class="section-header">
+      <h3>Mobile Money Wallets</h3>
+      <a href="#">Add +</a>
+    </div>
+    
+    <div class="account">
+      <div class="acc-left"><div class="flag">📱</div><div><div class="acc-name">MTN Mobile Money</div><div class="acc-sub">0803 *** *** 22</div></div></div>
+      <div class="acc-balance">₦ 125,400.00</div>
+    </div>
+    <div class="account">
+      <div class="acc-left"><div class="flag">📱</div><div><div class="acc-name">Airtel Money</div><div class="acc-sub">0802 *** *** 22</div></div></div>
+      <div class="acc-balance">₦ 89,200.00</div>
+    </div>
+    <div class="account">
+      <div class="acc-left"><div class="flag">📱</div><div><div class="acc-name">Glo Mobile Money</div><div class="acc-sub">0805 *** *** 22</div></div></div>
+      <div class="acc-balance">₦ 45,600.00</div>
+    </div>
+    <div class="account">
+      <div class="acc-left"><div class="flag">📱</div><div><div class="acc-name">9Mobile Wallet</div><div class="acc-sub">0809 *** *** 22</div></div></div>
+      <div class="acc-balance">₦ 32,100.00</div>
+    </div>
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="navbar">
+    <div class="nav-item active"><div class="nav-icon">🏠</div>Home</div>
+    <div class="nav-item"><div class="nav-icon">💼</div>Accounts</div>
+    <div class="nav-item"><div class="nav-icon">↔</div>Transfers</div>
+    <div class="nav-item"><div class="nav-icon">💳</div>Cards</div>
+    <div class="nav-item"><div class="nav-icon">⚙️</div>Settings</div>
+  </div>
+
+<script>
+  // Show the name from signup
+  const name = localStorage.getItem('userName') || 'User';
+  document.getElementById('userName').innerText = name;
+  
+  // Tab switcher
+  function showTab(tab) {
+    document.getElementById('worldTab').style.display = 'none';
+    document.getElementById('mobileTab').style.display = 'none';
+    
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    
+    if(tab === 'world'){
+      document.getElementById('worldTab').style.display = 'block';
+      document.querySelectorAll('.tab')[0].classList.add('active');
+    }
+    if(tab === 'mobile'){
+      document.getElementById('mobileTab').style.display = 'block';
+      document.querySelectorAll('.tab')[1].classList.add('active');
+    }
+  }
+</script>
+
+</body>
+</html>
