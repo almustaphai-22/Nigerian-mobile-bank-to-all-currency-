@@ -5,13 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard - All Currency Bank</title>
 <style>
-  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif;-webkit-tap-highlight-color:transparent}
   body{background:#020a1a;color:#fff;min-height:100vh;padding-bottom:80px}
  .header{padding:20px;display:flex;justify-content:space-between;align-items:center}
  .logo-title{display:flex;align-items:center;gap:10px}
  .logo-title img{width:35px;height:35px;border-radius:8px}
  .logo-title h2{font-size:15px;font-weight:700;background:linear-gradient(90deg,#00ffc8,#00aaff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
- .header-icons{display:flex;gap:15px;font-size:20px}
 
  .balance-card{margin:0 20px 20px;background:linear-gradient(135deg,#0d2a5a,#001127);padding:25px;border-radius:20px;border:1px solid #1a3d73}
  .balance-card p{color:#8aa4c7;font-size:12px}
@@ -20,13 +19,13 @@
  .eye{font-size:20px;cursor:pointer;opacity:0.7}
 
  .actions{display:flex;justify-content:space-around;margin:0 20px 25px}
- .action-btn{text-align:center;color:#cbd5e1;font-size:12px;cursor:pointer}
+ .action-btn{text-align:center;color:#cbd5e1;font-size:12px;cursor:pointer;padding:5px;transition:0.2s}
+ .action-btn:active{transform:scale(0.95);opacity:0.7}
  .action-icon{width:55px;height:55px;background:#0f2142;border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 8px;font-size:22px}
 
  .section{margin:0 20px 25px}
  .section-header{display:flex;justify-content:space-between;margin-bottom:15px}
  .section-header h3{font-size:16px}
- .section-header a{color:#00aaff;font-size:12px;text-decoration:none}
 
  .currency-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
  .currency{background:#0a1a33;padding:12px;border-radius:12px;border:1px solid #1a3d73}
@@ -39,7 +38,8 @@
  .my-balance{color:#00aaff;font-weight:700}
 
  .navbar{position:fixed;bottom:0;left:0;right:0;background:#04132e;display:flex;justify-content:space-around;padding:12px 0;border-top:1px solid #1a3d73}
- .nav-item{text-align:center;font-size:10px;color:#7a8ca5;cursor:pointer}
+ .nav-item{text-align:center;font-size:10px;color:#7a8ca5;cursor:pointer;padding:5px 15px;transition:0.2s}
+ .nav-item:active{transform:scale(0.9);opacity:0.7}
  .nav-item.active{color:#00aaff}
  .nav-icon{font-size:22px;margin-bottom:4px}
 </style>
@@ -52,7 +52,6 @@
       <img src="Screenshot_2026-08-17-18-53-58-99.png" alt="logo">
       <h2>ALL CURRENCY BANK</h2>
     </div>
-    <div class="header-icons">🔔 👤</div>
   </div>
 
   <!-- GREETING + BALANCE -->
@@ -66,24 +65,23 @@
     <span style="color:#8aa4c7;font-size:11px">Rates update every 5 minutes</span>
   </div>
 
-  <!-- ACTIONS -->
+  <!-- ACTIONS - NOW CLICKABLE -->
   <div class="actions">
     <div class="action-btn" onclick="location.href='transfers.html'"><div class="action-icon">↗</div>Send</div>
     <div class="action-btn" onclick="location.href='transfers.html'"><div class="action-icon">↓</div>Receive</div>
     <div class="action-btn" onclick="alert('Exchange Coming Soon')"><div class="action-icon">⇄</div>Exchange</div>
-    <div class="action-btn" onclick="alert('More Options')"><div class="action-icon">⋯</div>More</div>
+    <div class="action-btn" onclick="alert('More Options Coming Soon')"><div class="action-icon">⋯</div>More</div>
   </div>
 
   <!-- ALL WORLD CURRENCIES -->
   <div class="section">
     <div class="section-header">
       <h3>World Currencies</h3>
-      <a href="accounts.html">View All</a>
     </div>
     <div class="currency-grid" id="currencyGrid"></div>
   </div>
 
-  <!-- BOTTOM NAV -->
+  <!-- BOTTOM NAV - NOW CLICKABLE -->
   <div class="navbar">
     <div class="nav-item active"><div class="nav-icon">🏠</div>Home</div>
     <div class="nav-item" onclick="location.href='accounts.html'"><div class="nav-icon">💼</div>Accounts</div>
@@ -94,32 +92,21 @@
 
 <script>
   let balanceVisible = true;
-
-  // 1. PULL NAME FROM WHOEVER SIGNED UP. NO HARDCODE
   const name = localStorage.getItem('userName') || 'User';
   document.getElementById('userName').innerText = name;
 
   const userData = JSON.parse(localStorage.getItem('allCurrencyUser')) || {};
   const balances = userData.balances || {};
 
-  // ALL WORLD CURRENCIES with USD rates
   const currencies = [
-    {code:'USD', name:'US Dollar', flag:'🇺🇸', rate:1.00, symbol:'$'},
-    {code:'EUR', name:'Euro', flag:'🇪🇺', rate:0.92, symbol:'€'},
-    {code:'GBP', name:'British Pound', flag:'🇬🇧', rate:0.79, symbol:'£'},
-    {code:'CAD', name:'Canadian Dollar', flag:'🇨🇦', rate:1.36, symbol:'$'},
-    {code:'AUD', name:'Australian Dollar', flag:'🇦🇺', rate:1.52, symbol:'$'},
-    {code:'NGN', name:'Nigerian Naira', flag:'🇳🇬', rate:1600.50, symbol:'₦'},
-    {code:'GHS', name:'Ghana Cedi', flag:'🇬🇭', rate:15.80, symbol:'₵'},
-    {code:'KES', name:'Kenyan Shilling', flag:'🇰🇪', rate:129.40, symbol:'KSh'},
-    {code:'ZAR', name:'South African Rand', flag:'🇿🇦', rate:18.20, symbol:'R'},
-    {code:'AED', name:'UAE Dirham', flag:'🇦🇪', rate:3.67, symbol:'د.إ'},
-    {code:'SAR', name:'Saudi Riyal', flag:'🇸🇦', rate:3.75, symbol:'﷼'},
-    {code:'JPY', name:'Japanese Yen', flag:'🇯🇵', rate:149.80, symbol:'¥'},
-    {code:'CNY', name:'Chinese Yuan', flag:'🇨🇳', rate:7.24, symbol:'¥'},
-    {code:'INR', name:'Indian Rupee', flag:'🇮🇳', rate:83.50, symbol:'₹'},
-    {code:'BRL', name:'Brazilian Real', flag:'🇧🇷', rate:5.45, symbol:'R$'},
-    {code:'MXN', name:'Mexican Peso', flag:'🇲🇽', rate:18.90, symbol:'$'},
+    {code:'USD', flag:'🇺🇸', rate:1.00, symbol:'$'},
+    {code:'EUR', flag:'🇪🇺', rate:0.92, symbol:'€'},
+    {code:'GBP', flag:'🇬🇧', rate:0.79, symbol:'£'},
+    {code:'NGN', flag:'🇳🇬', rate:1600.50, symbol:'₦'},
+    {code:'GHS', flag:'🇬🇭', rate:15.80, symbol:'₵'},
+    {code:'KES', flag:'🇰🇪', rate:129.40, symbol:'KSh'},
+    {code:'AED', flag:'🇦🇪', rate:3.67, symbol:'د.إ'},
+    {code:'ZAR', flag:'🇿🇦', rate:18.20, symbol:'R'},
   ];
 
   let totalBalance = 0;
@@ -127,13 +114,9 @@
   function renderCurrencies(){
     const grid = document.getElementById('currencyGrid');
     grid.innerHTML = '';
-    
     currencies.forEach(cur => {
       const myBal = balances[cur.code] || 0;
-      if(myBal > 0){
-        totalBalance += myBal / cur.rate; // convert to USD
-      }
-
+      if(myBal > 0){ totalBalance += myBal / cur.rate; }
       grid.innerHTML += `
       <div class="currency ${myBal > 0 ? 'top' : ''}">
         <div class="cur-top">
@@ -141,7 +124,7 @@
             <div class="flag">${cur.flag}</div>
             <div class="cur-name">${cur.code}</div>
           </div>
-          <div class="cur-rate">1 USD = ${cur.rate} ${cur.code}</div>
+          <div class="cur-rate">1 USD = ${cur.rate}</div>
         </div>
         <div class="cur-balance">
           ${myBal > 0 ? `<span class="my-balance">${cur.symbol} ${myBal.toLocaleString()}</span>` : 'Balance: $0.00'}
@@ -152,11 +135,7 @@
 
   function updateTotal(){
     const el = document.getElementById('totalBalance');
-    if(totalBalance <= 0){
-      el.innerText = '$0.00';
-    } else {
-      el.innerText = balanceVisible ? `$${totalBalance.toLocaleString('en-US', {minimumFractionDigits:2})}` : '••••••';
-    }
+    el.innerText = totalBalance <= 0 ? '$0.00' : balanceVisible ? `$${totalBalance.toLocaleString('en-US', {minimumFractionDigits:2})}` : '••••••';
   }
 
   function toggleBalance(){
@@ -165,7 +144,6 @@
     updateTotal();
   }
 
-  // Initial load
   renderCurrencies();
   updateTotal();
 </script>
