@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Verify Account - Global Currency Bank</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #000;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+}
+
+.app {
+  width: 100%;
+  max-width: 430px;
+  background: linear-gradient(180deg,#031a38,#001127);
+  border: 2px solid #4168a5;
+  border-radius: 30px;
+  padding: 30px 22px;
+  color: white;
+  box-shadow: 0 0 30px rgba(30,100,180,.25);
+}
+
+.back {
+  font-size: 30px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo {
+  width: 90px;
+  height: 90px;
+  border-radius: 20px;
+  object-fit: cover;
+}
+
+h1 {
+  font-size: 23px;
+  margin: 12px 0 6px;
+}
+
+.subtitle {
+  color: #e4b947;
+  font-size: 12px;
+}
+
+.info {
+  background: #092548;
+  border: 1px solid #29496e;
+  border-radius: 12px;
+  padding: 14px;
+  text-align: center;
+  color: #b9c5d5;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+input {
+  width: 100%;
+  height: 55px;
+  border-radius: 12px;
+  border: 1px solid #315477;
+  background: #0b294b;
+  color: white;
+  padding: 0 15px;
+  text-align: center;
+  font-size: 24px;
+  letter-spacing: 8px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #e6bd50;
+}
+
+button {
+  width: 100%;
+  height: 50px;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(#f7d267,#dca32f);
+  font-weight: 800;
+  font-size: 16px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.resend {
+  background: transparent;
+  color: #e6bd50;
+  margin-top: 10px;
+}
+
+#message {
+  text-align: center;
+  font-size: 13px;
+  margin-top: 15px;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 25px;
+  color: #9ba8ba;
+  font-size: 12px;
+}
+
+.footer a {
+  color: #e6bd50;
+  text-decoration: none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <div class="back" onclick="history.back()">‹</div>
+
+  <div class="header">
+
+    <!-- Put your logo file in the same folder and name it logo.png -->
+    <img src="logo.png" class="logo" alt="Global Currency Bank">
+
+    <h1>Verify Your Account</h1>
+
+    <div class="subtitle">
+      Global Currency Bank
+    </div>
+
+  </div>
+
+  <div class="info">
+    Enter the 6-digit verification code sent to
+    <br>
+    <strong id="emailDisplay"></strong>
+  </div>
+
+  <input
+    id="code"
+    type="text"
+    inputmode="numeric"
+    maxlength="6"
+    placeholder="000000"
+    autocomplete="one-time-code"
+  >
+
+  <button onclick="verifyCode()">
+    Verify Account
+  </button>
+
+  <button class="resend" onclick="resendCode()">
+    Resend Code
+  </button>
+
+  <div id="message"></div>
+
+  <div class="footer">
+    Already verified?
+    <a href="index.html">Login</a>
+  </div>
+
+</div>
+
+<script>
+
+const email =
+  sessionStorage.getItem("verificationEmail");
+
+const savedCode =
+  sessionStorage.getItem("verificationCode");
+
+const purpose =
+  sessionStorage.getItem("verificationPurpose");
+
+const emailDisplay =
+  document.getElementById("emailDisplay");
+
+const message =
+  document.getElementById("message");
+
+if (!email || !savedCode) {
+
+  message.style.color = "#ff6b6b";
+  message.innerText =
+    "No verification request found.";
+
+} else {
+
+  emailDisplay.innerText = email;
+
+}
+
+function verifyCode() {
+
+  const enteredCode =
+    document.getElementById("code").value.trim();
+
+  if (enteredCode.length !== 6) {
+
+    message.style.color = "#ff6b6b";
+    message.innerText =
+      "Please enter the 6-digit code.";
+
+    return;
+  }
+
+  if (enteredCode !== savedCode) {
+
+    message.style.color = "#ff6b6b";
+    message.innerText =
+      "Incorrect verification code.";
+
+    return;
+  }
+
+  /*
+    SAVE THE ACCOUNT AS VERIFIED
+  */
+
+  const user = {
+
+    name:
+      sessionStorage.getItem("newUserName") || "",
+
+    email:
+      sessionStorage.getItem("verificationEmail") || "",
+
+    phone:
+      sessionStorage.getItem("newUserPhone") || "",
+
+    verified: true
+
+  };
+
+  localStorage.setItem(
+    "globalCurrencyUser",
+    JSON.stringify(user)
+  );
+
+  localStorage.setItem(
+    "accountVerified",
+    "true"
+  );
+
+  /*
+    Remove temporary verification information
+  */
+
+  sessionStorage.removeItem("verificationCode");
+  sessionStorage.removeItem("verificationEmail");
+  sessionStorage.removeItem("verificationPurpose");
+  sessionStorage.removeItem("newUserName");
+  sessionStorage.removeItem("newUserPhone");
+
+  message.style.color = "#00dcae";
+  message.innerText =
+    "Account verified successfully!";
+
+  /*
+    GO TO LOGIN PAGE
+  */
+
+  setTimeout(function() {
+
+    window.location.href = "index.html";
+
+  }, 1000);
+
+}
+
+
+function resendCode() {
+
+  message.style.color = "#e6bd50";
+
+  message.innerText =
+    "Please use the Sign Up page to request a new verification code.";
+
+}
+
+</script>
+
+</body>
+</html>
