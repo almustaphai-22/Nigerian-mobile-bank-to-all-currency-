@@ -3,14 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Global Currency Bank</title>
+<title>All Currency Bank</title>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-
+* { box-sizing: border-box; }
 body {
   margin: 0;
   min-height: 100vh;
@@ -21,7 +17,6 @@ body {
   align-items: center;
   padding: 15px;
 }
-
 .app {
   width: 100%;
   max-width: 430px;
@@ -33,7 +28,6 @@ body {
   text-align: center;
   box-shadow: 0 0 35px rgba(30,100,180,.3);
 }
-
 .logo {
   width: 110px;
   height: 110px;
@@ -43,25 +37,30 @@ body {
   margin: 0 auto 20px;
   box-shadow: 0 8px 25px rgba(0,0,0,.5);
 }
-
 h1 {
   font-size: 27px;
   margin: 5px 0;
+  background: linear-gradient(90deg,#00ffc8,#00aaff);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
 }
-
 .subtitle {
   color: #e4b947;
   font-size: 13px;
-  margin-bottom: 35px;
+  margin-bottom: 8px;
 }
-
+.currencies {
+  color: #aab6c6;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  margin-bottom: 25px;
+}
 .welcome {
   color: #aab6c6;
   font-size: 14px;
   line-height: 1.6;
   margin-bottom: 30px;
 }
-
 .button {
   display: block;
   width: 100%;
@@ -73,49 +72,42 @@ h1 {
   font-size: 15px;
   margin-top: 14px;
 }
-
 .login-button {
   background: linear-gradient(#f7d267, #dca32f);
   color: #111;
 }
-
 .signup-button {
   border: 1px solid #4168a5;
   background: #0b294b;
   color: white;
 }
-
-.button:active {
-  transform: scale(.98);
-}
-
-.security {
-  margin-top: 28px;
-  color: #65758a;
-  font-size: 10px;
-}
+.button:active { transform: scale(.98); }
+.security { margin-top: 28px; color: #65758a; font-size: 10px; }
 </style>
 </head>
 
 <body>
-
 <div class="app">
 
   <img
     src="Screenshot_2026-08-17-18-53-58-99.png"
     class="logo"
-    alt="Global Currency Bank Logo"
+    alt="All Currency Bank Logo"
   >
 
-  <h1>Global Currency Bank</h1>
+  <h1>All Currency Bank</h1>
 
   <div class="subtitle">
     Banking Beyond Borders
   </div>
+  
+  <div class="currencies">
+    USD • EUR • GBP • CAD • NGN • AED
+  </div>
 
   <div class="welcome">
-    Welcome to Global Currency Bank.<br>
-    Secure access to your currency account.
+    Welcome to All Currency Bank.<br>
+    Secure access to your multi-currency account.
   </div>
 
   <!-- LOGIN -->
@@ -123,16 +115,5 @@ h1 {
     Login
   </a>
 
-  <!-- CREATE ACCOUNT -->
-  <a href="signup.html" class="button signup-button">
-    Create Account
-  </a>
-
-  <div class="security">
-    🔒 Secure account access
-  </div>
-
-</div>
-
-</body>
-</html>
+  <!-- CREATE ACCOUNT - FIXED CAPITAL S -->
+  <a href="Signup.html" class="
