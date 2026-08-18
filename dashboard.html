@@ -68,17 +68,17 @@
 
   <!-- ACTIONS -->
   <div class="actions">
-    <div class="action-btn"><div class="action-icon">↗</div>Send</div>
-    <div class="action-btn"><div class="action-icon">↓</div>Receive</div>
-    <div class="action-btn"><div class="action-icon">⇄</div>Exchange</div>
-    <div class="action-btn"><div class="action-icon">⋯</div>More</div>
+    <div class="action-btn" onclick="location.href='transfers.html'"><div class="action-icon">↗</div>Send</div>
+    <div class="action-btn" onclick="location.href='transfers.html'"><div class="action-icon">↓</div>Receive</div>
+    <div class="action-btn" onclick="alert('Exchange Coming Soon')"><div class="action-icon">⇄</div>Exchange</div>
+    <div class="action-btn" onclick="alert('More Options')"><div class="action-icon">⋯</div>More</div>
   </div>
 
   <!-- ALL WORLD CURRENCIES -->
   <div class="section">
     <div class="section-header">
       <h3>World Currencies</h3>
-      <a href="#">Exchange</a>
+      <a href="accounts.html">View All</a>
     </div>
     <div class="currency-grid" id="currencyGrid"></div>
   </div>
@@ -86,23 +86,23 @@
   <!-- BOTTOM NAV -->
   <div class="navbar">
     <div class="nav-item active"><div class="nav-icon">🏠</div>Home</div>
-    <div class="nav-item"><div class="nav-icon">💼</div>Accounts</div>
-    <div class="nav-item"><div class="nav-icon">↔</div>Transfers</div>
-    <div class="nav-item"><div class="nav-icon">💳</div>Cards</div>
-    <div class="nav-item"><div class="nav-icon">⚙️</div>Settings</div>
+    <div class="nav-item" onclick="location.href='accounts.html'"><div class="nav-icon">💼</div>Accounts</div>
+    <div class="nav-item" onclick="location.href='transfers.html'"><div class="nav-icon">↔</div>Transfers</div>
+    <div class="nav-item" onclick="location.href='cards.html'"><div class="nav-icon">💳</div>Cards</div>
+    <div class="nav-item" onclick="location.href='settings.html'"><div class="nav-icon">⚙️</div>Settings</div>
   </div>
 
 <script>
   let balanceVisible = true;
 
-  // Load user data
+  // 1. PULL NAME FROM WHOEVER SIGNED UP. NO HARDCODE
   const name = localStorage.getItem('userName') || 'User';
   document.getElementById('userName').innerText = name;
 
   const userData = JSON.parse(localStorage.getItem('allCurrencyUser')) || {};
   const balances = userData.balances || {};
 
-  // ALL WORLD CURRENCIES with USD rates. Later we connect API
+  // ALL WORLD CURRENCIES with USD rates
   const currencies = [
     {code:'USD', name:'US Dollar', flag:'🇺🇸', rate:1.00, symbol:'$'},
     {code:'EUR', name:'Euro', flag:'🇪🇺', rate:0.92, symbol:'€'},
@@ -152,7 +152,11 @@
 
   function updateTotal(){
     const el = document.getElementById('totalBalance');
-    el.innerText = balanceVisible ? `$${totalBalance.toLocaleString('en-US', {minimumFractionDigits:2})}` : '••••••';
+    if(totalBalance <= 0){
+      el.innerText = '$0.00';
+    } else {
+      el.innerText = balanceVisible ? `$${totalBalance.toLocaleString('en-US', {minimumFractionDigits:2})}` : '••••••';
+    }
   }
 
   function toggleBalance(){
